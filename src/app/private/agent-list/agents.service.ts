@@ -20,6 +20,15 @@ export class AgentsService extends CollectionService<Agent> {
     return this.http.get<Array<Agent>>(`${environment.baseURL}/${this.path}/`);
   }
 
+  baseModels(
+    request: Partial<PagedDataRequestParam> = {}
+  ): Observable<Array<Agent>> {
+    // throw new Error('list not developed');
+    return this.http.get<Array<Agent>>(
+      `${environment.baseURL}/${this.path}/base`
+    );
+  }
+
   /** Creates a new agent */
   createAgent(agent: Agent): Observable<Agent> {
     return this.http.post<Agent>(

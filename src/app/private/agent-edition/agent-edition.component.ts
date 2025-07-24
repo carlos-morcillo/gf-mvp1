@@ -1,20 +1,17 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+
+import { Component, inject, resource } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslocoModule } from '@jsverse/transloco';
-import { AgentsService } from '../agent-list/agents.service';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { firstValueFrom } from 'rxjs';
 import { Agent } from '../agent-list/agent';
+import { AgentsService } from '../agent-list/agents.service';
 
 @Component({
   selector: 'app-agent-edition',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, TranslocoModule],
+  imports: [ReactiveFormsModule, NgSelectModule, TranslocoModule],
   templateUrl: './agent-edition.component.html',
   styleUrl: './agent-edition.component.scss',
 })
@@ -24,10 +21,11 @@ export class AgentEditionComponent {
   private agentsSvc = inject(AgentsService);
 
   /** Mock base model options */
-  models = [
-    { label: 'GPT-4', value: 'gpt-4' },
-    { label: 'GPT-3.5', value: 'gpt-3.5' },
-  ];
+  modelsResource = resource({
+    loader: () => {
+      return firstValueFrom(this.agentsSvc.baseModels());
+    },
+  });
 
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],

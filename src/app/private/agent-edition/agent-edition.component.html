@@ -1,39 +1,72 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container py-4 d-flex flex-column gap-3" (drop)="onDrop($event)" (dragover)="$event.preventDefault()">
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="container py-4 d-flex flex-column gap-3"
+  (drop)="onDrop($event)"
+  (dragover)="$event.preventDefault()"
+>
   <div class="d-flex mb-3">
     <button type="button" class="btn btn-link me-2" routerLink="../">
       <i class="fas fa-arrow-left"></i>
     </button>
-    <h1 class="h3 mb-0">{{ 'AGENT_EDITION.FORM.TITLE' | transloco }}</h1>
+    <h1 class="h3 mb-0">{{ "AGENT_EDITION.FORM.TITLE" }}</h1>
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.FORM.NAME' | transloco }}</label>
+    <label class="form-label">{{ "AGENT_EDITION.FORM.NAME" }}</label>
     <input type="text" formControlName="name" class="form-control" />
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.FORM.MODEL' | transloco }}</label>
-    <ng-select [items]="models" bindLabel="label" bindValue="value" formControlName="base_model_id"></ng-select>
+    <label class="form-label">{{ "AGENT_EDITION.FORM.MODEL" }}</label>
+    <ng-select
+      [items]="modelsResource.value()"
+      [loading]="modelsResource.isLoading()"
+      [searchable]="true"
+      bindLabel="name"
+      bindValue="id"
+      formControlName="base_model_id"
+    ></ng-select>
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.FORM.DESCRIPTION' | transloco }}</label>
-    <textarea rows="3" class="form-control" formControlName="description"></textarea>
+    <label class="form-label">{{ "AGENT_EDITION.FORM.DESCRIPTION" }}</label>
+    <textarea
+      rows="3"
+      class="form-control"
+      formControlName="description"
+    ></textarea>
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.FORM.UPLOAD_IMAGE' | transloco }}</label>
+    <label class="form-label">{{ "AGENT_EDITION.FORM.UPLOAD_IMAGE" }}</label>
     <div class="border rounded p-3 text-center">
-      <img *ngIf="imagePreview" [src]="imagePreview" class="img-thumbnail mb-2" alt="preview" />
-      <input type="file" accept="image/*" class="form-control" (change)="onFileSelect($event)" />
-      <small class="text-muted">{{ 'AGENT_EDITION.FORM.DRAG_DROP' | transloco }}</small>
+      @if (imagePreview) {
+      <img [src]="imagePreview" class="img-thumbnail mb-2" alt="preview" />
+      }
+      <input
+        type="file"
+        accept="image/*"
+        class="form-control"
+        (change)="onFileSelect($event)"
+      />
+      <small class="text-muted">{{ "AGENT_EDITION.FORM.DRAG_DROP" }}</small>
     </div>
   </div>
 
   <div class="form-check mb-3">
-    <input type="checkbox" class="form-check-input" formControlName="is_active" id="active" />
-    <label for="active" class="form-check-label">{{ 'AGENT_EDITION.FORM.IS_ACTIVE' | transloco }}</label>
+    <input
+      type="checkbox"
+      class="form-check-input"
+      formControlName="is_active"
+      id="active"
+    />
+    <label for="active" class="form-check-label">{{
+      "AGENT_EDITION.FORM.IS_ACTIVE"
+    }}</label>
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">{{ 'AGENT_EDITION.FORM.CREATE' | transloco }}</button>
+  <button type="submit" class="btn btn-primary w-100">
+    {{ "AGENT_EDITION.FORM.CREATE" }}
+  </button>
 </form>
