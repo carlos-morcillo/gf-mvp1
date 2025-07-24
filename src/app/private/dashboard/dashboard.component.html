@@ -1,0 +1,33 @@
+<div class="container">
+  <h1 class="mb-4">Dashboard</h1>
+
+  <div class="row mb-4">
+    <div class="col-6 col-lg-3 mb-3" *ngFor="let m of metrics">
+      <div class="card text-center h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ m.title }}</h5>
+          <p class="display-6 fw-bold mb-0">{{ m.value }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 mb-3">
+      <div class="card h-100">
+        <div class="card-header">Acceso rápido</div>
+        <div class="card-body">
+          <button class="btn btn-primary me-2 mb-2" *ngFor="let a of actions">{{ a }}</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 mb-3">
+      <div class="card h-100">
+        <div class="card-header">Actividad reciente</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let l of logs">{{ l }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
