@@ -24,7 +24,9 @@
     </ul>
   </div>
 </div>
-<div *ngIf="menuOpen()" class="offcanvas-backdrop fade show d-md-none" (click)="menuOpen.set(false)"></div>
+@if (menuOpen()) {
+  <div class="offcanvas-backdrop fade show d-md-none" (click)="menuOpen.set(false)"></div>
+}
 
 <div class="container-fluid">
   <div class="row">

@@ -1,8 +1,14 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
-import { TableComponent, PaginableTableHeader } from 'ng-hub-ui-table';
+import {
+  PaginableTableCellDirective,
+  PaginableTableHeader,
+  PaginableTableNotFoundDirective,
+  TableComponent,
+} from 'ng-hub-ui-table';
 
+import { RouterLink } from '@angular/router';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { Agent } from './agent';
 import { AgentsService } from './agents.service';
@@ -13,8 +19,15 @@ import { AgentsService } from './agents.service';
 @Component({
   selector: 'app-agent-list',
   standalone: true,
-  imports: [CommonModule, TableComponent, TranslocoModule],
-  templateUrl: './agent-list.component.html'
+  imports: [
+    CommonModule,
+    TableComponent,
+    PaginableTableCellDirective,
+    PaginableTableNotFoundDirective,
+    TranslocoModule,
+    RouterLink,
+  ],
+  templateUrl: './agent-list.component.html',
 })
 export class AgentListComponent extends PaginatedListComponent<Agent> {
   /** Service responsible for fetching agent data */
@@ -24,22 +37,22 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
   override headers: PaginableTableHeader[] = [
     {
       title: this.translocoSvc.selectTranslate('AGENT_LIST.COLUMNS.NAME'),
-      property: 'name'
+      property: 'name',
     },
     {
       title: this.translocoSvc.selectTranslate('AGENT_LIST.COLUMNS.MODEL'),
-      property: 'base_model_id'
+      property: 'base_model_id',
     },
     {
       title: this.translocoSvc.selectTranslate('AGENT_LIST.COLUMNS.FEATURES'),
-      property: 'meta.capabilities'
-    }
+      property: 'meta.capabilities',
+    },
   ];
 
   /**
    * Builds a readable summary for the agent capabilities.
    */
-  summarizeCapabilities(capabilities: Record<string, any>): string {
-    return Object.keys(capabilities || {}).join(', ');
+  summarizeCapabilities(capabilities: Record<string, any>): Array<string> {
+    return Object.keys(capabilities || {}).filter((key) => capabilities[key]);
   }
 }

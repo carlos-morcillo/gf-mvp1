@@ -10,13 +10,38 @@ export const PRIVATE_ROUTES: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent)
+        loadComponent: () =>
+          import('./dashboard/dashboard.component').then(
+            (c) => c.DashboardComponent
+          ),
       },
       {
         path: 'agents',
-        loadComponent: () => import('./agents/agent-list.component').then(m => m.AgentListComponent)
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./agent-list/agent-list.component').then(
+                (c) => c.AgentListComponent
+              ),
+          },
+          {
+            path: 'add',
+            loadComponent: () =>
+              import('./agent-edition/agent-edition.component').then(
+                (c) => c.AgentEditionComponent
+              ),
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('./agent-edition/agent-edition.component').then(
+                (c) => c.AgentEditionComponent
+              ),
+          },
+        ],
       },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
-    ]
-  }
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    ],
+  },
 ];

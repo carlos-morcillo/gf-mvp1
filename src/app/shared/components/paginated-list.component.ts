@@ -329,6 +329,7 @@ export abstract class PaginatedListComponent<
   }
 
   async edit(item?: T) {
+    this.#router.navigateByUrl('./add');
     // if (!this.editComponent) {
     //   throw new Error('No edit component provided');
     // }

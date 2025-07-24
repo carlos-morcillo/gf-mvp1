@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { PagedDataRequestParam } from '../types/paged-data-request-param';
 import { PaginatedData } from '../types/paginated-data';
 
@@ -20,10 +21,7 @@ export abstract class CollectionService<
    */
   list(request: Partial<PagedDataRequestParam> = {}): Observable<Array<T>> {
     // throw new Error('list not developed');
-    return this.http.post<Array<T>>(
-      `http://localhost:3000/${this.path}`,
-      request
-    );
+    return this.http.get<Array<T>>(`${environment.baseURL}/${this.path} `);
   }
 
   /**
