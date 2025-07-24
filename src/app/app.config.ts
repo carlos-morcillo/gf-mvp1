@@ -8,19 +8,11 @@ import {
 import { provideRouter } from '@angular/router';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { provideTransloco } from '@jsverse/transloco';
+import { provideTransloco, provideTranslocoLoader } from '@jsverse/transloco';
 import { TableModule } from 'ng-hub-ui-table';
 import { routes } from './app.routes';
 import { tokenInterceptor } from './auth/token.interceptor';
-
-// @Injectable({ providedIn: 'root' })
-// export class TranslocoHttpLoader implements TranslocoLoader {
-//   private http = inject(HttpClient);
-
-//   getTranslation(lang: string) {
-//     return this.http.get<Translation>(`/assets/i18n/${lang}.json`);
-//   }
-// }
+import { TranslocoHttpLoader } from './shared/services/transloco-http.loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,11 +24,11 @@ export const appConfig: ApplicationConfig = {
       config: {
         availableLangs: ['en', 'es'],
         defaultLang: 'es',
-        // Remove this option if your application doesn't support changing language in runtime.
         reRenderOnLangChange: true,
         prodMode: true,
       },
     }),
+    provideTranslocoLoader(TranslocoHttpLoader),
     importProvidersFrom(NoopAnimationsModule, TableModule.forRoot()),
   ],
 };

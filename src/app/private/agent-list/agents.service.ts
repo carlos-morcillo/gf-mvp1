@@ -19,4 +19,12 @@ export class AgentsService extends CollectionService<Agent> {
     // throw new Error('list not developed');
     return this.http.get<Array<Agent>>(`${environment.baseURL}/${this.path}/`);
   }
+
+  /** Creates a new agent */
+  createAgent(agent: Agent): Observable<Agent> {
+    return this.http.post<Agent>(
+      `${environment.baseURL}/${this.path}/create`,
+      agent
+    );
+  }
 }
