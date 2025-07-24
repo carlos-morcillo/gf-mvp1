@@ -14,7 +14,7 @@ export const PRIVATE_ROUTES: Routes = [
       },
       {
         path: 'agents',
-        loadComponent: () => import('./agents/agents.component').then(m => m.AgentsComponent)
+        loadComponent: () => import('./agents/agent-list.component').then(m => m.AgentListComponent)
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

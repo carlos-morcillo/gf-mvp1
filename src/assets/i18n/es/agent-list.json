@@ -1,0 +1,13 @@
+{
+  "TITLES": {
+    "MAIN": "Agentes"
+  },
+  "COLUMNS": {
+    "NAME": "Nombre",
+    "MODEL": "Modelo",
+    "FEATURES": "Características"
+  },
+  "EMPTY": {
+    "NO_RESULTS": "No se encontraron agentes"
+  }
+}

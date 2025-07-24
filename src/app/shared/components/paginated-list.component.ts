@@ -35,7 +35,7 @@ import {
 // } from '../types/paged-data-request-param';
 
 @Directive()
-export abstract class PaginatedTableComponent<
+export abstract class PaginatedListComponent<
   T extends { id?: number | string | null }
 > implements OnDestroy, OnInit
 {
