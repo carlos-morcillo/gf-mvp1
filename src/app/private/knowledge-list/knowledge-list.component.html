@@ -1,0 +1,23 @@
+<div class="container-fluid d-flex flex-column gap-4">
+  <h1>{{ 'KNOWLEDGE_LIST.TITLES.MAIN' | transloco }}</h1>
+
+  <div class="d-flex justify-content-end gap-2">
+    <button class="btn btn-primary" [routerLink]="['.', 'create']">
+      {{ 'KNOWLEDGE_LIST.BUTTONS.ADD' | transloco }}
+    </button>
+  </div>
+
+  <hub-ui-table
+    [headers]="headers"
+    [loading]="paginatedData.isLoading()"
+    [data]="paginatedData.value()"
+    [searchable]="false"
+  >
+    <ng-template cellTpt header="created_at" let-property="property">
+      {{ formatDate(property) }}
+    </ng-template>
+    <ng-template noDataTpt>
+      {{ 'KNOWLEDGE_LIST.EMPTY.NO_RESULTS' | transloco }}
+    </ng-template>
+  </hub-ui-table>
+</div>

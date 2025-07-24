@@ -1,0 +1,16 @@
+{
+  "TITLES": {
+    "MAIN": "Knowledge Bases"
+  },
+  "COLUMNS": {
+    "NAME": "Name",
+    "DESCRIPTION": "Description",
+    "CREATED_AT": "Created"
+  },
+  "BUTTONS": {
+    "ADD": "Add"
+  },
+  "EMPTY": {
+    "NO_RESULTS": "No knowledge bases found"
+  }
+}
