@@ -1,0 +1,51 @@
+<!-- Toggle button visible on small screens -->
+<button class="btn btn-light d-md-none m-2" (click)="menuOpen.set(true)">
+  <i class="bi bi-list"></i>
+</button>
+
+<!-- Offcanvas menu for mobile -->
+<div class="offcanvas offcanvas-start" [class.show]="menuOpen()" tabindex="-1">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Menú</h5>
+    <button type="button" class="btn-close" (click)="menuOpen.set(false)"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/private/dashboard" (click)="menuOpen.set(false)">
+          <i class="bi bi-speedometer2 me-2"></i> Dashboard
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/private/agents" (click)="menuOpen.set(false)">
+          <i class="bi bi-people me-2"></i> Agents
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div *ngIf="menuOpen()" class="offcanvas-backdrop fade show d-md-none" (click)="menuOpen.set(false)"></div>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Static sidebar for md and above -->
+    <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light p-3 min-vh-100">
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/private/dashboard">
+            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" routerLink="/private/agents">
+            <i class="bi bi-people me-2"></i> Agents
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="col-12 col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-3">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
