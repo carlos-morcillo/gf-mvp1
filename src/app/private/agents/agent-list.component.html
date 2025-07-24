@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <h1>{{ 'AGENT_LIST.TITLES.MAIN' | transloco }}</h1>
+
+  <hub-ui-table
+    [headers]="headers"
+    [data]="paginatedData.value()"
+  >
+    <ng-template cellTpt header="meta.capabilities" let-data="data">
+      {{ summarizeCapabilities(data.meta.capabilities) }}
+    </ng-template>
+
+    <ng-template notFoundTpt>
+      {{ 'AGENT_LIST.EMPTY.NO_RESULTS' | transloco }}
+    </ng-template>
+  </hub-ui-table>
+</div>
