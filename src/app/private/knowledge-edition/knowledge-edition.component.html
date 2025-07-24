@@ -1,0 +1,29 @@
+<div class="container py-4">
+  <h1 class="mb-4">{{ 'KNOWLEDGE_EDITION.TITLES.MAIN' | transloco }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vstack gap-3">
+    <div class="mb-3">
+      <label class="form-label">{{ 'KNOWLEDGE_EDITION.FORM.NAME' | transloco }}</label>
+      <input type="text" formControlName="name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">{{ 'KNOWLEDGE_EDITION.FORM.DESCRIPTION' | transloco }}</label>
+      <textarea formControlName="description" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Data</label>
+      <textarea formControlName="data" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Access Control</label>
+      <textarea formControlName="access_control" class="form-control" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {{ 'KNOWLEDGE_EDITION.FORM.SAVE_BUTTON' | transloco }}
+    </button>
+  </form>
+</div>

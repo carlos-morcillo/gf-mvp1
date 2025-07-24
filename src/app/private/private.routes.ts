@@ -41,6 +41,25 @@ export const PRIVATE_ROUTES: Routes = [
           },
         ],
       },
+      {
+        path: 'knowledge',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./knowledge-list/knowledge-list.component').then(
+                (c) => c.KnowledgeListComponent
+              ),
+          },
+          {
+            path: 'create',
+            loadComponent: () =>
+              import('./knowledge-edition/knowledge-edition.component').then(
+                (c) => c.KnowledgeEditionComponent
+              ),
+          },
+        ],
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
