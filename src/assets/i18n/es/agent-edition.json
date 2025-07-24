@@ -1,0 +1,12 @@
+{
+  "FORM": {
+    "TITLE": "Crear Agente",
+    "NAME": "Nombre",
+    "MODEL": "Modelo",
+    "DESCRIPTION": "Descripción",
+    "UPLOAD_IMAGE": "Subir imagen",
+    "DRAG_DROP": "Arrastra la imagen aquí o haz clic para seleccionar",
+    "IS_ACTIVE": "Activo",
+    "CREATE": "Crear Agente"
+  }
+}
