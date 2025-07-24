@@ -1,10 +1,20 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
-interface LoginResponse { token: string; }
-interface LoginPayload { email: string; password: string; }
-interface RegisterPayload { name: string; email: string; password: string; }
+interface LoginResponse {
+  token: string;
+}
+interface LoginPayload {
+  email: string;
+  password: string;
+}
+interface RegisterPayload {
+  name: string;
+  email: string;
+  password: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -20,9 +30,9 @@ export class AuthService {
 
   /** Performs the login request and stores the received JWT */
   login(payload: LoginPayload) {
-    return this.http.post<LoginResponse>('/api/login', payload).pipe(
-      tap(res => this.setToken(res.token))
-    );
+    return this.http
+      .post<LoginResponse>(`${environment.baseURL}/auths/signin`, payload)
+      .pipe(tap((res) => this.setToken(res.token)));
   }
 
   /** Registers a new company in the backend */
