@@ -15,7 +15,8 @@ export const routes: Routes = [
   },
   {
     path: 'private',
-    loadChildren: () => import('./private/private.routes').then(m => m.PRIVATE_ROUTES)
+    loadChildren: () =>
+      import('./private/private.routes').then((m) => m.PRIVATE_ROUTES),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' },
