@@ -1,9 +1,9 @@
 <div class="container-fluid d-flex flex-column gap-4">
-  <h1>{{ "AGENT_LIST.TITLES.MAIN" | transloco }}</h1>
+  <h1>{{ "AGENT_LIST.TITLES.MAIN" }}</h1>
 
   <div class="d-flex justify-content-end gap-2">
     <button class="btn btn-primary" [routerLink]="['.', 'add']">
-      {{ "AGENT_LIST.BUTTONS.ADD" | transloco }}
+      {{ "AGENT_LIST.BUTTONS.ADD" }}
     </button>
   </div>
 
@@ -25,7 +25,7 @@
     </ng-template>
 
     <ng-template noDataTpt>
-      {{ "AGENT_LIST.EMPTY.NO_RESULTS" | transloco }}
+      {{ "AGENT_LIST.EMPTY.NO_RESULTS" }}
     </ng-template>
   </hub-ui-table>
 </div>

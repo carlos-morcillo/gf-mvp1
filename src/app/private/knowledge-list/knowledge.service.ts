@@ -13,13 +13,11 @@ export class KnowledgeService extends CollectionService<KnowledgeBase> {
     request: Partial<PagedDataRequestParam> = {}
   ): Observable<Array<KnowledgeBase>> {
     return this.http.get<Array<KnowledgeBase>>(
-      `${environment.baseURL}/${this.path}`
+      `${environment.baseURL}/${this.path}/`
     );
   }
 
-  createKnowledge(
-    data: Partial<KnowledgeBase>
-  ): Observable<KnowledgeBase> {
+  createKnowledge(data: Partial<KnowledgeBase>): Observable<KnowledgeBase> {
     return this.http.post<KnowledgeBase>(
       `${environment.baseURL}/${this.path}/create`,
       data
