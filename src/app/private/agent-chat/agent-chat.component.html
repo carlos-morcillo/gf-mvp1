@@ -1,7 +1,4 @@
-<div
-  class="container-fluid d-flex flex-column gap-3"
-  style="height: calc(100vh - 120px)"
->
+<div class="container-fluid d-flex flex-column gap-3 vh-100">
   <h1>{{ "AGENT_CHAT.TITLES.MAIN" }}</h1>
   <div class="flex-grow-1 overflow-auto border rounded p-3" #scroll>
     <div *ngFor="let msg of messages(); let i = index" class="mb-3">
@@ -29,7 +26,7 @@
   </div>
   }
 
-  <div class="input-group">
+  <div class="input-group mt-2 sticky-bottom bg-white">
     <textarea
       class="form-control"
       rows="1"

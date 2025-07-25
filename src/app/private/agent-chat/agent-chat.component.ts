@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, inject, WritableSignal, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AgentChatService } from './agent-chat.service';
 import { ChatMessage } from './chat-message';
@@ -19,6 +19,7 @@ import { ChatMessage } from './chat-message';
 export class AgentChatComponent {
   private chatSvc = inject(AgentChatService);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   transloco = inject(TranslocoService);
 
   /** Skills available for the agent */
@@ -43,12 +44,26 @@ export class AgentChatComponent {
 
   /** Agent identifier captured from the route */
   agentId = this.route.snapshot.paramMap.get('agentId') ?? 'default';
+  /** Chat identifier from the route */
+  chatId = this.route.snapshot.paramMap.get('chatId');
 
   constructor() {
     // Scroll to bottom whenever messages change
     effect(() => {
       this.messages();
       queueMicrotask(() => this.scrollToBottom());
+    });
+
+    this.route.paramMap.subscribe((params) => {
+      this.agentId = params.get('agentId') ?? 'default';
+      this.chatId = params.get('chatId');
+      if (this.chatId && this.chatId !== 'new') {
+        this.chatSvc.getChat(this.chatId).then((chat) => {
+          this.messages.set(chat.messages);
+        });
+      } else {
+        this.messages.set([]);
+      }
     });
   }
 
@@ -58,9 +73,13 @@ export class AgentChatComponent {
     if (!content) {
       return;
     }
-    if (this.messages().length === 0) {
+    if (!this.chatId || this.chatId === 'new') {
       this.chatSvc
         .createChatWithAgent(this.agentId, content)
+        .then((chat) => {
+          this.chatId = String(chat.id);
+          this.router.navigate(['/agents', this.agentId, 'chats', this.chatId]);
+        })
         .catch(() => {});
     } else {
       this.chatSvc.sendMessage(this.agentId, content).subscribe();

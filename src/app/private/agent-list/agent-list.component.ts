@@ -8,7 +8,7 @@ import {
   TableComponent,
 } from 'ng-hub-ui-table';
 
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { Agent } from './agent';
 import { AgentsService } from './agents.service';
@@ -34,6 +34,7 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
   /** Service responsible for fetching agent data */
   override dataSvc = inject(AgentsService);
   pinnedSvc = inject(PinnedAgentsService);
+  router = inject(Router);
 
   /** Table column definitions */
   override headers: PaginableTableHeader[] = [
@@ -68,5 +69,10 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
   /** Check if given agent is pinned */
   isPinned(agent: Agent): boolean {
     return this.pinnedSvc.isPinned(agent.id!);
+  }
+
+  /** Navigate to the new chat route for a given agent */
+  startChat(agentId: string): void {
+    this.router.navigate(['/agents', agentId, 'chats', 'new']);
   }
 }
