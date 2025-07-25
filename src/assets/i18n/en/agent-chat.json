@@ -16,7 +16,9 @@
     "SEND": "Send"
   },
   "STATUS": {
-    "SENDING": "Sending..."
+    "SENDING": "Sending...",
+    "LOADING": "Loading conversation...",
+    "ERROR": "Unable to load conversation"
   },
   "NEW_BUTTON": "New Chat"
 }

@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, inject, WritableSignal, effect } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  inject,
+  WritableSignal,
+  effect,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
@@ -14,7 +22,7 @@ import { ChatMessage } from './chat-message';
   selector: 'app-agent-chat',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, TranslocoModule],
-  templateUrl: './agent-chat.component.html'
+  templateUrl: './agent-chat.component.html',
 })
 export class AgentChatComponent {
   private chatSvc = inject(AgentChatService);
@@ -30,17 +38,23 @@ export class AgentChatComponent {
     'IMAGE_GENERATION',
     'CODE_INTERPRETER',
     'CITATIONS',
-    'USAGE'
+    'USAGE',
   ];
 
   /** Current list of chat messages */
   messages: WritableSignal<ChatMessage[]> = this.chatSvc.messages;
   sending = this.chatSvc.sending;
 
+  /** Indicates that the chat history is being loaded */
+  loading = signal(false);
+  /** Error flag when the chat cannot be retrieved */
+  error = signal(false);
+
   /** Input model */
   inputValue = '';
 
-  @ViewChild('scroll') scrollContainer?: ElementRef<HTMLDivElement>;
+  /** Container element that holds the messages */
+  @ViewChild('scrollContainer') scrollContainer?: ElementRef<HTMLDivElement>;
 
   /** Agent identifier captured from the route */
   agentId = this.route.snapshot.paramMap.get('agentId') ?? 'default';
@@ -48,7 +62,7 @@ export class AgentChatComponent {
   chatId = this.route.snapshot.paramMap.get('chatId');
 
   constructor() {
-    // Scroll to bottom whenever messages change
+    // Keep the latest message in view once Angular renders the DOM
     effect(() => {
       this.messages();
       queueMicrotask(() => this.scrollToBottom());
@@ -58,9 +72,20 @@ export class AgentChatComponent {
       this.agentId = params.get('agentId') ?? 'default';
       this.chatId = params.get('chatId');
       if (this.chatId && this.chatId !== 'new') {
-        this.chatSvc.getChat(this.chatId).then((chat) => {
-          this.messages.set(chat.messages);
-        });
+        // Retrieve complete history for existing chats
+        this.loading.set(true);
+        this.error.set(false);
+        this.chatSvc
+          .getChat(this.chatId)
+          .then((chat) => {
+            this.messages.set(chat.messages);
+            this.loading.set(false);
+          })
+          .catch(() => {
+            this.messages.set([]);
+            this.loading.set(false);
+            this.error.set(true);
+          });
       } else {
         this.messages.set([]);
       }
@@ -87,6 +112,11 @@ export class AgentChatComponent {
     this.inputValue = '';
   }
 
+  /**
+   * Scrolls the message container to the last message.
+   * This is triggered every time the message list changes so
+   * the newest interaction is always visible.
+   */
   private scrollToBottom(): void {
     const el = this.scrollContainer?.nativeElement;
     if (el) {
