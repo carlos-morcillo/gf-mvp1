@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, WritableSignal, signal, inject } from '@angular/core';
-import { Observable, of, firstValueFrom } from 'rxjs';
+import { Injectable, WritableSignal, signal } from '@angular/core';
+import { Observable, firstValueFrom, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { CollectionService } from '../../shared/services';
@@ -24,8 +23,9 @@ export class AgentChatService extends CollectionService<AgentChat> {
   /** Flag indicating that a request is in progress */
   readonly sending = signal(false);
 
-
-  override list(request: Partial<PagedDataRequestParam> = {}): Observable<AgentChat[]> {
+  override list(
+    request: Partial<PagedDataRequestParam> = {}
+  ): Observable<AgentChat[]> {
     return this.http.get<AgentChat[]>(`${environment.baseURL}/${this.path}/`);
   }
 
@@ -50,21 +50,23 @@ export class AgentChatService extends CollectionService<AgentChat> {
     ];
 
     const chat = await firstValueFrom(
-      this.http.post<Chat>(
-        `${environment.openWebUiUrl}/api/v1/chats/new`,
-        {
-          agentId,
-          models: [agentId],
-          messages,
-        }
-      )
+      this.http.post<Chat>(`${environment.baseURL}/chats/new`, {
+        chat: {
+          agentId: 'prueba',
+          models: ['prueba'],
+          messages: [
+            { role: 'user', content: initialMessage },
+            { role: 'assistant', content: '' },
+          ],
+        },
+      })
     );
 
     this.messages.set(messages);
 
     const completion = await firstValueFrom(
       this.http.post<{ choices: { message: ChatMessage }[] }>(
-        `${environment.openWebUiUrl}/api/chat/completions`,
+        `${environment.baseURL}at/completions`,
         { model: agentId, messages }
       )
     );
@@ -72,12 +74,9 @@ export class AgentChatService extends CollectionService<AgentChat> {
     const assistantMessage = completion.choices[0].message;
     this.messages.update((m) => [m[0], assistantMessage]);
     await firstValueFrom(
-      this.http.post(
-        `${environment.openWebUiUrl}/api/chat/completed`,
-        {
-          chat_id: chat.id,
-        }
-      )
+      this.http.post(`${environment.baseURL}at/completed`, {
+        chat_id: chat.id,
+      })
     ).catch(() => null);
 
     this.sending.set(false);
@@ -87,9 +86,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
   /** Retrieves an existing chat from the backend */
   async getChat(chatId: string): Promise<Chat> {
     return firstValueFrom(
-      this.http.get<Chat>(
-        `${environment.openWebUiUrl}/api/v1/chats/${chatId}`
-      )
+      this.http.get<Chat>(`${environment.baseURL}/chats/${chatId}`)
     );
   }
 
@@ -106,7 +103,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
 
     return this.http
       .post<{ choices: { message: ChatMessage }[] }>(
-        `${environment.openWebUiUrl}/api/chat/completions`,
+        `${environment.baseURL}at/completions`,
         body
       )
       .pipe(

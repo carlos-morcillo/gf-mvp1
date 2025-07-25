@@ -1,31 +1,44 @@
-<div class="container-fluid d-flex flex-column gap-3" style="height: calc(100vh - 120px);">
-  <h1>{{ 'AGENT_CHAT.TITLES.MAIN' }}</h1>
+<div
+  class="container-fluid d-flex flex-column gap-3"
+  style="height: calc(100vh - 120px)"
+>
+  <h1>{{ "AGENT_CHAT.TITLES.MAIN" }}</h1>
   <div class="flex-grow-1 overflow-auto border rounded p-3" #scroll>
     <div *ngFor="let msg of messages(); let i = index" class="mb-3">
       <div class="d-flex" [class.justify-content-end]="msg.role === 'user'">
-        <div class="p-2 rounded"
+        <div
+          class="p-2 rounded"
           [class.bg-primary]="msg.role === 'user'"
           [class.text-white]="msg.role === 'user'"
-          [class.bg-light]="msg.role === 'assistant'">
+          [class.bg-light]="msg.role === 'assistant'"
+        >
           {{ msg.content }}
         </div>
       </div>
     </div>
-    <div *ngIf="sending()" class="text-muted">{{ 'AGENT_CHAT.STATUS.SENDING' | transloco }}</div>
+    <div *ngIf="sending()" class="text-muted">
+      {{ "AGENT_CHAT.STATUS.SENDING" }}
+    </div>
   </div>
 
   @if (messages().length === 0) {
-    <div class="d-flex flex-wrap gap-2">
-      <button class="btn btn-outline-secondary" *ngFor="let s of skills">
-        {{ 'AGENT_CHAT.BUTTONS.' + s }}
-      </button>
-    </div>
+  <div class="d-flex flex-wrap gap-2">
+    <button class="btn btn-outline-secondary" *ngFor="let s of skills">
+      {{ "AGENT_CHAT.BUTTONS." + s }}
+    </button>
+  </div>
   }
 
   <div class="input-group">
-    <textarea class="form-control" rows="1" [(ngModel)]="inputValue" [placeholder]="'AGENT_CHAT.PLACEHOLDER.INPUT' | transloco" (keydown.enter)="send(); $event.preventDefault()"></textarea>
+    <textarea
+      class="form-control"
+      rows="1"
+      [(ngModel)]="inputValue"
+      [placeholder]="'AGENT_CHAT.PLACEHOLDER.INPUT'"
+      (keydown.enter)="send(); $event.preventDefault()"
+    ></textarea>
     <button class="btn btn-primary" (click)="send()" [disabled]="sending()">
-      {{ 'AGENT_CHAT.BUTTONS.SEND' | transloco }}
+      {{ "AGENT_CHAT.BUTTONS.SEND" }}
     </button>
   </div>
 </div>
