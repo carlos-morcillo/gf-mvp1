@@ -1,8 +1,8 @@
 <div class="container-fluid d-flex flex-column gap-4">
   <div class="d-flex justify-content-between align-items-center">
-    <h1>{{ 'AGENT_CHAT_LIST.TITLES.MAIN' }}</h1>
+    <h1>{{ "AGENT_CHAT_LIST.TITLES.MAIN" }}</h1>
     <button class="btn btn-primary" [routerLink]="['new']">
-      {{ 'AGENT_CHAT_LIST.BUTTONS.NEW_CHAT' }}
+      {{ "AGENT_CHAT_LIST.BUTTONS.NEW_CHAT" }}
     </button>
   </div>
 
@@ -11,13 +11,13 @@
     [loading]="paginatedData.isLoading()"
     [data]="paginatedData.value()"
     [searchable]="false"
-    (rowClicked)="navigateTo($event)"
+    (rowClicked)="navigateTo($any($event))"
   >
     <ng-template cellTpt header="updated_at" let-property="property">
       {{ formatDate(property) }}
     </ng-template>
     <ng-template noDataTpt>
-      {{ 'AGENT_CHAT_LIST.EMPTY.NO_RESULTS' }}
+      {{ "AGENT_CHAT_LIST.EMPTY.NO_RESULTS" }}
     </ng-template>
   </hub-ui-table>
 </div>

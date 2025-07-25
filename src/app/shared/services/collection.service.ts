@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { firstValueFrom, Observable, map } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PagedDataRequestParam } from '../types/paged-data-request-param';
 import { PaginatedData } from '../types/paginated-data';
@@ -58,56 +58,56 @@ export abstract class CollectionService<
       })
     );
   }
-    // const {
-    // 	perPage: size,
-    // 	page,
-    // 	ordination: { direction: sort = null, property: sortField = null } = {},
-    // 	filters,
-    // 	searchTerm
-    // } = { ...DEFAULT_PAGINATION_PARAMS, ...request };
-    // const params: ServerPaginationRequest = {
-    // 	size,
-    // 	page: page - 1,
-    // 	sort: sort as any,
-    // 	sortField
-    // };
-    // let httpParams = new HttpParams();
+  // const {
+  // 	perPage: size,
+  // 	page,
+  // 	ordination: { direction: sort = null, property: sortField = null } = {},
+  // 	filters,
+  // 	searchTerm
+  // } = { ...DEFAULT_PAGINATION_PARAMS, ...request };
+  // const params: ServerPaginationRequest = {
+  // 	size,
+  // 	page: page - 1,
+  // 	sort: sort as any,
+  // 	sortField
+  // };
+  // let httpParams = new HttpParams();
 
-    // removeEmptyProperties(params);
-    // Object.entries(params).forEach(([key, value]) => {
-    // 	httpParams = httpParams.set(key, value.toString());
-    // });
+  // removeEmptyProperties(params);
+  // Object.entries(params).forEach(([key, value]) => {
+  // 	httpParams = httpParams.set(key, value.toString());
+  // });
 
-    // const query = {
-    // 	sortField,
-    // 	sort,
-    // 	where: filters ?? []
-    // };
+  // const query = {
+  // 	sortField,
+  // 	sort,
+  // 	where: filters ?? []
+  // };
 
-    // if (searchTerm && request.searchKeys?.length) {
-    // 	query['generalSearch'] = {
-    // 		value: searchTerm.trim(),
-    // 		fields: request.searchKeys
-    // 	};
-    // }
+  // if (searchTerm && request.searchKeys?.length) {
+  // 	query['generalSearch'] = {
+  // 		value: searchTerm.trim(),
+  // 		fields: request.searchKeys
+  // 	};
+  // }
 
-    // return this.http
-    // 	.post<
-    // 		PaginatedResponse<T>
-    // 	>(`${environment.baseURL}/${this.path}/search`, query, { params: httpParams })
-    // 	.pipe(
-    // 		map((response: PaginatedResponse<T>) => ({
-    // 			data: response.content,
-    // 			currentPage: response.number + 1,
-    // 			lastPage: response.totalPages,
-    // 			total: response.totalElements,
-    // 			perPage: response.size
-    // 		})),
-    // 		catchError((error) => {
-    // 			return of(null);
-    // 		})
-    // 	);
-  }
+  // return this.http
+  // 	.post<
+  // 		PaginatedResponse<T>
+  // 	>(`${environment.baseURL}/${this.path}/search`, query, { params: httpParams })
+  // 	.pipe(
+  // 		map((response: PaginatedResponse<T>) => ({
+  // 			data: response.content,
+  // 			currentPage: response.number + 1,
+  // 			lastPage: response.totalPages,
+  // 			total: response.totalElements,
+  // 			perPage: response.size
+  // 		})),
+  // 		catchError((error) => {
+  // 			return of(null);
+  // 		})
+  // 	);
+  //   }
 
   /**
    * Retrieves data from the backend based on a backend ID and returns a promise of an array of objects.

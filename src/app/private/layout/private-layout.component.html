@@ -20,11 +20,15 @@
         <a class="nav-link" routerLink="/private/agents" (click)="menuOpen.set(false)">
           <i class="fa fa-brain me-2"></i> Agents
         </a>
-        <ul class="nav flex-column ms-3" *ngIf="pinnedSvc.pinned().length">
-          <li class="nav-item" *ngFor="let ag of pinnedSvc.pinned()">
-            <a class="nav-link" [routerLink]="['/private/agents', ag.id]" (click)="menuOpen.set(false)">{{ ag.name }}</a>
-          </li>
-        </ul>
+        @if (pinnedSvc.pinned().length) {
+          <ul class="nav flex-column ms-3">
+            @for (ag of pinnedSvc.pinned(); track ag) {
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/private/agents', ag.id]" (click)="menuOpen.set(false)">{{ ag.name }}</a>
+              </li>
+            }
+          </ul>
+        }
       </li>
       <li>
         <a class="nav-link" routerLink="/private/training" (click)="menuOpen.set(false)">
@@ -73,48 +77,52 @@
             <i class="fa fa-home me-2"></i> Dashboard
           </a>
         </li>
-      <li>
-        <a class="nav-link" routerLink="/private/agents">
-          <i class="fa fa-brain me-2"></i> Agents
-        </a>
-        <ul class="nav flex-column ms-3" *ngIf="pinnedSvc.pinned().length">
-          <li class="nav-item" *ngFor="let ag of pinnedSvc.pinned()">
-            <a class="nav-link" [routerLink]="['/private/agents', ag.id]">{{ ag.name }}</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a class="nav-link" routerLink="/private/training">
-          <i class="fa fa-book-open me-2"></i> Training
-        </a>
-      </li>
-      <li>
-        <a class="nav-link" routerLink="/private/evaluation">
-          <i class="fa fa-clipboard-check me-2"></i> Evaluation
-        </a>
-      </li>
-      <li>
-        <a class="nav-link" routerLink="/private/chats">
-          <i class="fa fa-comments me-2"></i> Chats
-        </a>
-      </li>
-      <li>
-        <a class="nav-link" href="#">
-          <i class="fa fa-file-alt me-2"></i> Documentation
-        </a>
-      </li>
-      <li>
-        <a class="nav-link" href="#">
-          <i class="fa fa-user-shield me-2"></i> Employee Portal
-        </a>
-      </li>
-      <li>
-        <a class="nav-link" routerLink="/private/knowledge">
-          <i class="fa fa-folder me-2"></i> Knowledge
-        </a>
-      </li>
-    </ul>
-  </nav>
+        <li>
+          <a class="nav-link" routerLink="/private/agents">
+            <i class="fa fa-brain me-2"></i> Agents
+          </a>
+          @if (pinnedSvc.pinned().length) {
+            <ul class="nav flex-column ms-3">
+              @for (ag of pinnedSvc.pinned(); track ag) {
+                <li class="nav-item">
+                  <a class="nav-link" [routerLink]="['/private/agents', ag.id]">{{ ag.name }}</a>
+                </li>
+              }
+            </ul>
+          }
+        </li>
+        <li>
+          <a class="nav-link" routerLink="/private/training">
+            <i class="fa fa-book-open me-2"></i> Training
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" routerLink="/private/evaluation">
+            <i class="fa fa-clipboard-check me-2"></i> Evaluation
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" routerLink="/private/chats">
+            <i class="fa fa-comments me-2"></i> Chats
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#">
+            <i class="fa fa-file-alt me-2"></i> Documentation
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#">
+            <i class="fa fa-user-shield me-2"></i> Employee Portal
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" routerLink="/private/knowledge">
+            <i class="fa fa-folder me-2"></i> Knowledge
+          </a>
+        </li>
+      </ul>
+    </nav>
 
     <main class="col-12 col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-3">
       <router-outlet></router-outlet>

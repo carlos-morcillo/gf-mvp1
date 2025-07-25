@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -16,13 +16,12 @@ import { KnowledgeService } from './knowledge.service';
   selector: 'app-knowledge-list',
   standalone: true,
   imports: [
-    CommonModule,
     TableComponent,
     PaginableTableCellDirective,
     PaginableTableNotFoundDirective,
     RouterLink,
-    TranslocoModule,
-  ],
+    TranslocoModule
+],
   templateUrl: './knowledge-list.component.html',
 })
 export class KnowledgeListComponent extends PaginatedListComponent<KnowledgeBase> {

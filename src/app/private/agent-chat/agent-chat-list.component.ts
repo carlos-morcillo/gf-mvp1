@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -16,13 +16,12 @@ import { AgentChatService } from './agent-chat.service';
   selector: 'app-agent-chat-list',
   standalone: true,
   imports: [
-    CommonModule,
     TableComponent,
     PaginableTableCellDirective,
     PaginableTableNotFoundDirective,
     RouterLink,
-    TranslocoModule,
-  ],
+    TranslocoModule
+],
   templateUrl: './agent-chat-list.component.html',
 })
 export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
