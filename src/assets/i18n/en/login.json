@@ -1,0 +1,15 @@
+{
+  "TABS": {
+    "STANDARD": "Standard",
+    "LDAP": "LDAP"
+  },
+  "FIELDS": {
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "USER": "User"
+  },
+  "BUTTONS": {
+    "SUBMIT": "Login",
+    "CREATE_COMPANY": "Create company"
+  }
+}

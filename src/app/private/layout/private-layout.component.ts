@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { PinnedAgentsService } from '../../shared/services';
 
 import { RouterLink, RouterOutlet } from '@angular/router';
 
@@ -11,4 +12,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 export class PrivateLayoutComponent {
   /** Controls offcanvas visibility on small screens */
   menuOpen = signal(false);
+
+  pinnedSvc = inject(PinnedAgentsService);
 }

@@ -3,9 +3,13 @@
     "MAIN": "Agents"
   },
   "COLUMNS": {
+    "PIN": "",
     "NAME": "Name",
     "MODEL": "Model",
     "FEATURES": "Features"
+  },
+  "BUTTONS": {
+    "ADD": "Add"
   },
   "EMPTY": {
     "NO_RESULTS": "No agents found"
