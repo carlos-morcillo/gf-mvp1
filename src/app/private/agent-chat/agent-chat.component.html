@@ -1,6 +1,6 @@
 <div class="container-fluid d-flex flex-column gap-3 vh-100">
   <h1>{{ "AGENT_CHAT.TITLES.MAIN" }}</h1>
-  <div class="flex-grow-1 overflow-auto border rounded p-3" #scroll>
+  <div class="flex-grow-1 overflow-auto border rounded p-3" #scrollContainer>
     <div *ngFor="let msg of messages(); let i = index" class="mb-3">
       <div class="d-flex" [class.justify-content-end]="msg.role === 'user'">
         <div
@@ -13,17 +13,23 @@
         </div>
       </div>
     </div>
+    <div *ngIf="loading()" class="text-muted">
+      {{ "AGENT_CHAT.STATUS.LOADING" }}
+    </div>
+    <div *ngIf="error()" class="text-danger">
+      {{ "AGENT_CHAT.STATUS.ERROR" }}
+    </div>
     <div *ngIf="sending()" class="text-muted">
       {{ "AGENT_CHAT.STATUS.SENDING" }}
     </div>
   </div>
 
   @if (messages().length === 0) {
-  <div class="d-flex flex-wrap gap-2">
-    <button class="btn btn-outline-secondary" *ngFor="let s of skills">
-      {{ "AGENT_CHAT.BUTTONS." + s }}
-    </button>
-  </div>
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-outline-secondary" *ngFor="let s of skills">
+        {{ "AGENT_CHAT.BUTTONS." + s }}
+      </button>
+    </div>
   }
 
   <div class="input-group mt-2 sticky-bottom bg-white">
@@ -31,7 +37,7 @@
       class="form-control"
       rows="1"
       [(ngModel)]="inputValue"
-      [placeholder]="'AGENT_CHAT.PLACEHOLDER.INPUT'"
+      [placeholder]="'AGENT_CHAT.PLACEHOLDER.INPUT' | transloco"
       (keydown.enter)="send(); $event.preventDefault()"
     ></textarea>
     <button class="btn btn-primary" (click)="send()" [disabled]="sending()">

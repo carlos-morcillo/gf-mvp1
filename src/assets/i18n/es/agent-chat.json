@@ -16,7 +16,9 @@
     "SEND": "Enviar"
   },
   "STATUS": {
-    "SENDING": "Enviando..."
+    "SENDING": "Enviando...",
+    "LOADING": "Cargando conversaci\u00f3n...",
+    "ERROR": "No se pudo cargar la conversaci\u00f3n"
   },
   "NEW_BUTTON": "Nuevo chat"
 }
