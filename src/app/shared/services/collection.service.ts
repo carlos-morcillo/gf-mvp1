@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PagedDataRequestParam } from '../types/paged-data-request-param';
 import { PaginatedData } from '../types/paginated-data';
@@ -42,7 +42,22 @@ export abstract class CollectionService<
   paginate(
     request: Partial<PagedDataRequestParam> = {}
   ): Observable<PaginatedData<T>> {
-    throw new Error('paginate not developed');
+    const { page = 1, perPage = 20 } = request;
+    return this.list(request).pipe(
+      map((all) => {
+        const total = all.length;
+        const lastPage = Math.ceil(total / perPage);
+        const start = (page - 1) * perPage;
+        return {
+          data: all.slice(start, start + perPage),
+          currentPage: page,
+          lastPage,
+          total,
+          perPage,
+        } as PaginatedData<T>;
+      })
+    );
+  }
     // const {
     // 	perPage: size,
     // 	page,

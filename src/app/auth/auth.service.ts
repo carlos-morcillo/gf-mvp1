@@ -16,6 +16,11 @@ interface RegisterPayload {
   password: string;
 }
 
+interface LdapPayload {
+  user: string;
+  password: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
@@ -32,6 +37,13 @@ export class AuthService {
   login(payload: LoginPayload) {
     return this.http
       .post<LoginResponse>(`${environment.baseURL}/auths/signin`, payload)
+      .pipe(tap((res) => this.setToken(res.token)));
+  }
+
+  /** Performs LDAP authentication and stores the received JWT */
+  loginLdap(payload: LdapPayload) {
+    return this.http
+      .post<LoginResponse>(`${environment.baseURL}/auths/ldap`, payload)
       .pipe(tap((res) => this.setToken(res.token)));
   }
 

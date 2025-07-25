@@ -42,6 +42,42 @@ export const PRIVATE_ROUTES: Routes = [
         ],
       },
       {
+        path: 'training',
+        loadComponent: () =>
+          import('./training/training.component').then((c) => c.TrainingComponent),
+      },
+      {
+        path: 'evaluation',
+        loadComponent: () =>
+          import('./evaluation/evaluation.component').then((c) => c.EvaluationComponent),
+      },
+      {
+        path: 'chats',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./agent-chat/agent-chat-list.component').then(
+                (c) => c.AgentChatListComponent
+              ),
+          },
+          {
+            path: 'new',
+            loadComponent: () =>
+              import('./agent-chat/agent-chat.component').then(
+                (c) => c.AgentChatComponent
+              ),
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('./agent-chat/agent-chat.component').then(
+                (c) => c.AgentChatComponent
+              ),
+          },
+        ],
+      },
+      {
         path: 'knowledge',
         children: [
           {

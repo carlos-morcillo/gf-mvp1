@@ -1,6 +1,6 @@
 <!-- Toggle button visible on small screens -->
 <button class="btn btn-light d-md-none m-2" (click)="menuOpen.set(true)">
-  <i class="bi bi-list"></i>
+  <i class="fa fa-bars"></i>
 </button>
 
 <!-- Offcanvas menu for mobile -->
@@ -13,17 +13,47 @@
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="/private/dashboard" (click)="menuOpen.set(false)">
-          <i class="bi bi-speedometer2 me-2"></i> Dashboard
+          <i class="fa fa-home me-2"></i> Dashboard
         </a>
       </li>
       <li>
         <a class="nav-link" routerLink="/private/agents" (click)="menuOpen.set(false)">
-          <i class="bi bi-people me-2"></i> Agents
+          <i class="fa fa-brain me-2"></i> Agents
+        </a>
+        <ul class="nav flex-column ms-3" *ngIf="pinnedSvc.pinned().length">
+          <li class="nav-item" *ngFor="let ag of pinnedSvc.pinned()">
+            <a class="nav-link" [routerLink]="['/private/agents', ag.id]" (click)="menuOpen.set(false)">{{ ag.name }}</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/private/training" (click)="menuOpen.set(false)">
+          <i class="fa fa-book-open me-2"></i> Training
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/private/evaluation" (click)="menuOpen.set(false)">
+          <i class="fa fa-clipboard-check me-2"></i> Evaluation
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/private/chats" (click)="menuOpen.set(false)">
+          <i class="fa fa-comments me-2"></i> Chats
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href="#" (click)="menuOpen.set(false)">
+          <i class="fa fa-file-alt me-2"></i> Documentation
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href="#" (click)="menuOpen.set(false)">
+          <i class="fa fa-user-shield me-2"></i> Employee Portal
         </a>
       </li>
       <li>
         <a class="nav-link" routerLink="/private/knowledge" (click)="menuOpen.set(false)">
-          <i class="bi bi-book me-2"></i> Knowledge
+          <i class="fa fa-folder me-2"></i> Knowledge
         </a>
       </li>
     </ul>
@@ -40,17 +70,47 @@
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/private/dashboard">
-            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+            <i class="fa fa-home me-2"></i> Dashboard
           </a>
         </li>
       <li>
         <a class="nav-link" routerLink="/private/agents">
-          <i class="bi bi-people me-2"></i> Agents
+          <i class="fa fa-brain me-2"></i> Agents
+        </a>
+        <ul class="nav flex-column ms-3" *ngIf="pinnedSvc.pinned().length">
+          <li class="nav-item" *ngFor="let ag of pinnedSvc.pinned()">
+            <a class="nav-link" [routerLink]="['/private/agents', ag.id]">{{ ag.name }}</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/private/training">
+          <i class="fa fa-book-open me-2"></i> Training
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/private/evaluation">
+          <i class="fa fa-clipboard-check me-2"></i> Evaluation
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" routerLink="/private/chats">
+          <i class="fa fa-comments me-2"></i> Chats
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href="#">
+          <i class="fa fa-file-alt me-2"></i> Documentation
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href="#">
+          <i class="fa fa-user-shield me-2"></i> Employee Portal
         </a>
       </li>
       <li>
         <a class="nav-link" routerLink="/private/knowledge">
-          <i class="bi bi-book me-2"></i> Knowledge
+          <i class="fa fa-folder me-2"></i> Knowledge
         </a>
       </li>
     </ul>

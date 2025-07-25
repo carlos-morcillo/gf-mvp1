@@ -13,6 +13,11 @@
     [data]="paginatedData.value()"
     [searchable]="false"
   >
+    <ng-template cellTpt header="pin" let-row="row">
+      <button type="button" class="btn btn-link p-0" (click)="togglePin(row)">
+        <i class="fa-solid fa-thumbtack" [class.text-warning]="isPinned(row)" [class.text-secondary]="!isPinned(row)"></i>
+      </button>
+    </ng-template>
     <ng-template cellTpt header="meta.capabilities" let-property="property">
       <div class="d-flex gap-2 flex-wrap">
         @for (capability of summarizeCapabilities(property); track $index) {
