@@ -33,6 +33,13 @@ export const PRIVATE_ROUTES: Routes = [
               ),
           },
           {
+            path: ':agentId/chat',
+            loadComponent: () =>
+              import('./agent-chat/agent-chat.component').then(
+                (c) => c.AgentChatComponent
+              ),
+          },
+          {
             path: ':id',
             loadComponent: () =>
               import('./agent-edition/agent-edition.component').then(

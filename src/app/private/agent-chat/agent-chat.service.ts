@@ -1,12 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, WritableSignal, signal, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, firstValueFrom } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { CollectionService } from '../../shared/services';
 import { PagedDataRequestParam } from '../../shared/types/paged-data-request-param';
 import { AgentChat } from './agent-chat.model';
 import { ChatMessage } from './chat-message';
+
+/** Interface representing a full chat retrieved from WebUI */
+export interface Chat {
+  id: string | number;
+  messages: ChatMessage[];
+  agent: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AgentChatService extends CollectionService<AgentChat> {
@@ -17,7 +24,6 @@ export class AgentChatService extends CollectionService<AgentChat> {
   /** Flag indicating that a request is in progress */
   readonly sending = signal(false);
 
-  private http = inject(HttpClient);
 
   override list(request: Partial<PagedDataRequestParam> = {}): Observable<AgentChat[]> {
     return this.http.get<AgentChat[]>(`${environment.baseURL}/${this.path}/`);
@@ -26,6 +32,65 @@ export class AgentChatService extends CollectionService<AgentChat> {
   /** Returns current message history */
   getMessages(_agentId: string): Observable<ChatMessage[]> {
     return of(this.messages());
+  }
+
+  /**
+   * Creates a chat on Open WebUI using the provided agent and first message.
+   * An empty assistant message is injected so that the backend registers the
+   * assistant's response in the history.
+   */
+  async createChatWithAgent(
+    agentId: string,
+    initialMessage: string
+  ): Promise<Chat> {
+    this.sending.set(true);
+    const messages: ChatMessage[] = [
+      { role: 'user', content: initialMessage },
+      { role: 'assistant', content: '' },
+    ];
+
+    const chat = await firstValueFrom(
+      this.http.post<Chat>(
+        `${environment.openWebUiUrl}/api/v1/chats/new`,
+        {
+          agentId,
+          models: [agentId],
+          messages,
+        }
+      )
+    );
+
+    this.messages.set(messages);
+
+    const completion = await firstValueFrom(
+      this.http.post<{ choices: { message: ChatMessage }[] }>(
+        `${environment.openWebUiUrl}/api/chat/completions`,
+        { model: agentId, messages }
+      )
+    );
+
+    const assistantMessage = completion.choices[0].message;
+    this.messages.update((m) => [m[0], assistantMessage]);
+    await firstValueFrom(
+      this.http.post(
+        `${environment.openWebUiUrl}/api/chat/completed`,
+        {
+          chat_id: chat.id,
+        }
+      )
+    ).catch(() => null);
+
+    this.sending.set(false);
+    return { ...chat, messages: this.messages() };
+  }
+
+  /** Retrieves an existing chat from the backend */
+  async getChat(chatId: string): Promise<Chat> {
+    return firstValueFrom(
+      this.http.get<Chat>(
+        `${environment.openWebUiUrl}/api/v1/chats/${chatId}`
+      )
+    );
   }
 
   /**

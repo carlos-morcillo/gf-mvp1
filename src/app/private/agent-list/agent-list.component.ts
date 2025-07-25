@@ -50,6 +50,7 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
       title: this.translocoSvc.selectTranslate('AGENT_LIST.COLUMNS.FEATURES'),
       property: 'meta.capabilities',
     },
+    { title: '', property: 'chat', sortable: false },
   ];
 
   /**

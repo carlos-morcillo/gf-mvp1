@@ -36,6 +36,11 @@
         }
       </div>
     </ng-template>
+    <ng-template paginableTableCell header="chat" let-row="row">
+      <a [routerLink]="['/agents', row.id, 'chat']" class="btn btn-link p-0">
+        {{ 'AGENT_CHAT.NEW_BUTTON' | transloco }}
+      </a>
+    </ng-template>
 
     <ng-template noDataTpt>
       {{ "AGENT_LIST.EMPTY.NO_RESULTS" }}

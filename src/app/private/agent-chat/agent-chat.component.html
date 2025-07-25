@@ -23,7 +23,7 @@
   }
 
   <div class="input-group">
-    <textarea class="form-control" rows="1" [(ngModel)]="inputValue" [placeholder]="'AGENT_CHAT.INPUT_PLACEHOLDER' | transloco" (keydown.enter)="send(); $event.preventDefault()"></textarea>
+    <textarea class="form-control" rows="1" [(ngModel)]="inputValue" [placeholder]="'AGENT_CHAT.PLACEHOLDER.INPUT' | transloco" (keydown.enter)="send(); $event.preventDefault()"></textarea>
     <button class="btn btn-primary" (click)="send()" [disabled]="sending()">
       {{ 'AGENT_CHAT.BUTTONS.SEND' | transloco }}
     </button>
