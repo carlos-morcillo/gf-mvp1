@@ -2,7 +2,18 @@
   "TITLES": {
     "MAIN": "Chat"
   },
-  "PLACEHOLDER": {
-    "MESSAGE": "Type a message"
+  "INPUT_PLACEHOLDER": "Type a message",
+  "BUTTONS": {
+    "VISION": "Vision",
+    "FILE_UPLOAD": "File upload",
+    "WEB_SEARCH": "Web search",
+    "IMAGE_GENERATION": "Image generation",
+    "CODE_INTERPRETER": "Code interpreter",
+    "CITATIONS": "Citations",
+    "USAGE": "Usage",
+    "SEND": "Send"
+  },
+  "STATUS": {
+    "SENDING": "Sending..."
   }
 }
