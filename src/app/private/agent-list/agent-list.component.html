@@ -37,9 +37,9 @@
       </div>
     </ng-template>
     <ng-template paginableTableCell header="chat" let-item="item">
-      <a [routerLink]="['./', item.id, 'chat']" class="btn btn-link p-0">
-        {{ "AGENT_CHAT.NEW_BUTTON" }}
-      </a>
+      <button type="button" class="btn btn-link p-0" (click)="startChat(item.id)">
+        {{ "CHAT_LIST.NEW_CHAT_BUTTON" }}
+      </button>
     </ng-template>
 
     <ng-template noDataTpt>
