@@ -2,7 +2,9 @@
   "TITLES": {
     "MAIN": "Chat"
   },
-  "INPUT_PLACEHOLDER": "Type a message",
+  "PLACEHOLDER": {
+    "INPUT": "Type a message"
+  },
   "BUTTONS": {
     "VISION": "Vision",
     "FILE_UPLOAD": "File upload",
@@ -15,5 +17,6 @@
   },
   "STATUS": {
     "SENDING": "Sending..."
-  }
+  },
+  "NEW_BUTTON": "New Chat"
 }

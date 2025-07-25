@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, inject, WritableSignal, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AgentChatService } from './agent-chat.service';
 import { ChatMessage } from './chat-message';
@@ -18,6 +18,7 @@ import { ChatMessage } from './chat-message';
 })
 export class AgentChatComponent {
   private chatSvc = inject(AgentChatService);
+  private route = inject(ActivatedRoute);
   transloco = inject(TranslocoService);
 
   /** Skills available for the agent */
@@ -40,6 +41,9 @@ export class AgentChatComponent {
 
   @ViewChild('scroll') scrollContainer?: ElementRef<HTMLDivElement>;
 
+  /** Agent identifier captured from the route */
+  agentId = this.route.snapshot.paramMap.get('agentId') ?? 'default';
+
   constructor() {
     // Scroll to bottom whenever messages change
     effect(() => {
@@ -54,7 +58,13 @@ export class AgentChatComponent {
     if (!content) {
       return;
     }
-    this.chatSvc.sendMessage('default', content).subscribe();
+    if (this.messages().length === 0) {
+      this.chatSvc
+        .createChatWithAgent(this.agentId, content)
+        .catch(() => {});
+    } else {
+      this.chatSvc.sendMessage(this.agentId, content).subscribe();
+    }
     this.inputValue = '';
   }
 
