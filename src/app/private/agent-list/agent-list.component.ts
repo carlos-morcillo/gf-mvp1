@@ -10,9 +10,9 @@ import {
 
 import { Router, RouterLink } from '@angular/router';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
+import { PinnedAgentsService } from '../../shared/services';
 import { Agent } from './agent';
 import { AgentsService } from './agents.service';
-import { PinnedAgentsService } from '../../shared/services';
 
 /**
  * Displays a paginated list of agents using `ng-hub-ui-table`.
@@ -73,6 +73,11 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
 
   /** Navigate to the new chat route for a given agent */
   startChat(agentId: string): void {
-    this.router.navigate(['/agents', agentId, 'chats', 'new']);
+    this.router.navigate(['./', agentId, 'chats', 'new']);
+  }
+
+  goToChats(item: Agent) {
+    console.log(item);
+    debugger;
   }
 }

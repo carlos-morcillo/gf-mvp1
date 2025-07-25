@@ -66,7 +66,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
 
     const completion = await firstValueFrom(
       this.http.post<{ choices: { message: ChatMessage }[] }>(
-        `${environment.baseURL}at/completions`,
+        `${environment.baseURL}/chat/completions`,
         { model: agentId, messages }
       )
     );
@@ -74,7 +74,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
     const assistantMessage = completion.choices[0].message;
     this.messages.update((m) => [m[0], assistantMessage]);
     await firstValueFrom(
-      this.http.post(`${environment.baseURL}at/completed`, {
+      this.http.post(`${environment.baseURL}/chat/completed`, {
         chat_id: chat.id,
       })
     ).catch(() => null);
@@ -103,7 +103,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
 
     return this.http
       .post<{ choices: { message: ChatMessage }[] }>(
-        `${environment.baseURL}at/completions`,
+        `${environment.baseURL}/chat/completions`,
         body
       )
       .pipe(

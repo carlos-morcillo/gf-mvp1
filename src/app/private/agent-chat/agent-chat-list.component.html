@@ -1,7 +1,7 @@
 <div class="container-fluid d-flex flex-column gap-4">
   <div class="d-flex justify-content-between align-items-center">
     <h1>{{ "AGENT_CHAT_LIST.TITLES.MAIN" }}</h1>
-    <button class="btn btn-primary" (click)="goToChat('new')">
+    <button class="btn btn-primary" [routerLink]="['./', 'new']">
       {{ "CHAT_LIST.NEW_CHAT_BUTTON" }}
     </button>
   </div>
@@ -11,7 +11,7 @@
     [loading]="paginatedData.isLoading()"
     [data]="paginatedData.value()"
     [searchable]="false"
-    (itemClick)="goToChat($any($event).data.id)"
+    [clickFn]="goToChat.bind(this)"
   >
     <ng-template cellTpt header="updated_at" let-property="property">
       {{ formatDate(property) }}
