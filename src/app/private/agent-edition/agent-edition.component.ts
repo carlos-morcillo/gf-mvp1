@@ -1,3 +1,4 @@
+import { KeyValuePipe, TitleCasePipe } from '@angular/common';
 import { Component, inject, resource } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +17,13 @@ import { AgentSkill } from './agent-skill.enum';
 @Component({
   selector: 'app-agent-edition',
   standalone: true,
-  imports: [ReactiveFormsModule, NgSelectModule, TranslocoModule],
+  imports: [
+    ReactiveFormsModule,
+    NgSelectModule,
+    TranslocoModule,
+    TitleCasePipe,
+    KeyValuePipe,
+  ],
   templateUrl: './agent-edition.component.html',
   styleUrl: './agent-edition.component.scss',
 })
@@ -146,11 +153,11 @@ export class AgentEditionComponent {
     this.form.patchValue({
       name: agent.name,
       base_model_id: agent.base_model_id,
-      tone: desc.tone,
-      persona: desc.persona,
-      welcomeMessage: desc.welcomeMessage,
-      context: desc.context,
-      outputFormat: desc.outputFormat,
+      tone: desc['tone'],
+      persona: desc['persona'],
+      welcomeMessage: desc['welcomeMessage'],
+      context: desc['context'],
+      outputFormat: desc['outputFormat'],
       skills: Object.keys(agent.meta.capabilities || {}) as AgentSkill[],
       knowledgeIds: (agent.meta as any).knowledgeIds || [],
       profile_image_url: agent.meta.profile_image_url,
@@ -176,7 +183,7 @@ export class AgentEditionComponent {
           acc[s] = true;
           return acc;
         }, {} as Record<string, boolean>),
-        knowledgeIds: value.knowledgeIds,
+        // knowledgeIds: value.knowledgeIds,
       },
       params: {},
       access_control: {},
@@ -190,5 +197,10 @@ export class AgentEditionComponent {
     request.subscribe(() => {
       this.router.navigate(['/private/agents']);
     });
+  }
+
+  onSkillChange(skill: any) {
+    console.log(skill);
+    // form.value.skills?.includes(skill) ? form.patchValue({skills: form.value.skills?.filter(s => s !== skill)}) : form.patchValue({skills: [...form.value.skills, skill]})
   }
 }

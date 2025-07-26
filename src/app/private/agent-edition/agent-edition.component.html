@@ -4,81 +4,113 @@
   class="container py-4 vstack gap-3"
   (drop)="onDrop($event)"
   (dragover)="$event.preventDefault()"
->
+  >
   <div class="d-flex mb-3">
     <button type="button" class="btn btn-link me-2" routerLink="../">
       <i class="fas fa-arrow-left"></i>
     </button>
-    <h1 class="h3 mb-0">{{ 'AGENT_EDITION.TITLES.MAIN' }}</h1>
+    <h1 class="h3 mb-0">{{ "AGENT_EDITION.TITLES.MAIN" }}</h1>
   </div>
 
   <div class="mb-3">
     <label class="form-label">
-      {{ 'AGENT_EDITION.LABELS.NAME' }}
-      <i class="fas fa-question-circle ms-1" [title]="'AGENT_EDITION.TIPS.NAME'"></i>
+      {{ "AGENT_EDITION.LABELS.NAME" }}
+      <i
+        class="fas fa-question-circle ms-1"
+        [title]="'AGENT_EDITION.TIPS.NAME'"
+      ></i>
     </label>
     <input type="text" formControlName="name" class="form-control" />
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.TONE' }}</label>
+    <label class="form-label">{{ "AGENT_EDITION.LABELS.TONE" }}</label>
     <div class="d-flex gap-3">
-      <div class="form-check" *ngFor="let t of ['CASUAL','PROFESSIONAL','CONCISE']; index as i">
-        <input
-          class="form-check-input"
-          type="radio"
-          [id]="'tone'+i"
-          [value]="t"
-          formControlName="tone"
-        />
-        <label class="form-check-label" [for]="'tone'+i">{{ 'AGENT_EDITION.TONES.' + t }}</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">
-      {{ 'AGENT_EDITION.LABELS.PERSONA' }}
-      <i class="fas fa-question-circle ms-1" [title]="'AGENT_EDITION.TIPS.PERSONALITY'"></i>
-    </label>
-    <textarea rows="2" class="form-control" formControlName="persona"></textarea>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.WELCOME_MESSAGE' }}</label>
-    <textarea rows="2" class="form-control" formControlName="welcomeMessage"></textarea>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.CONTEXT' }}</label>
-    <textarea rows="3" class="form-control" formControlName="context"></textarea>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.OUTPUT_FORMAT' }}</label>
-    <textarea rows="2" class="form-control" formControlName="outputFormat"></textarea>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.SKILLS' }}</label>
-    <div class="d-flex flex-wrap gap-3">
-      @for (skill of Object.values(AgentSkill); track skill) {
-      <div class="form-check">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          [id]="'skill'+skill"
-          [checked]="form.value.skills.includes(skill)"
-          (change)="form.value.skills.includes(skill) ? form.patchValue({skills: form.value.skills.filter(s => s !== skill)}) : form.patchValue({skills: [...form.value.skills, skill]})"
-        />
-        <label class="form-check-label" [for]="'skill'+skill">{{ skill | titlecase }}</label>
-      </div>
+      @for (t of ['CASUAL', 'PROFESSIONAL', 'CONCISE']; track t; let i = $index) {
+        <div
+          class="form-check"
+          >
+          <input
+            class="form-check-input"
+            type="radio"
+            [id]="'tone' + i"
+            [value]="t"
+            formControlName="tone"
+            />
+          <label class="form-check-label" [for]="'tone' + i">{{
+            "AGENT_EDITION.TONES." + t
+          }}</label>
+        </div>
       }
     </div>
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.KNOWLEDGE' }}</label>
+    <label class="form-label">
+      {{ "AGENT_EDITION.LABELS.PERSONA" }}
+      <i
+        class="fas fa-question-circle ms-1"
+        [title]="'AGENT_EDITION.TIPS.PERSONALITY'"
+      ></i>
+    </label>
+    <textarea
+      rows="2"
+      class="form-control"
+      formControlName="persona"
+    ></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.WELCOME_MESSAGE"
+    }}</label>
+    <textarea
+      rows="2"
+      class="form-control"
+      formControlName="welcomeMessage"
+    ></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">{{ "AGENT_EDITION.LABELS.CONTEXT" }}</label>
+    <textarea
+      rows="3"
+      class="form-control"
+      formControlName="context"
+    ></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">{{ "AGENT_EDITION.LABELS.OUTPUT_FORMAT" }}</label>
+    <textarea
+      rows="2"
+      class="form-control"
+      formControlName="outputFormat"
+    ></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">{{ "AGENT_EDITION.LABELS.SKILLS" }}</label>
+    <div class="d-flex flex-wrap gap-3">
+      @for (skill of (AgentSkill) |keyvalue; track skill.key) {
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [id]="'skill' + skill.key"
+            [checked]="form.value.skills?.includes(skill.value)"
+            (change)="onSkillChange($event)"
+            />
+          <label class="form-check-label" [for]="'skill' + skill.key">{{
+            skill.value | titlecase
+          }}</label>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">{{ "AGENT_EDITION.LABELS.KNOWLEDGE" }}</label>
     <ng-select
       [items]="knowledgeResource.value()"
       [loading]="knowledgeResource.isLoading()"
@@ -90,12 +122,17 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.FILES' }}</label>
-    <input type="file" multiple class="form-control" (change)="onFileSelect($event)" />
+    <label class="form-label">{{ "AGENT_EDITION.LABELS.FILES" }}</label>
+    <input
+      type="file"
+      multiple
+      class="form-control"
+      (change)="onFileSelect($event)"
+      />
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.MODEL' }}</label>
+    <label class="form-label">{{ "AGENT_EDITION.LABELS.MODEL" }}</label>
     <ng-select
       [items]="modelsResource.value()"
       [loading]="modelsResource.isLoading()"
@@ -106,20 +143,34 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ 'AGENT_EDITION.LABELS.UPLOAD_IMAGE' }}</label>
+    <label class="form-label">{{ "AGENT_EDITION.LABELS.UPLOAD_IMAGE" }}</label>
     <div class="border rounded p-3 text-center">
       @if (imagePreview) {
-      <img [src]="imagePreview" class="img-thumbnail mb-2" alt="preview" />
+        <img [src]="imagePreview" class="img-thumbnail mb-2" alt="preview" />
       }
-      <input type="file" accept="image/*" class="form-control" (change)="onImageSelect($event)" />
-      <small class="text-muted">{{ 'AGENT_EDITION.FORM.DRAG_DROP' }}</small>
+      <input
+        type="file"
+        accept="image/*"
+        class="form-control"
+        (change)="onImageSelect($event)"
+        />
+      <small class="text-muted">{{ "AGENT_EDITION.FORM.DRAG_DROP" }}</small>
     </div>
   </div>
 
   <div class="form-check mb-3">
-    <input type="checkbox" class="form-check-input" formControlName="is_active" id="active" />
-    <label for="active" class="form-check-label">{{ 'AGENT_EDITION.LABELS.ACTIVE' }}</label>
+    <input
+      type="checkbox"
+      class="form-check-input"
+      formControlName="is_active"
+      id="active"
+      />
+    <label for="active" class="form-check-label">{{
+      "AGENT_EDITION.LABELS.ACTIVE"
+    }}</label>
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">{{ 'AGENT_EDITION.BUTTONS.SAVE' }}</button>
+  <button type="submit" class="btn btn-primary w-100">
+    {{ "AGENT_EDITION.BUTTONS.SAVE" }}
+  </button>
 </form>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   ElementRef,
@@ -22,7 +22,7 @@ import { ChatMessage } from './chat-message';
 @Component({
   selector: 'app-agent-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TranslocoModule],
+  imports: [FormsModule, RouterLink, TranslocoModule],
   templateUrl: './agent-chat.component.html',
 })
 export class AgentChatComponent {
