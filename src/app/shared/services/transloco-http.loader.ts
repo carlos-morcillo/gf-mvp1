@@ -15,6 +15,6 @@ export class TranslocoHttpLoader implements TranslocoLoader {
    * @returns an HTTP request to fetch a JSON file containing translations for the specified language.
    */
   getTranslation(lang: string) {
-    return this.http.get<Translation>(`/assets/i18n/${lang}.json`);
+    return this.http.get<Translation>(`/i18n/${lang}.json`);
   }
 }

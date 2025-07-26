@@ -4,17 +4,17 @@
   class="container py-4 vstack gap-3"
   (drop)="onDrop($event)"
   (dragover)="$event.preventDefault()"
-  >
+>
   <div class="d-flex mb-3">
     <button type="button" class="btn btn-link me-2" routerLink="../">
       <i class="fas fa-arrow-left"></i>
     </button>
-    <h1 class="h3 mb-0">{{ "AGENT_EDITION.TITLES.MAIN" }}</h1>
+    <h1 class="h3 mb-0">{{ "AGENT_EDITION.TITLES.MAIN" | transloco }}</h1>
   </div>
 
   <div class="mb-3">
     <label class="form-label">
-      {{ "AGENT_EDITION.LABELS.NAME" }}
+      {{ "AGENT_EDITION.LABELS.NAME" | transloco }}
       <i
         class="fas fa-question-circle ms-1"
         [title]="'AGENT_EDITION.TIPS.NAME'"
@@ -24,30 +24,31 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ "AGENT_EDITION.LABELS.TONE" }}</label>
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.TONE" | transloco
+    }}</label>
     <div class="d-flex gap-3">
-      @for (t of ['CASUAL', 'PROFESSIONAL', 'CONCISE']; track t; let i = $index) {
-        <div
-          class="form-check"
-          >
-          <input
-            class="form-check-input"
-            type="radio"
-            [id]="'tone' + i"
-            [value]="t"
-            formControlName="tone"
-            />
-          <label class="form-check-label" [for]="'tone' + i">{{
-            "AGENT_EDITION.TONES." + t
-          }}</label>
-        </div>
+      @for (t of ['CASUAL', 'PROFESSIONAL', 'CONCISE']; track t; let i = $index)
+      {
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          [id]="'tone' + i"
+          [value]="t"
+          formControlName="tone"
+        />
+        <label class="form-check-label" [for]="'tone' + i">{{
+          "AGENT_EDITION.TONES." + t | transloco
+        }}</label>
+      </div>
       }
     </div>
   </div>
 
   <div class="mb-3">
     <label class="form-label">
-      {{ "AGENT_EDITION.LABELS.PERSONA" }}
+      {{ "AGENT_EDITION.LABELS.PERSONA" | transloco }}
       <i
         class="fas fa-question-circle ms-1"
         [title]="'AGENT_EDITION.TIPS.PERSONALITY'"
@@ -62,7 +63,7 @@
 
   <div class="mb-3">
     <label class="form-label">{{
-      "AGENT_EDITION.LABELS.WELCOME_MESSAGE"
+      "AGENT_EDITION.LABELS.WELCOME_MESSAGE" | transloco
     }}</label>
     <textarea
       rows="2"
@@ -72,7 +73,9 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ "AGENT_EDITION.LABELS.CONTEXT" }}</label>
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.CONTEXT" | transloco
+    }}</label>
     <textarea
       rows="3"
       class="form-control"
@@ -81,7 +84,9 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ "AGENT_EDITION.LABELS.OUTPUT_FORMAT" }}</label>
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.OUTPUT_FORMAT" | transloco
+    }}</label>
     <textarea
       rows="2"
       class="form-control"
@@ -90,27 +95,31 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ "AGENT_EDITION.LABELS.SKILLS" }}</label>
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.SKILLS" | transloco
+    }}</label>
     <div class="d-flex flex-wrap gap-3">
       @for (skill of (AgentSkill) |keyvalue; track skill.key) {
-        <div class="form-check">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            [id]="'skill' + skill.key"
-            [checked]="form.value.skills?.includes(skill.value)"
-            (change)="onSkillChange($event)"
-            />
-          <label class="form-check-label" [for]="'skill' + skill.key">{{
-            skill.value | titlecase
-          }}</label>
-        </div>
+      <div class="form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [id]="'skill' + skill.key"
+          [checked]="form.value.skills?.includes(skill.value)"
+          (change)="onSkillChange($event)"
+        />
+        <label class="form-check-label" [for]="'skill' + skill.key">{{
+          skill.value | titlecase
+        }}</label>
+      </div>
       }
     </div>
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ "AGENT_EDITION.LABELS.KNOWLEDGE" }}</label>
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.KNOWLEDGE" | transloco
+    }}</label>
     <ng-select
       [items]="knowledgeResource.value()"
       [loading]="knowledgeResource.isLoading()"
@@ -122,17 +131,21 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ "AGENT_EDITION.LABELS.FILES" }}</label>
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.FILES" | transloco
+    }}</label>
     <input
       type="file"
       multiple
       class="form-control"
       (change)="onFileSelect($event)"
-      />
+    />
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ "AGENT_EDITION.LABELS.MODEL" }}</label>
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.MODEL" | transloco
+    }}</label>
     <ng-select
       [items]="modelsResource.value()"
       [loading]="modelsResource.isLoading()"
@@ -143,18 +156,22 @@
   </div>
 
   <div class="mb-3">
-    <label class="form-label">{{ "AGENT_EDITION.LABELS.UPLOAD_IMAGE" }}</label>
+    <label class="form-label">{{
+      "AGENT_EDITION.LABELS.UPLOAD_IMAGE" | transloco
+    }}</label>
     <div class="border rounded p-3 text-center">
       @if (imagePreview) {
-        <img [src]="imagePreview" class="img-thumbnail mb-2" alt="preview" />
+      <img [src]="imagePreview" class="img-thumbnail mb-2" alt="preview" />
       }
       <input
         type="file"
         accept="image/*"
         class="form-control"
         (change)="onImageSelect($event)"
-        />
-      <small class="text-muted">{{ "AGENT_EDITION.FORM.DRAG_DROP" }}</small>
+      />
+      <small class="text-muted">{{
+        "AGENT_EDITION.FORM.DRAG_DROP" | transloco
+      }}</small>
     </div>
   </div>
 
@@ -164,13 +181,13 @@
       class="form-check-input"
       formControlName="is_active"
       id="active"
-      />
+    />
     <label for="active" class="form-check-label">{{
-      "AGENT_EDITION.LABELS.ACTIVE"
+      "AGENT_EDITION.LABELS.ACTIVE" | transloco
     }}</label>
   </div>
 
   <button type="submit" class="btn btn-primary w-100">
-    {{ "AGENT_EDITION.BUTTONS.SAVE" }}
+    {{ "AGENT_EDITION.BUTTONS.SAVE" | transloco }}
   </button>
 </form>
