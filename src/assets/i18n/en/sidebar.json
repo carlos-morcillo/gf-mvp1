@@ -1,0 +1,16 @@
+{
+  "MENU": {
+    "DASHBOARD": "Dashboard",
+    "AGENTS": "Agents",
+    "TRAINING": "Training",
+    "EVALUATION": "Evaluation",
+    "CHATS": "Chats",
+    "DOCUMENTATION": "Documentation",
+    "EMPLOYEE_PORTAL": "Employee Portal",
+    "KNOWLEDGE": "Knowledge",
+    "TITLE": "Menu"
+  },
+  "ACTIONS": {
+    "LOGOUT": "Logout"
+  }
+}

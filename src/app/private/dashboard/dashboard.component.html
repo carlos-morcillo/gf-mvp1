@@ -1,12 +1,12 @@
 <div class="container">
-  <h1 class="mb-4">Dashboard</h1>
+  <h1 class="mb-4">{{ 'DASHBOARD.TITLES.MAIN' | transloco }}</h1>
 
   <div class="row mb-4">
     @for (m of metrics; track m) {
       <div class="col-6 col-lg-3 mb-3">
         <div class="card text-center h-100">
           <div class="card-body">
-            <h5 class="card-title">{{ m.title }}</h5>
+            <h5 class="card-title">{{ m.title | transloco }}</h5>
             <p class="display-6 fw-bold mb-0">{{ m.value }}</p>
           </div>
         </div>
@@ -17,20 +17,20 @@
   <div class="row">
     <div class="col-lg-6 mb-3">
       <div class="card h-100">
-        <div class="card-header">Acceso rápido</div>
+        <div class="card-header">{{ 'DASHBOARD.SECTIONS.QUICK_ACCESS' | transloco }}</div>
         <div class="card-body">
           @for (a of actions; track a) {
-            <button class="btn btn-primary me-2 mb-2">{{ a }}</button>
+            <button class="btn btn-primary me-2 mb-2">{{ a | transloco }}</button>
           }
         </div>
       </div>
     </div>
     <div class="col-lg-6 mb-3">
       <div class="card h-100">
-        <div class="card-header">Actividad reciente</div>
+        <div class="card-header">{{ 'DASHBOARD.SECTIONS.RECENT_ACTIVITY' | transloco }}</div>
         <ul class="list-group list-group-flush">
           @for (l of logs; track l) {
-            <li class="list-group-item">{{ l }}</li>
+            <li class="list-group-item">{{ l | transloco }}</li>
           }
         </ul>
       </div>

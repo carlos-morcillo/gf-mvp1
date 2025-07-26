@@ -1,0 +1,11 @@
+{
+  "TITLES": {
+    "MAIN": "Base de Conocimiento"
+  },
+  "FORM": {
+    "NAME": "Nombre",
+    "DESCRIPTION": "Descripción",
+    "SAVE_BUTTON": "Guardar",
+    "SUCCESS": "Base de conocimiento guardada correctamente"
+  }
+}

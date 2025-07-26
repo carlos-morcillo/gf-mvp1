@@ -1,0 +1,16 @@
+{
+  "TITLES": {
+    "MAIN": "Chats de Agentes"
+  },
+  "COLUMNS": {
+    "ID": "Id",
+    "AGENT": "Agente",
+    "UPDATED": "Actualizado"
+  },
+  "BUTTONS": {
+    "NEW_CHAT": "Nuevo Chat"
+  },
+  "EMPTY": {
+    "NO_RESULTS": "Sin chats"
+  }
+}

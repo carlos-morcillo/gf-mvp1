@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -24,8 +25,14 @@ interface LdapPayload {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
+  private router = inject(Router);
 
   private _token = signal<string | null>(localStorage.getItem('token'));
+  private _user = signal<{ name: string; email: string; avatar?: string } | null>(
+    JSON.parse(localStorage.getItem('user') || 'null')
+  );
+
+  readonly user = this._user.asReadonly();
 
   /** Readonly token signal */
   readonly token = this._token.asReadonly();
@@ -37,14 +44,24 @@ export class AuthService {
   login(payload: LoginPayload) {
     return this.http
       .post<LoginResponse>(`${environment.baseURL}/auths/signin`, payload)
-      .pipe(tap((res) => this.setToken(res.token)));
+      .pipe(
+        tap((res) => {
+          this.setToken(res.token);
+          this.setUser({ name: payload.email, email: payload.email });
+        })
+      );
   }
 
   /** Performs LDAP authentication and stores the received JWT */
   loginLdap(payload: LdapPayload) {
     return this.http
       .post<LoginResponse>(`${environment.baseURL}/auths/ldap`, payload)
-      .pipe(tap((res) => this.setToken(res.token)));
+      .pipe(
+        tap((res) => {
+          this.setToken(res.token);
+          this.setUser({ name: payload.user, email: payload.user });
+        })
+      );
   }
 
   /** Registers a new company in the backend */
@@ -55,6 +72,21 @@ export class AuthService {
   /** Clears the stored token */
   logout(): void {
     this.setToken(null);
+    this.setUser(null);
+    this.router.navigateByUrl('/login');
+  }
+
+  setLanguage(lang: string): void {
+    localStorage.setItem('language', lang);
+  }
+
+  setUser(user: { name: string; email: string; avatar?: string } | null): void {
+    this._user.set(user);
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
   }
 
   /** Retrieves the current JWT value */

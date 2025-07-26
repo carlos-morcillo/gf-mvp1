@@ -7,8 +7,9 @@ import {
 } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideTransloco, provideTranslocoLoader } from '@jsverse/transloco';
+import { provideTransloco, provideTranslocoConfig, provideTranslocoLoader, translocoConfig } from '@jsverse/transloco';
 import { TableModule } from 'ng-hub-ui-table';
+import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { tokenInterceptor } from './auth/token.interceptor';
 import { TranslocoHttpLoader } from './shared/services/transloco-http.loader';
@@ -20,14 +21,15 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([tokenInterceptor])),
     provideTransloco({
-      config: {
-        availableLangs: ['en', 'es'],
+      config: translocoConfig({
+        availableLangs: ['es', 'ca', 'eu', 'gl', 'ast', 'oc'],
         defaultLang: 'es',
+        fallbackLang: 'es',
         reRenderOnLangChange: true,
-        prodMode: true,
-      },
+        prodMode: environment.production,
+      }),
+      loader: TranslocoHttpLoader,
     }),
-    provideTranslocoLoader(TranslocoHttpLoader),
     importProvidersFrom(NoopAnimationsModule, TableModule.forRoot()),
   ],
 };

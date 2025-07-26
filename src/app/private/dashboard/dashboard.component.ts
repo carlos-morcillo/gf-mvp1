@@ -1,25 +1,30 @@
 import { Component } from '@angular/core';
 
 
+import { TranslocoModule } from "@jsverse/transloco";
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [],
+  imports: [TranslocoModule],
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent {
   metrics = [
-    { title: 'Formaciones completadas', value: 12 },
-    { title: 'Documentos indexados', value: 340 },
-    { title: 'Puntuaci\u00f3n media', value: '4.5/5' },
-    { title: 'Agentes activos', value: 5 }
+    { title: 'DASHBOARD.METRICS.TRAININGS_COMPLETED', value: 12 },
+    { title: 'DASHBOARD.METRICS.DOCUMENTS_INDEXED', value: 340 },
+    { title: 'DASHBOARD.METRICS.AVERAGE_SCORE', value: '4.5/5' },
+    { title: 'DASHBOARD.METRICS.ACTIVE_AGENTS', value: 5 },
   ];
 
-  actions = ['Nuevo documento', 'Crear agente', 'Lanzar training'];
+  actions = [
+    'DASHBOARD.ACTIONS.NEW_DOC',
+    'DASHBOARD.ACTIONS.NEW_AGENT',
+    'DASHBOARD.ACTIONS.RUN_TRAINING',
+  ];
 
   logs = [
-    'Usuario Juan cre\u00f3 un agente',
-    'Se index\u00f3 el documento Manual.pdf',
-    'Actualizada la formaci\u00f3n B\u00e1sica'
+    'DASHBOARD.LOGS.USER_CREATED_AGENT',
+    'DASHBOARD.LOGS.DOC_INDEXED',
+    'DASHBOARD.LOGS.TRAINING_UPDATED',
   ];
 }

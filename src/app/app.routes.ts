@@ -7,6 +7,16 @@ export const routes: Routes = [
       import('./auth/login/login.component').then((m) => m.LoginComponent),
   },
   {
+    path: 'profile',
+    loadComponent: () =>
+      import('./private/user-profile/user-profile.component').then(
+        (m) => m.UserProfileComponent
+      ),
+    canActivate: [
+      () => import('./private/auth.guard').then((m) => m.authGuard),
+    ],
+  },
+  {
     path: 'register',
     loadComponent: () =>
       import('./auth/create-company/create-company.component').then(
