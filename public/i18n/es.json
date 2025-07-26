@@ -233,6 +233,14 @@
       "MAIN": "Perfil de usuario"
     }
   },
+  "USER_PROFILE": {
+    "TITLE": "Mi perfil",
+    "NAME": "Nombre",
+    "EMAIL": "Correo electrónico",
+    "ROLE": "Rol",
+    "LANGUAGE": "Idioma preferido",
+    "EDIT_BUTTON": "Editar perfil"
+  },
   "SIDEBAR": {
     "MENU": {
       "DASHBOARD": "Panel",

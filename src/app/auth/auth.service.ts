@@ -27,6 +27,8 @@ interface CurrentUser {
   name: string;
   email: string;
   avatar?: string;
+  role?: string;
+  language?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -39,6 +41,8 @@ export class AuthService {
     name: string;
     email: string;
     avatar?: string;
+    role?: string;
+    language?: string;
   } | null>(JSON.parse(localStorage.getItem('user') || 'null'));
 
   readonly user = this._user.asReadonly();
@@ -99,7 +103,17 @@ export class AuthService {
     localStorage.setItem('language', lang);
   }
 
-  setUser(user: { name: string; email: string; avatar?: string } | null): void {
+  setUser(
+    user:
+      | {
+          name: string;
+          email: string;
+          avatar?: string;
+          role?: string;
+          language?: string;
+        }
+      | null
+  ): void {
     this._user.set(user);
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
