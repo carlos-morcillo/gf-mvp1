@@ -1,9 +1,9 @@
 <div class="container-fluid d-flex flex-column gap-4">
-  <h1>{{ "AGENT_LIST.TITLES.MAIN" }}</h1>
+  <h1>{{ "AGENT_LIST.TITLES.MAIN" | transloco }}</h1>
 
   <div class="d-flex justify-content-end gap-2">
     <button class="btn btn-primary" [routerLink]="['.', 'add']">
-      {{ "AGENT_LIST.BUTTONS.ADD" }}
+      {{ "AGENT_LIST.BUTTONS.ADD" | transloco }}
     </button>
   </div>
 
@@ -39,18 +39,18 @@
     </ng-template>
     <ng-template paginableTableCell header="chat" let-item="item">
       <a [routerLink]="['./', item.id, 'chats']" class="btn btn-link p-0">
-        {{ "AGENT_CHAT.CHATS" }}
+        {{ "AGENT_CHAT.CHATS" | transloco }}
       </a>
       <a
         [routerLink]="['./', item.id, 'chats', 'new']"
         class="btn btn-link p-0"
       >
-        {{ "AGENT_CHAT.NEW_BUTTON" }}
+        {{ "AGENT_CHAT.NEW_BUTTON" | transloco }}
       </a>
     </ng-template>
 
     <ng-template noDataTpt>
-      {{ "AGENT_LIST.EMPTY.NO_RESULTS" }}
+      {{ "AGENT_LIST.EMPTY.NO_RESULTS" | transloco }}
     </ng-template>
   </hub-ui-table>
 </div>

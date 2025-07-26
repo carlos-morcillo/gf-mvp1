@@ -11,6 +11,6 @@ export class AgentResolver implements Resolve<Agent | null> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<Agent | null> {
     const id = route.paramMap.get('agentId') || route.paramMap.get('id');
-    return id ? this.agentsSvc.getAgent(id) : of(null);
+    return id && id !== 'add' ? this.agentsSvc.find(id) : of(null);
   }
 }

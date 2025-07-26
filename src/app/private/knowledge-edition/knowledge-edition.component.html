@@ -1,9 +1,11 @@
 <div class="container py-4">
-  <h1 class="mb-4">{{ "KNOWLEDGE_EDITION.TITLES.MAIN" }}</h1>
+  <h1 class="mb-4">{{ "KNOWLEDGE_EDITION.TITLES.MAIN" | transloco }}</h1>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vstack gap-3">
     <div class="mb-3">
-      <label class="form-label">{{ "KNOWLEDGE_EDITION.FORM.NAME" }}</label>
+      <label class="form-label">{{
+        "KNOWLEDGE_EDITION.FORM.NAME" | transloco
+      }}</label>
       <input type="text" formControlName="name" class="form-control" />
     </div>
 
@@ -29,7 +31,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">
-      {{ "KNOWLEDGE_EDITION.FORM.SAVE_BUTTON" }}
+      {{ "KNOWLEDGE_EDITION.FORM.SAVE_BUTTON" | transloco }}
     </button>
   </form>
 </div>

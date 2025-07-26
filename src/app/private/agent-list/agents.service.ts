@@ -20,6 +20,13 @@ export class AgentsService extends CollectionService<Agent> {
     return this.http.get<Array<Agent>>(`${environment.baseURL}/${this.path}/`);
   }
 
+  /** Retrieves an agent by identifier */
+  override find(id: string): Observable<Agent> {
+    return this.http.get<Agent>(`${environment.baseURL}/${this.path}/model`, {
+      params: { id },
+    });
+  }
+
   baseModels(
     request: Partial<PagedDataRequestParam> = {}
   ): Observable<Array<Agent>> {
@@ -37,13 +44,11 @@ export class AgentsService extends CollectionService<Agent> {
     );
   }
 
-  /** Retrieves an agent by identifier */
-  getAgent(id: string): Observable<Agent> {
-    return this.http.get<Agent>(`${environment.baseURL}/${this.path}/${id}`);
-  }
-
   /** Updates an existing agent */
   updateAgent(id: string, agent: Partial<Agent>): Observable<Agent> {
-    return this.http.put<Agent>(`${environment.baseURL}/${this.path}/${id}`, agent);
+    return this.http.put<Agent>(
+      `${environment.baseURL}/${this.path}/${id}`,
+      agent
+    );
   }
 }

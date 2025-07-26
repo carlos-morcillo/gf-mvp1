@@ -1,6 +1,6 @@
 <div
   class="container d-flex justify-content-center align-items-center min-vh-100"
-  >
+>
   <div class="card p-4 w-100" style="max-width: 400px">
     <ul class="nav nav-tabs mb-3">
       <li class="nav-item">
@@ -9,8 +9,8 @@
           [class.active]="tab() === 'standard'"
           type="button"
           (click)="tab.set('standard')"
-          >
-          {{ "LOGIN.TABS.STANDARD" }}
+        >
+          {{ "LOGIN.TABS.STANDARD" | transloco }}
         </button>
       </li>
       <li class="nav-item">
@@ -19,81 +19,90 @@
           [class.active]="tab() === 'ldap'"
           type="button"
           (click)="tab.set('ldap')"
-          >
-          {{ "LOGIN.TABS.LDAP" }}
+        >
+          {{ "LOGIN.TABS.LDAP" | transloco }}
         </button>
       </li>
     </ul>
 
     @if (tab() === 'standard') {
-      <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="mb-3">
-          <label for="email" class="form-label">{{ "LOGIN.FIELDS.EMAIL" }}</label>
-          <input
-            id="email"
-            type="email"
-            formControlName="email"
-            class="form-control"
-            />
-        </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">{{
-            "LOGIN.FIELDS.PASSWORD"
-          }}</label>
-          <input
-            id="password"
-            type="password"
-            formControlName="password"
-            class="form-control"
-            />
-        </div>
-        <button
-          type="submit"
-          class="btn btn-primary w-100"
-          [disabled]="loading() || form.invalid"
-          >
-          {{ loading() ? ("LOGIN.STATUS.LOADING" | transloco) : ("LOGIN.BUTTONS.SUBMIT" | transloco) }}
-        </button>
-      </form>
-    }
-
-    @if (tab() === 'ldap') {
-      <form
-        [formGroup]="ldapForm"
-        (ngSubmit)="submitLdap()"
-        >
-        <div class="mb-3">
-          <label for="user" class="form-label">{{ "LOGIN.FIELDS.USER" }}</label>
-          <input
-            id="user"
-            type="text"
-            formControlName="user"
-            class="form-control"
-            />
-        </div>
-        <div class="mb-3">
-          <label for="ldapPassword" class="form-label">{{
-            "LOGIN.FIELDS.PASSWORD"
-          }}</label>
-          <input
-            id="ldapPassword"
-            type="password"
-            formControlName="password"
-            class="form-control"
-            />
-        </div>
-        <button
-          type="submit"
-          class="btn btn-primary w-100"
-          [disabled]="loading() || ldapForm.invalid"
-          >
-          {{ loading() ? ("LOGIN.STATUS.LOADING" | transloco) : ("LOGIN.BUTTONS.SUBMIT" | transloco) }}
-        </button>
-      </form>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="mb-3">
+        <label for="email" class="form-label">{{
+          "LOGIN.FIELDS.EMAIL" | transloco
+        }}</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">{{
+          "LOGIN.FIELDS.PASSWORD"
+        }}</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        [disabled]="loading() || form.invalid"
+      >
+        {{
+          loading()
+            ? ("LOGIN.STATUS.LOADING" | transloco)
+            : ("LOGIN.BUTTONS.SUBMIT" | transloco)
+        }}
+      </button>
+    </form>
+    } @if (tab() === 'ldap') {
+    <form [formGroup]="ldapForm" (ngSubmit)="submitLdap()">
+      <div class="mb-3">
+        <label for="user" class="form-label">{{
+          "LOGIN.FIELDS.USER" | transloco
+        }}</label>
+        <input
+          id="user"
+          type="text"
+          formControlName="user"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="ldapPassword" class="form-label">{{
+          "LOGIN.FIELDS.PASSWORD"
+        }}</label>
+        <input
+          id="ldapPassword"
+          type="password"
+          formControlName="password"
+          class="form-control"
+        />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        [disabled]="loading() || ldapForm.invalid"
+      >
+        {{
+          loading()
+            ? ("LOGIN.STATUS.LOADING" | transloco)
+            : ("LOGIN.BUTTONS.SUBMIT" | transloco)
+        }}
+      </button>
+    </form>
     }
 
     <p class="mt-3 text-center">
-      <a routerLink="/register">{{ "LOGIN.BUTTONS.CREATE_COMPANY" }}</a>
+      <a routerLink="/register">{{
+        "LOGIN.BUTTONS.CREATE_COMPANY" | transloco
+      }}</a>
     </p>
   </div>
 </div>
