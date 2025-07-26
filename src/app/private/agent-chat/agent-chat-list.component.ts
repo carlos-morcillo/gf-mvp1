@@ -1,6 +1,7 @@
 import { Component, inject, input } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
+import { upperFirst } from 'lodash';
 import {
   PaginableTableCellDirective,
   PaginableTableHeader,
@@ -8,11 +9,8 @@ import {
   TableComponent,
   TableRowEvent,
 } from 'ng-hub-ui-table';
-import { map } from 'rxjs/operators';
-import { upperFirst } from 'lodash';
-import { Translations } from '../../shared/services/translations.service';
-import { Confirmable } from '../../shared/decorators/confirm.decorator';
 import { firstValueFrom } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { AgentChat } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
@@ -56,10 +54,13 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
       property: null as any,
       buttons: [
         {
-          tooltip: upperFirst(Translations.instant('GENERIC.BUTTONS.REMOVE')),
-          icon: { type: 'material', value: 'delete' },
+          tooltip: upperFirst(
+            this.translocoSvc.translate('GENERIC.BUTTONS.REMOVE')
+          ),
+          icon: { type: 'font-awesome', value: 'fa-trash fa' },
           classlist: 'btn btn-table-danger',
-          handler: (event) => this.delete((event as TableRowEvent<AgentChat>).data),
+          handler: (event) =>
+            this.delete((event as TableRowEvent<AgentChat>).data),
         },
       ],
     },
@@ -88,11 +89,11 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
   }
 
   /** Delete a chat with confirmation */
-  @Confirmable({
-    content: 'CHAT_LIST.CONFIRM.DELETE',
-    confirmButtonText: 'GENERIC.BUTTONS.REMOVE',
-    denyButtonText: 'GENERIC.BUTTONS.CANCEL',
-  })
+  //   @Confirmable({
+  //     content: 'CHAT_LIST.CONFIRM.DELETE',
+  //     confirmButtonText: 'GENERIC.BUTTONS.REMOVE',
+  //     denyButtonText: 'GENERIC.BUTTONS.CANCEL',
+  //   })
   override async delete(chat: AgentChat): Promise<void> {
     await firstValueFrom(this.dataSvc.deleteChat(String(chat.id)));
     this.paginatedData.reload();

@@ -1,5 +1,6 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
   importProvidersFrom,
   provideBrowserGlobalErrorListeners,
@@ -7,7 +8,11 @@ import {
 } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { provideTransloco, provideTranslocoConfig, provideTranslocoLoader, translocoConfig } from '@jsverse/transloco';
+import {
+  provideTransloco,
+  translocoConfig,
+  TranslocoService,
+} from '@jsverse/transloco';
 import { TableModule } from 'ng-hub-ui-table';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
@@ -31,5 +36,17 @@ export const appConfig: ApplicationConfig = {
       loader: TranslocoHttpLoader,
     }),
     importProvidersFrom(NoopAnimationsModule, TableModule.forRoot()),
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [TranslocoService],
+      useFactory: () => preloadTranslation,
+    },
   ],
 };
+
+export function preloadTranslation(translocoSvc: TranslocoService) {
+  return function () {
+    return null;
+  };
+}

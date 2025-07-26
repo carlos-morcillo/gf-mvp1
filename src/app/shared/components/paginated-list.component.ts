@@ -20,7 +20,6 @@ import { firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 // import { DefaultPagedDataRequestParam } from '../constants/default-paged-data-request-param';
 // import { DefaultModalOptions } from '../constants/modal';
 import { DefaultPagedDataRequestParam } from '../constants';
-import { Confirmable } from '../decorators/confirm.decorator';
 import { CollectionService, Toast } from '../services';
 import { Filter } from '../types/filter';
 import {
@@ -367,10 +366,10 @@ export abstract class PaginatedListComponent<
    * source. It is of type `T`, which means it can be any type of object that your application supports for deletion. When calling
    * the `delete` function, you pass an instance of
    */
-  @Confirmable({
-    title: 'GENERIC.TITLES.DELETE_ELEMENT',
-    content: 'GENERIC.MESSAGES.WARNING.DELETE_ELEMENT?',
-  })
+  //   @Confirmable({
+  //     title: 'GENERIC.TITLES.DELETE_ELEMENT',
+  //     content: 'GENERIC.MESSAGES.WARNING.DELETE_ELEMENT?',
+  //   })
   async delete(item: T) {
     try {
       if (this.deleteFn) {

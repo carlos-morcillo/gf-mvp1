@@ -10,14 +10,12 @@ import {
 } from 'ng-hub-ui-table';
 
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { upperFirst } from 'lodash';
+import { firstValueFrom } from 'rxjs';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { PinnedAgentsService } from '../../shared/services';
 import { Agent } from './agent';
 import { AgentsService } from './agents.service';
-import { upperFirst } from 'lodash';
-import { Translations } from '../../shared/services/translations.service';
-import { Confirmable } from '../../shared/decorators/confirm.decorator';
-import { firstValueFrom } from 'rxjs';
 
 /**
  * Displays a paginated list of agents using `ng-hub-ui-table`.
@@ -51,7 +49,7 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
       buttons: [
         {
           tooltip: 'Pin',
-          icon: { type: 'font-awesome', value: 'fa-thumbtack' },
+          icon: { type: 'font-awesome', value: 'fa fa-thumbtack' },
           classlist: 'btn btn-link p-0',
           handler: (e) => this.togglePin((e as TableRowEvent<Agent>).data),
         },
@@ -75,15 +73,9 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
       sortable: false,
       buttons: [
         {
-          tooltip: Translations.instant('AGENT_CHAT.CHATS'),
-          icon: { type: 'material', value: 'forum' },
-          classlist: 'btn btn-link p-0',
-          handler: (e) => this.openChats((e as TableRowEvent<Agent>).data.id!),
-        },
-        {
-          tooltip: Translations.instant('AGENT_CHAT.NEW_BUTTON'),
-          icon: { type: 'material', value: 'add_comment' },
-          classlist: 'btn btn-link p-0',
+          tooltip: this.translocoSvc.translate('AGENT_CHAT.NEW_BUTTON'),
+          icon: { type: 'font-awesome', value: 'fa-message' },
+          classlist: 'btn text-secondary',
           handler: (e) => this.startChat((e as TableRowEvent<Agent>).data.id!),
         },
       ],
@@ -92,9 +84,14 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
       property: null as any,
       buttons: [
         {
-          tooltip: upperFirst(Translations.instant('GENERIC.BUTTONS.REMOVE')),
-          icon: { type: 'material', value: 'delete' },
-          classlist: 'btn btn-table-danger',
+          tooltip: upperFirst(
+            this.translocoSvc.translate('GENERIC.BUTTONS.REMOVE')
+          ),
+          icon: {
+            type: 'font-awesome',
+            value: 'fa-trash',
+          },
+          classlist: 'btn text-danger',
           handler: (event) => this.delete((event as TableRowEvent<Agent>).data),
         },
       ],
@@ -120,7 +117,9 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
 
   /** Navigate to the new chat route for a given agent */
   startChat(agentId: string): void {
-    this.router.navigate(['./', agentId, 'chats', 'new']);
+    this.router.navigate(['./', agentId, 'chats', 'new'], {
+      relativeTo: this.route,
+    });
   }
 
   /** Navigate to chat list for the selected agent */
@@ -129,11 +128,11 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
   }
 
   /** Delete selected agent with confirmation */
-  @Confirmable({
-    content: 'AGENT_LIST.CONFIRM.DELETE',
-    confirmButtonText: 'GENERIC.BUTTONS.REMOVE',
-    denyButtonText: 'GENERIC.BUTTONS.CANCEL',
-  })
+  //   @Confirmable({
+  //     content: 'AGENT_LIST.CONFIRM.DELETE',
+  //     confirmButtonText: 'GENERIC.BUTTONS.REMOVE',
+  //     denyButtonText: 'GENERIC.BUTTONS.CANCEL',
+  //   })
   override async delete(agent: Agent): Promise<void> {
     await firstValueFrom(this.dataSvc.deleteAgent(agent.id!));
     this.paginatedData.reload();
