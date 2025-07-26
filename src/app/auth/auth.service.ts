@@ -22,15 +22,40 @@ interface LdapPayload {
   password: string;
 }
 
+interface CurrentUser {
+  name: string;
+  email: string;
+  avatar?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
 
+  constructor() {
+    const token = this.getToken();
+    if (token) {
+      this.http.get<CurrentUser>(`${environment.baseURL}/auths`).subscribe({
+        next: (user) => this.setUser(user),
+        error: (err) => {
+          this.setToken(null);
+          if (err.status === 401) {
+            this.router.navigateByUrl('/login');
+          } else {
+            this.router.navigateByUrl('/error');
+          }
+        },
+      });
+    }
+  }
+
   private _token = signal<string | null>(localStorage.getItem('token'));
-  private _user = signal<{ name: string; email: string; avatar?: string } | null>(
-    JSON.parse(localStorage.getItem('user') || 'null')
-  );
+  private _user = signal<{
+    name: string;
+    email: string;
+    avatar?: string;
+  } | null>(JSON.parse(localStorage.getItem('user') || 'null'));
 
   readonly user = this._user.asReadonly();
 
@@ -48,7 +73,7 @@ export class AuthService {
         tap((res) => {
           this.setToken(res.token);
           this.setUser({ name: payload.email, email: payload.email });
-        })
+        }),
       );
   }
 
@@ -60,7 +85,7 @@ export class AuthService {
         tap((res) => {
           this.setToken(res.token);
           this.setUser({ name: payload.user, email: payload.user });
-        })
+        }),
       );
   }
 

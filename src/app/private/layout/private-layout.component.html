@@ -10,11 +10,22 @@
     <button type="button" class="btn-close" (click)="menuOpen.set(false)"></button>
   </div>
   <div class="offcanvas-body p-0">
+    <div class="text-center py-3 border-bottom">
+      <a routerLink="/home" class="text-decoration-none">
+        <span class="fw-bold fs-4">Greenfield</span>
+      </a>
+    </div>
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="/private/dashboard" (click)="menuOpen.set(false)">
           <i class="fa fa-home me-2"></i>
           {{ 'SIDEBAR.MENU.DASHBOARD' | transloco }}
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/private/home" (click)="menuOpen.set(false)">
+          <i class="fa fa-house me-2"></i>
+          {{ 'SIDEBAR.MENU.HOME' | transloco }}
         </a>
       </li>
       <li>
@@ -94,11 +105,22 @@
   <div class="row">
     <!-- Static sidebar for md and above -->
     <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light p-3 min-vh-100">
+      <div class="text-center pb-3 mb-2 border-bottom">
+        <a routerLink="/home" class="text-decoration-none">
+          <span class="fw-bold fs-4">Greenfield</span>
+        </a>
+      </div>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/private/dashboard">
             <i class="fa fa-home me-2"></i>
             {{ 'SIDEBAR.MENU.DASHBOARD' | transloco }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/private/home">
+            <i class="fa fa-house me-2"></i>
+            {{ 'SIDEBAR.MENU.HOME' | transloco }}
           </a>
         </li>
         <li>

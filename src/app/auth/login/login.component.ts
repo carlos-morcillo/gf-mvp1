@@ -1,4 +1,3 @@
-
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -41,7 +40,7 @@ export class LoginComponent {
     this.auth.login(this.form.getRawValue()).subscribe({
       next: () => {
         this.loading.set(false);
-        this.router.navigateByUrl('/private');
+        this.router.navigateByUrl('/home');
       },
       error: () => this.loading.set(false),
     });
@@ -57,7 +56,7 @@ export class LoginComponent {
     this.auth.loginLdap(this.ldapForm.getRawValue()).subscribe({
       next: () => {
         this.loading.set(false);
-        this.router.navigateByUrl('/private');
+        this.router.navigateByUrl('/home');
       },
       error: () => this.loading.set(false),
     });

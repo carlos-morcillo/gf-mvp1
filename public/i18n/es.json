@@ -169,6 +169,7 @@
     }
   },
   "EVALUATION": {
+    "IFRAME_FALLBACK": "Tu navegador no permite mostrar el formulario",
     "TITLES": {
       "MAIN": "Evaluación"
     }
@@ -206,7 +207,8 @@
     "EU": "Euskara",
     "GL": "Galego",
     "AST": "Asturianu",
-    "OC": "Aranés"
+    "OC": "Aranés",
+    "EN": "English"
   },
   "LOGIN": {
     "TABS": {
@@ -234,6 +236,7 @@
   "SIDEBAR": {
     "MENU": {
       "DASHBOARD": "Panel",
+      "HOME": "Inicio",
       "AGENTS": "Agentes",
       "TRAINING": "Formación",
       "EVALUATION": "Evaluación",
@@ -251,5 +254,17 @@
     "TITLES": {
       "MAIN": "Formación"
     }
+  },
+  "ERROR": {
+    "GENERIC": {
+      "MESSAGE": "Se ha producido un error inesperado",
+      "RETURN_HOME": "Volver al inicio"
+    }
+  },
+  "NOT_FOUND": {
+    "MESSAGE": "La página que buscas no existe"
+  },
+  "HOME": {
+    "IFRAME_FALLBACK": "Tu navegador no permite mostrar el contenido"
   }
 }
