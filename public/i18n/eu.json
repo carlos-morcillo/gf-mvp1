@@ -73,6 +73,21 @@
       "DRAG_DROP": "Arrastra la imagen o haz clic para seleccionar"
     }
   },
+  "AGENT_FORM": {
+    "LABELS": {
+      "NAME": "Zer izena eman nahi diozu zure agenteari?",
+      "DESCRIPTION": "Labur azaldu agentearen lana.",
+      "BASE_MODEL": "Aukeratu agenteak oinarrituko duen hizkuntza eredua",
+      "SYSTEM": "Sistemaren mezua",
+      "CAPABILITIES": "Gaitasunak",
+      "KNOWLEDGE": "Ezagutza baseak",
+      "PROFILE_IMAGE": "Profil irudia",
+      "ACTIVE": "Agente aktiboa"
+    },
+    "TIPS": {
+      "CAPABILITIES": "Gaitu agenteak izan ditzan gaitasunak. Askatasunez konbina ditzakezu."
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agentes"

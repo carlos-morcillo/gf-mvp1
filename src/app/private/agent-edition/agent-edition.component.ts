@@ -1,4 +1,4 @@
-import { KeyValuePipe, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { Component, inject, resource } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,11 @@ import { firstValueFrom } from 'rxjs';
 import { Agent } from '../agent-list/agent';
 import { AgentsService } from '../agent-list/agents.service';
 import { KnowledgeService } from '../knowledge-list/knowledge.service';
-import { AgentSkill } from './agent-skill.enum';
+import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
+import {
+  AgentCapability,
+  AGENT_CAPABILITIES,
+} from './agent-capability.enum';
 
 /**
  * Component used for both creation and edition of AI agents.
@@ -22,7 +26,6 @@ import { AgentSkill } from './agent-skill.enum';
     NgSelectModule,
     TranslocoModule,
     TitleCasePipe,
-    KeyValuePipe,
   ],
   templateUrl: './agent-edition.component.html',
   styleUrl: './agent-edition.component.scss',
@@ -34,8 +37,8 @@ export class AgentEditionComponent {
   private agentsSvc = inject(AgentsService);
   private knowledgeSvc = inject(KnowledgeService);
 
-  /** Expose enum to the template */
-  readonly AgentSkill = AgentSkill;
+  /** Capabilities displayed in the template */
+  readonly capabilities = AGENT_CAPABILITIES;
 
   /** Base models available in the backend */
   modelsResource = resource({
@@ -50,19 +53,36 @@ export class AgentEditionComponent {
   /** Identifier of the agent if editing */
   agentId: string | null = this.route.snapshot.paramMap.get('id');
 
-  /** Reactive form describing the agent */
+  /** Reactive form mirroring the Agent JSON structure */
   form = this.fb.nonNullable.group({
-    name: ['', Validators.required],
-    tone: this.fb.nonNullable.control('', Validators.required),
-    persona: [''],
-    welcomeMessage: [''],
-    context: [''],
-    outputFormat: [''],
-    skills: this.fb.nonNullable.control<AgentSkill[]>([]),
-    knowledgeIds: this.fb.nonNullable.control<string[]>([]),
-    base_model_id: ['', Validators.required],
-    profile_image_url: [''],
+    id: [''],
+    user_id: [''],
+    base_model_id: this.fb.nonNullable.control('', Validators.required),
+    name: this.fb.nonNullable.control('', Validators.required),
+    params: this.fb.group({
+      system: [''],
+    }),
+    meta: this.fb.group({
+      profile_image_url: [''],
+      description: [''],
+      capabilities: this.createCapabilitiesGroup(),
+      suggestion_prompts: this.fb.control<any[]>([]),
+      tags: this.fb.control<string[]>([]),
+      knowledge: this.fb.control<KnowledgeBase[]>([]),
+    }),
+    access_control: this.fb.group({
+      read: this.fb.group({
+        group_ids: this.fb.control<string[]>([]),
+        user_ids: this.fb.control<string[]>([]),
+      }),
+      write: this.fb.group({
+        group_ids: this.fb.control<string[]>([]),
+        user_ids: this.fb.control<string[]>([]),
+      }),
+    }),
     is_active: this.fb.nonNullable.control(true),
+    updated_at: this.fb.control<number | null>(null),
+    created_at: this.fb.control<number | null>(null),
   });
 
   /** Attached files */
@@ -109,60 +129,12 @@ export class AgentEditionComponent {
     }
   }
 
-  /**
-   * Converts individual form fields into the text block expected by the backend.
-   */
-  private buildDescription(): string {
-    const v = this.form.getRawValue();
-    return `TONE: ${v.tone}\nPERSONALITY: ${v.persona}\nWELCOME_MESSAGE: ${v.welcomeMessage}\nCONTEXT: ${v.context}\nOUTPUT_FORMAT: ${v.outputFormat}`;
-  }
-
-  /**
-   * Parses the description block and returns the corresponding values.
-   */
-  private parseDescription(text: string): Partial<Record<string, string>> {
-    const result: any = {};
-    const regex = /^([A-Z_]+):\s*(.*)$/gm;
-    let match: RegExpExecArray | null;
-    while ((match = regex.exec(text))) {
-      switch (match[1]) {
-        case 'TONE':
-          result.tone = match[2];
-          break;
-        case 'PERSONALITY':
-          result.persona = match[2];
-          break;
-        case 'WELCOME_MESSAGE':
-          result.welcomeMessage = match[2];
-          break;
-        case 'CONTEXT':
-          result.context = match[2];
-          break;
-        case 'OUTPUT_FORMAT':
-          result.outputFormat = match[2];
-          break;
-      }
-    }
-    return result;
-  }
 
   /** Patches the form with agent data when editing */
   private patchForm(agent: Agent): void {
-    const desc = this.parseDescription(agent.meta.description || '');
     this.imagePreview = agent.meta.profile_image_url;
-    this.form.patchValue({
-      name: agent.name,
-      base_model_id: agent.base_model_id,
-      tone: desc['tone'],
-      persona: desc['persona'],
-      welcomeMessage: desc['welcomeMessage'],
-      context: desc['context'],
-      outputFormat: desc['outputFormat'],
-      skills: Object.keys(agent.meta.capabilities || {}) as AgentSkill[],
-      knowledgeIds: (agent.meta as any).knowledgeIds || [],
-      profile_image_url: agent.meta.profile_image_url,
-      is_active: agent.is_active,
-    });
+    this.form.patchValue(agent);
+    this.parseCapabilitiesToForm(agent.meta.capabilities);
   }
 
   /** Submits the form creating or updating the agent */
@@ -173,21 +145,12 @@ export class AgentEditionComponent {
     }
 
     const value = this.form.getRawValue();
-    const payload: Partial<Agent> = {
-      base_model_id: value.base_model_id,
-      name: value.name,
+    const payload: Agent = {
+      ...value,
       meta: {
-        profile_image_url: value.profile_image_url || '/static/favicon.png',
-        description: this.buildDescription(),
-        capabilities: value.skills.reduce((acc, s) => {
-          acc[s] = true;
-          return acc;
-        }, {} as Record<string, boolean>),
-        // knowledgeIds: value.knowledgeIds,
+        ...value.meta,
+        capabilities: this.composeCapabilitiesFromForm(),
       },
-      params: {},
-      access_control: {},
-      is_active: value.is_active,
     } as Agent;
 
     const request = this.agentId
@@ -199,8 +162,40 @@ export class AgentEditionComponent {
     });
   }
 
-  onSkillChange(skill: any) {
-    console.log(skill);
-    // form.value.skills?.includes(skill) ? form.patchValue({skills: form.value.skills?.filter(s => s !== skill)}) : form.patchValue({skills: [...form.value.skills, skill]})
+  /**
+   * Parses the capabilities object received from the backend into the form
+   * group controls.
+   */
+  private parseCapabilitiesToForm(capabilities: Partial<Record<string, boolean>>): void {
+    const group = this.form.controls.meta.controls.capabilities;
+    for (const key of this.capabilities) {
+      group.controls[key].setValue(!!capabilities?.[key]);
+    }
+  }
+
+  /**
+   * Composes a capabilities object to be sent to the backend based on the form
+   * values.
+   */
+  private composeCapabilitiesFromForm(): Record<string, boolean> {
+    const group = this.form.controls.meta.controls.capabilities;
+    const result: Record<string, boolean> = {};
+    for (const key of this.capabilities) {
+      result[key] = group.controls[key].value;
+    }
+    return result;
+  }
+
+  /** Creates the capabilities form group with all controls set to false */
+  private createCapabilitiesGroup() {
+    return this.fb.group({
+      vision: this.fb.nonNullable.control(false),
+      file_upload: this.fb.nonNullable.control(false),
+      web_search: this.fb.nonNullable.control(false),
+      image_generation: this.fb.nonNullable.control(false),
+      code_interpreter: this.fb.nonNullable.control(false),
+      citations: this.fb.nonNullable.control(false),
+      usage: this.fb.nonNullable.control(false),
+    });
   }
 }

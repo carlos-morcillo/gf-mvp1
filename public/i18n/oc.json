@@ -73,6 +73,21 @@
       "DRAG_DROP": "Arrastra la imagen o haz clic para seleccionar"
     }
   },
+  "AGENT_FORM": {
+    "LABELS": {
+      "NAME": "Cossí vols sonar ton agent?",
+      "DESCRIPTION": "Descriu brèvament çò qu'aquel agent fa.",
+      "BASE_MODEL": "Causís lo modèl de lenga sul qual se basa ton agent",
+      "SYSTEM": "Missatge del sistèma",
+      "CAPABILITIES": "Capacitats",
+      "KNOWLEDGE": "Bastidas de coneissença",
+      "PROFILE_IMAGE": "Imatge de perfil",
+      "ACTIVE": "Agent actiu"
+    },
+    "TIPS": {
+      "CAPABILITIES": "Activa las capacitats que vòs que ton agent aguèsse. Las pòdes combinar liurament."
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agentes"

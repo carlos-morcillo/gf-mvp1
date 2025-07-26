@@ -73,6 +73,21 @@
       "DRAG_DROP": "Arrastra la imagen o haz clic para seleccionar"
     }
   },
+  "AGENT_FORM": {
+    "LABELS": {
+      "NAME": "Como queres chamar ao teu axente?",
+      "DESCRIPTION": "Describe brevemente que fai este axente.",
+      "BASE_MODEL": "Escolle o modelo de lingua no que se basea o teu axente",
+      "SYSTEM": "Mensaxe de sistema",
+      "CAPABILITIES": "Habilidades",
+      "KNOWLEDGE": "Bases de coñecemento",
+      "PROFILE_IMAGE": "Imaxe de perfil",
+      "ACTIVE": "Axente activo"
+    },
+    "TIPS": {
+      "CAPABILITIES": "Activa as habilidades que desexas que teña o axente. Podes combinalas libremente."
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agentes"
