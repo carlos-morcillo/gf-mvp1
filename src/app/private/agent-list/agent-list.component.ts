@@ -117,7 +117,7 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
 
   /** Navigate to the new chat route for a given agent */
   startChat(agentId: string): void {
-    this.router.navigate(['./', agentId, 'chats', 'new'], {
+    this.router.navigate(['./', agentId, 'chats', 'add'], {
       relativeTo: this.route,
     });
   }

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { PaginationState } from 'ng-hub-ui-table';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PagedDataRequestParam } from '../types/paged-data-request-param';
-import { PaginatedData } from '../types/paginated-data';
 
 export abstract class CollectionService<
   T extends { id?: number | string | null }
@@ -41,20 +41,22 @@ export abstract class CollectionService<
 	}) */
   paginate(
     request: Partial<PagedDataRequestParam> = {}
-  ): Observable<PaginatedData<T>> {
+  ): Observable<PaginationState<T>> {
     const { page = 1, perPage = 20 } = request;
     return this.list(request).pipe(
       map((all) => {
-        const total = all.length;
-        const lastPage = Math.ceil(total / perPage);
+        // const total = all.length;
+        // const lastPage = Math.ceil(total / perPage);
         const start = (page - 1) * perPage;
         return {
           data: all.slice(start, start + perPage),
-          currentPage: page,
-          lastPage,
-          total,
+          page,
+          totalItems: all.length,
+          //   currentPage: page,
+          //   lastPage,
+          //   total,
           perPage,
-        } as PaginatedData<T>;
+        };
       })
     );
   }

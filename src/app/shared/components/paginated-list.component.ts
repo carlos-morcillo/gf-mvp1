@@ -15,7 +15,11 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
-import { PaginableTableHeader, TableRowEvent } from 'ng-hub-ui-table';
+import {
+  PaginableTableHeader,
+  PaginationState,
+  TableRowEvent,
+} from 'ng-hub-ui-table';
 import { firstValueFrom, Observable, Subject, takeUntil } from 'rxjs';
 // import { DefaultPagedDataRequestParam } from '../constants/default-paged-data-request-param';
 // import { DefaultModalOptions } from '../constants/modal';
@@ -161,18 +165,8 @@ export abstract class PaginatedListComponent<
 
   paginatedData = resource({
     params: () => this.request(),
-    loader: async () => {
-      return firstValueFrom(this.fetchFn());
-    },
+    loader: () => firstValueFrom(this.fetchFn()),
   });
-
-  //   lastPage = computed(() => {
-  //     if (!this.paginatedData.hasValue()) {
-  //       return null;
-  //     }
-  //     const { lastPage } = this.paginatedData.value();
-  //     return lastPage;
-  //   });
 
   /**
    * The `updateURLOnRequest` property is a boolean variable that determines whether the component should update the browser's URL
@@ -285,19 +279,19 @@ export abstract class PaginatedListComponent<
    * with the rest of the request data. It also includes the configured search keys, and forwards all
    * parameters to the `paginate` method of the data service.
    *
-   * @returns {Observable<PaginatedData<T>>} An observable that emits the paginated data result.
+   * @returns {Observable<PaginationState<T>>} An observable that emits the paginated data result.
    *
    * @example
    * this.fetchFn().subscribe((result) => {
    *   console.log(result.data); // Access returned items
    * });
    */
-  fetchFn(): Observable<Array<T>> {
+  fetchFn(): Observable<PaginationState<T>> {
     const { filters = [], ...request } = this.request();
     if (!this.dataSvc) {
       throw new Error('fetch function not found');
     }
-    return this.dataSvc.list({
+    return this.dataSvc.paginate({
       ...request,
       searchKeys: this.searchKeys(),
       filters,

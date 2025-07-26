@@ -1,4 +1,3 @@
-
 import {
   Component,
   ElementRef,
@@ -6,12 +5,14 @@ import {
   WritableSignal,
   effect,
   inject,
+  input,
   model,
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { AgentChat } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
 import { ChatMessage } from './chat-message';
 
@@ -26,7 +27,7 @@ import { ChatMessage } from './chat-message';
   templateUrl: './agent-chat.component.html',
 })
 export class AgentChatComponent {
-  private chatSvc = inject(AgentChatService);
+  private chatsSvc = inject(AgentChatService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   transloco = inject(TranslocoService);
@@ -43,8 +44,8 @@ export class AgentChatComponent {
   ];
 
   /** Current list of chat messages */
-  messages: WritableSignal<ChatMessage[]> = this.chatSvc.messages;
-  sending = this.chatSvc.sending;
+  messages: WritableSignal<ChatMessage[]> = this.chatsSvc.messages;
+  sending = this.chatsSvc.sending;
 
   /** Indicates that the chat history is being loaded */
   loading = signal(false);
@@ -60,30 +61,42 @@ export class AgentChatComponent {
   /** Agent identifier captured from the route */
   agentId = model<string>('', { alias: 'agentId' });
   /** Chat identifier from the route */
-  chatId = model<string | null>(null, { alias: 'id' });
+  chatId = model<string | undefined | null>(null, { alias: 'id' });
 
-  asdf = effect(() => {
-    const chatId = this.chatId();
-    const agentId = this.agentId();
-    if (chatId && chatId !== 'new') {
-      // Retrieve complete history for existing chats
-      this.loading.set(true);
-      this.error.set(false);
-      this.chatSvc
-        .getChat(chatId)
-        .then((chat) => {
-          this.messages.set(chat.messages);
-          this.loading.set(false);
-        })
-        .catch(() => {
-          this.messages.set([]);
-          this.loading.set(false);
-          this.error.set(true);
-        });
-    } else {
-      this.messages.set([]);
-    }
-  });
+  chat = input<AgentChat | null>(null);
+
+  //   messages = resource({
+  // 	params: () => ({chat: this.chat()}),
+  // 	loader: async ({params: {chat}}) =>{
+  // 		if(!chat) {
+  // 			return null;
+  // 		}
+  // 		return this.chatsSvc.getMessages()
+  // 	}
+  //   })
+
+  //   chatEffect = effect(() => {
+  //     const chatId = this.chatId();
+  //     const agentId = this.agentId();
+  //     if (chatId && chatId !== 'new') {
+  //       // Retrieve complete history for existing chats
+  //       this.loading.set(true);
+  //       this.error.set(false);
+  //       this.chatSvc
+  //         .find(chatId)
+  //         .then((chat) => {
+  //           this.messages.set(chat.messages);
+  //           this.loading.set(false);
+  //         })
+  //         .catch(() => {
+  //           this.messages.set([]);
+  //           this.loading.set(false);
+  //           this.error.set(true);
+  //         });
+  //     } else {
+  //       this.messages.set([]);
+  //     }
+  //   });
 
   constructor() {
     // Keep the latest message in view once Angular renders the DOM
@@ -99,10 +112,10 @@ export class AgentChatComponent {
     if (!content) {
       return;
     }
-    if (!this.chatId() || this.chatId() === 'new') {
-      this.chatSvc
+    if (!this.chatId() || this.chatId() === 'add') {
+      this.chatsSvc
         .createChatWithAgent(this.agentId(), content)
-        .then((chat) => {
+        .then((chat: AgentChat) => {
           this.chatId.set(chat.id);
           this.router.navigate([
             '/agents',
@@ -113,7 +126,7 @@ export class AgentChatComponent {
         })
         .catch(() => {});
     } else {
-      this.chatSvc.sendMessage(this.agentId(), content).subscribe();
+      this.chatsSvc.sendMessage(this.agentId(), content).subscribe();
     }
     this.inputValue = '';
   }

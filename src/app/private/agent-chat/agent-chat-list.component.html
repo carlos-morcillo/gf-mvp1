@@ -1,7 +1,7 @@
 <div class="container-fluid d-flex flex-column gap-4">
   <div class="d-flex justify-content-between align-items-center">
     <h1>{{ "AGENT_CHAT_LIST.TITLES.MAIN" | transloco }}</h1>
-    <button class="btn btn-primary" [routerLink]="['./', 'new']">
+    <button class="btn btn-primary" [routerLink]="['./', 'add']">
       {{ "CHAT_LIST.NEW_CHAT_BUTTON" | transloco }}
     </button>
   </div>
@@ -12,6 +12,14 @@
     [data]="paginatedData.value()"
     [searchable]="false"
     [clickFn]="goToChat.bind(this)"
+    [searchable]="true"
+    [options]="{ hoverableRows: true, scrollable: true }"
+    [clickFn]="navigateTo.bind(this)"
+    [(searchTerm)]="searchTerm"
+    [(filters)]="dynamicFilters"
+    [(ordination)]="ordination"
+    [(perPage)]="perPage"
+    [(page)]="page"
   >
     <ng-template cellTpt header="updated_at" let-property="property">
       {{ formatDate(property) }}

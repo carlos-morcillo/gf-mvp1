@@ -12,6 +12,14 @@
     [loading]="paginatedData.isLoading()"
     [data]="paginatedData.value()"
     [searchable]="false"
+    [searchable]="true"
+    [options]="{ hoverableRows: true, scrollable: true }"
+    [clickFn]="navigateTo.bind(this)"
+    [(searchTerm)]="searchTerm"
+    [(filters)]="dynamicFilters"
+    [(ordination)]="ordination"
+    [(perPage)]="perPage"
+    [(page)]="page"
   >
     <ng-template cellTpt header="created_at" let-property="property">
       {{ formatDate(property) }}

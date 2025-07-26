@@ -7,13 +7,6 @@ import { PagedDataRequestParam } from '../../shared/types/paged-data-request-par
 import { AgentChat } from './agent-chat.model';
 import { ChatMessage } from './chat-message';
 
-/** Interface representing a full chat retrieved from WebUI */
-export interface Chat {
-  id: string;
-  messages: ChatMessage[];
-  agent: string;
-}
-
 @Injectable({ providedIn: 'root' })
 export class AgentChatService extends CollectionService<AgentChat> {
   protected override path = 'chats';
@@ -42,7 +35,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
   async createChatWithAgent(
     agentId: string,
     initialMessage: string
-  ): Promise<Chat> {
+  ): Promise<AgentChat> {
     this.sending.set(true);
     const messages: ChatMessage[] = [
       { role: 'user', content: initialMessage },
@@ -50,10 +43,10 @@ export class AgentChatService extends CollectionService<AgentChat> {
     ];
 
     const chat = await firstValueFrom(
-      this.http.post<Chat>(`${environment.baseURL}/chats/new`, {
+      this.http.post<AgentChat>(`${environment.baseURL}/chats/new`, {
         chat: {
-          agentId: 'prueba',
-          models: ['prueba'],
+          agentId: agentId,
+          models: [agentId],
           messages: [
             { role: 'user', content: initialMessage },
             { role: 'assistant', content: '' },
@@ -84,10 +77,8 @@ export class AgentChatService extends CollectionService<AgentChat> {
   }
 
   /** Retrieves an existing chat from the backend */
-  async getChat(chatId: string): Promise<Chat> {
-    return firstValueFrom(
-      this.http.get<Chat>(`${environment.baseURL}/chats/${chatId}`)
-    );
+  override find(chatId: string): Observable<AgentChat> {
+    return this.http.get<AgentChat>(`${environment.baseURL}/chats/${chatId}`);
   }
 
   /**

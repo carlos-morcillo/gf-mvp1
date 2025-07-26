@@ -1,5 +1,8 @@
+import { ChatMessage } from './chat-message';
+
 export interface AgentChat {
-  id?: number | string;
+  id?: string;
   agent: string;
   updated_at: number;
+  messages: ChatMessage[];
 }

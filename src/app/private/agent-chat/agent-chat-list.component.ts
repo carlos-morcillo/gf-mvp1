@@ -10,7 +10,6 @@ import {
   TableRowEvent,
 } from 'ng-hub-ui-table';
 import { firstValueFrom } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { AgentChat } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
@@ -65,19 +64,6 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
       ],
     },
   ];
-
-  /**
-   * Overrides the default data fetcher so results are filtered by agent.
-   */
-  override fetchFn() {
-    return this.dataSvc
-      .list()
-      .pipe(
-        map((chats) =>
-          chats.filter((c) => !this.agentId || c.agent === this.agentId())
-        )
-      );
-  }
 
   /** Navigate to the selected chat */
   goToChat(event: TableRowEvent<AgentChat>): void {
