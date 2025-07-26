@@ -11,5 +11,8 @@
   "BUTTONS": {
     "SUBMIT": "Login",
     "CREATE_COMPANY": "Create company"
+  },
+  "STATUS": {
+    "LOADING": "Loading..."
   }
 }

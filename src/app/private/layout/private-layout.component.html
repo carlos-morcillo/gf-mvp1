@@ -6,19 +6,21 @@
 <!-- Offcanvas menu for mobile -->
 <div class="offcanvas offcanvas-start" [class.show]="menuOpen()" tabindex="-1">
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title">Menú</h5>
+    <h5 class="offcanvas-title">{{ 'SIDEBAR.MENU.TITLE' | transloco }}</h5>
     <button type="button" class="btn-close" (click)="menuOpen.set(false)"></button>
   </div>
   <div class="offcanvas-body p-0">
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="/private/dashboard" (click)="menuOpen.set(false)">
-          <i class="fa fa-home me-2"></i> Dashboard
+          <i class="fa fa-home me-2"></i>
+          {{ 'SIDEBAR.MENU.DASHBOARD' | transloco }}
         </a>
       </li>
       <li>
         <a class="nav-link" routerLink="/private/agents" (click)="menuOpen.set(false)">
-          <i class="fa fa-brain me-2"></i> Agents
+          <i class="fa fa-brain me-2"></i>
+          {{ 'SIDEBAR.MENU.AGENTS' | transloco }}
         </a>
         @if (pinnedSvc.pinned().length) {
           <ul class="nav flex-column ms-3">
@@ -32,37 +34,56 @@
       </li>
       <li>
         <a class="nav-link" routerLink="/private/training" (click)="menuOpen.set(false)">
-          <i class="fa fa-book-open me-2"></i> Training
+          <i class="fa fa-book-open me-2"></i>
+          {{ 'SIDEBAR.MENU.TRAINING' | transloco }}
         </a>
       </li>
       <li>
         <a class="nav-link" routerLink="/private/evaluation" (click)="menuOpen.set(false)">
-          <i class="fa fa-clipboard-check me-2"></i> Evaluation
+          <i class="fa fa-clipboard-check me-2"></i>
+          {{ 'SIDEBAR.MENU.EVALUATION' | transloco }}
         </a>
       </li>
       <li>
         <a class="nav-link" routerLink="/private/chats" (click)="menuOpen.set(false)">
-          <i class="fa fa-comments me-2"></i> Chats
+          <i class="fa fa-comments me-2"></i>
+          {{ 'SIDEBAR.MENU.CHATS' | transloco }}
         </a>
       </li>
       <li>
         <a class="nav-link" href="#" (click)="menuOpen.set(false)">
-          <i class="fa fa-file-alt me-2"></i> Documentation
+          <i class="fa fa-file-alt me-2"></i>
+          {{ 'SIDEBAR.MENU.DOCUMENTATION' | transloco }}
         </a>
       </li>
       <li>
         <a class="nav-link" href="#" (click)="menuOpen.set(false)">
-          <i class="fa fa-user-shield me-2"></i> Employee Portal
+          <i class="fa fa-user-shield me-2"></i>
+          {{ 'SIDEBAR.MENU.EMPLOYEE_PORTAL' | transloco }}
         </a>
       </li>
       <li>
         <a class="nav-link" routerLink="/private/knowledge" (click)="menuOpen.set(false)">
-          <i class="fa fa-folder me-2"></i> Knowledge
+          <i class="fa fa-folder me-2"></i>
+          {{ 'SIDEBAR.MENU.KNOWLEDGE' | transloco }}
         </a>
       </li>
-    </ul>
+      </ul>
+      <div class="mt-3 border-top pt-3 text-center">
+        <a routerLink="/profile" class="text-decoration-none d-block" (click)="menuOpen.set(false)">
+          <hub-avatar [name]="user()?.name" [src]="user()?.avatar" size="40"></hub-avatar>
+          <div class="small">{{ user()?.name }}</div>
+          <div class="text-muted small">{{ user()?.email }}</div>
+        </a>
+        <select class="form-select mt-2" [ngModel]="currentLang()" (ngModelChange)="changeLang($event)">
+          <option *ngFor="let l of languages" [value]="l.code">{{ l.labelKey | transloco }}</option>
+        </select>
+        <button class="btn btn-link mt-2" (click)="logout()">
+          <i class="fa fa-sign-out-alt"></i> {{ 'SIDEBAR.ACTIONS.LOGOUT' | transloco }}
+        </button>
+      </div>
+    </div>
   </div>
-</div>
 @if (menuOpen()) {
   <div class="offcanvas-backdrop fade show d-md-none" (click)="menuOpen.set(false)"></div>
 }
@@ -74,12 +95,14 @@
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a class="nav-link" routerLink="/private/dashboard">
-            <i class="fa fa-home me-2"></i> Dashboard
+            <i class="fa fa-home me-2"></i>
+            {{ 'SIDEBAR.MENU.DASHBOARD' | transloco }}
           </a>
         </li>
         <li>
           <a class="nav-link" routerLink="/private/agents">
-            <i class="fa fa-brain me-2"></i> Agents
+            <i class="fa fa-brain me-2"></i>
+            {{ 'SIDEBAR.MENU.AGENTS' | transloco }}
           </a>
           @if (pinnedSvc.pinned().length) {
             <ul class="nav flex-column ms-3">
@@ -93,34 +116,53 @@
         </li>
         <li>
           <a class="nav-link" routerLink="/private/training">
-            <i class="fa fa-book-open me-2"></i> Training
+            <i class="fa fa-book-open me-2"></i>
+            {{ 'SIDEBAR.MENU.TRAINING' | transloco }}
           </a>
         </li>
         <li>
           <a class="nav-link" routerLink="/private/evaluation">
-            <i class="fa fa-clipboard-check me-2"></i> Evaluation
+            <i class="fa fa-clipboard-check me-2"></i>
+            {{ 'SIDEBAR.MENU.EVALUATION' | transloco }}
           </a>
         </li>
         <li>
           <a class="nav-link" routerLink="/private/chats">
-            <i class="fa fa-comments me-2"></i> Chats
+            <i class="fa fa-comments me-2"></i>
+            {{ 'SIDEBAR.MENU.CHATS' | transloco }}
           </a>
         </li>
         <li>
           <a class="nav-link" href="#">
-            <i class="fa fa-file-alt me-2"></i> Documentation
+            <i class="fa fa-file-alt me-2"></i>
+            {{ 'SIDEBAR.MENU.DOCUMENTATION' | transloco }}
           </a>
         </li>
         <li>
           <a class="nav-link" href="#">
-            <i class="fa fa-user-shield me-2"></i> Employee Portal
+            <i class="fa fa-user-shield me-2"></i>
+            {{ 'SIDEBAR.MENU.EMPLOYEE_PORTAL' | transloco }}
           </a>
         </li>
         <li>
           <a class="nav-link" routerLink="/private/knowledge">
-            <i class="fa fa-folder me-2"></i> Knowledge
+            <i class="fa fa-folder me-2"></i>
+            {{ 'SIDEBAR.MENU.KNOWLEDGE' | transloco }}
           </a>
         </li>
+      <div class="mt-3 border-top pt-3 text-center">
+        <a routerLink="/profile" class="text-decoration-none d-block">
+          <hub-avatar [name]="user()?.name" [src]="user()?.avatar" size="40"></hub-avatar>
+          <div class="small">{{ user()?.name }}</div>
+          <div class="text-muted small">{{ user()?.email }}</div>
+        </a>
+        <select class="form-select mt-2" [ngModel]="currentLang()" (ngModelChange)="changeLang($event)">
+          <option *ngFor="let l of languages" [value]="l.code">{{ l.labelKey | transloco }}</option>
+        </select>
+        <button class="btn btn-link mt-2" (click)="logout()">
+          <i class="fa fa-sign-out-alt"></i> {{ 'SIDEBAR.ACTIONS.LOGOUT' | transloco }}
+        </button>
+      </div>
       </ul>
     </nav>
 

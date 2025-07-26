@@ -1,0 +1,15 @@
+{
+  "TITLES": { "MAIN": "Register Company" },
+  "FIELDS": {
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "PASSWORD": "Password"
+  },
+  "BUTTONS": {
+    "SAVE": "Create",
+    "BACK": "Back to login"
+  },
+  "STATUS": {
+    "SAVING": "Saving..."
+  }
+}

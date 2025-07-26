@@ -1,0 +1,15 @@
+{
+  "TITLES": { "MAIN": "Registrar compañía" },
+  "FIELDS": {
+    "NAME": "Nombre",
+    "EMAIL": "Correo",
+    "PASSWORD": "Contraseña"
+  },
+  "BUTTONS": {
+    "SAVE": "Crear",
+    "BACK": "Volver al login"
+  },
+  "STATUS": {
+    "SAVING": "Guardando..."
+  }
+}

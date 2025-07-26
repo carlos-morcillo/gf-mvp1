@@ -52,7 +52,7 @@
           class="btn btn-primary w-100"
           [disabled]="loading() || form.invalid"
           >
-          {{ loading() ? "Loading..." : "LOGIN.BUTTONS.SUBMIT" }}
+          {{ loading() ? ("LOGIN.STATUS.LOADING" | transloco) : ("LOGIN.BUTTONS.SUBMIT" | transloco) }}
         </button>
       </form>
     }
@@ -87,7 +87,7 @@
           class="btn btn-primary w-100"
           [disabled]="loading() || ldapForm.invalid"
           >
-          {{ loading() ? "Loading..." : "LOGIN.BUTTONS.SUBMIT" }}
+          {{ loading() ? ("LOGIN.STATUS.LOADING" | transloco) : ("LOGIN.BUTTONS.SUBMIT" | transloco) }}
         </button>
       </form>
     }
