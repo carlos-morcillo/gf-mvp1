@@ -44,7 +44,7 @@
       class="form-control"
       rows="1"
       [(ngModel)]="inputValue"
-      [placeholder]="'AGENT_CHAT.PLACEHOLDER.INPUT'"
+      [placeholder]="'AGENT_CHAT.PLACEHOLDER.INPUT' | transloco"
       (keydown.enter)="send(); $event.preventDefault()"
     ></textarea>
     <button class="btn btn-primary" (click)="send()" [disabled]="sending()">

@@ -56,8 +56,8 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
           tooltip: upperFirst(
             this.translocoSvc.translate('GENERIC.BUTTONS.REMOVE')
           ),
-          icon: { type: 'font-awesome', value: 'fa-trash fa' },
-          classlist: 'btn btn-table-danger',
+          icon: { type: 'font-awesome', value: 'fa-trash' },
+          classlist: 'btn text-danger',
           handler: (event) =>
             this.delete((event as TableRowEvent<AgentChat>).data),
         },

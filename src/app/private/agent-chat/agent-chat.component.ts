@@ -10,11 +10,10 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
-import { AgentChat } from './agent-chat.model';
+import { AgentChat, Message } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
-import { ChatMessage } from './chat-message';
 
 /**
  * Chat component that mimics the ChatGPT interface.
@@ -23,7 +22,7 @@ import { ChatMessage } from './chat-message';
 @Component({
   selector: 'app-agent-chat',
   standalone: true,
-  imports: [FormsModule, RouterLink, TranslocoModule],
+  imports: [FormsModule, TranslocoModule],
   templateUrl: './agent-chat.component.html',
 })
 export class AgentChatComponent {
@@ -44,7 +43,7 @@ export class AgentChatComponent {
   ];
 
   /** Current list of chat messages */
-  messages: WritableSignal<ChatMessage[]> = this.chatsSvc.messages;
+  messages: WritableSignal<Message[]> = this.chatsSvc.messages;
   sending = this.chatsSvc.sending;
 
   /** Indicates that the chat history is being loaded */
@@ -60,10 +59,20 @@ export class AgentChatComponent {
 
   /** Agent identifier captured from the route */
   agentId = model<string>('', { alias: 'agentId' });
+
   /** Chat identifier from the route */
-  chatId = model<string | undefined | null>(null, { alias: 'id' });
+  chatId = model<string | undefined | null>(null, { alias: 'chatId' });
 
   chat = input<AgentChat | null>(null);
+
+  chatEffect = effect(() => {
+    const chat = this.chat();
+    if (!chat) {
+      return;
+    }
+    this.chatsSvc.messages.set(chat.chat.messages);
+    this.agentId.set(chat.chat.agentId);
+  });
 
   //   messages = resource({
   // 	params: () => ({chat: this.chat()}),
@@ -107,12 +116,13 @@ export class AgentChatComponent {
   }
 
   /** Sends the current input value */
-  send(): void {
+  async send() {
     const content = this.inputValue.trim();
     if (!content) {
       return;
     }
     if (!this.chatId() || this.chatId() === 'add') {
+      debugger;
       this.chatsSvc
         .createChatWithAgent(this.agentId(), content)
         .then((chat: AgentChat) => {
@@ -126,7 +136,15 @@ export class AgentChatComponent {
         })
         .catch(() => {});
     } else {
-      this.chatsSvc.sendMessage(this.agentId(), content).subscribe();
+      const result = await this.chatsSvc.sendMessage2(
+        this.agentId(),
+        this.chatId()!,
+        content
+      );
+      debugger;
+      //   this.chatsSvc
+      //     .sendMessage(this.agentId(), this.chatId()!, content)
+      //     .subscribe();
     }
     this.inputValue = '';
   }

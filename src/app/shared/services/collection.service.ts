@@ -45,16 +45,11 @@ export abstract class CollectionService<
     const { page = 1, perPage = 20 } = request;
     return this.list(request).pipe(
       map((all) => {
-        // const total = all.length;
-        // const lastPage = Math.ceil(total / perPage);
         const start = (page - 1) * perPage;
         return {
           data: all.slice(start, start + perPage),
           page,
           totalItems: all.length,
-          //   currentPage: page,
-          //   lastPage,
-          //   total,
           perPage,
         };
       })
