@@ -88,6 +88,20 @@
       "CAPABILITIES": "Enable the skills you want your agent to have. You can combine them freely."
     }
   },
+  "AGENT_DESCRIPTION": {
+    "TITLE": "How should your agent behave?",
+    "INTRO": "Fill the following fields to define how your agent will speak, interact and respond. This information becomes an internal description used by the AI model.",
+    "FIELDS": {
+      "TONE": "Conversation tone",
+      "PERSONALITY": "Agent personality",
+      "WELCOME": "Welcome message",
+      "CONTEXT": "Context",
+      "OUTPUT": "Output format"
+    },
+    "VALIDATION": {
+      "CONTEXT_REQUIRED": "Context is required"
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agents"

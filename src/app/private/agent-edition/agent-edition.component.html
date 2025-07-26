@@ -18,8 +18,83 @@
   </div>
 
   <div class="mb-3" formGroupName="meta">
-    <label class="form-label">{{ 'AGENT_FORM.LABELS.DESCRIPTION' | transloco }}</label>
-    <textarea rows="3" class="form-control" formControlName="description"></textarea>
+    <fieldset formGroupName="descriptionFields" class="border rounded p-3">
+      <legend class="float-none w-auto fs-6 mb-2">
+        {{ 'AGENT_DESCRIPTION.TITLE' | transloco }}
+      </legend>
+      <p class="small text-muted">
+        {{ 'AGENT_DESCRIPTION.INTRO' | transloco }}
+      </p>
+
+      <div class="mb-3">
+        <label class="form-label">
+          {{ 'AGENT_DESCRIPTION.FIELDS.TONE' | transloco }}
+          <i
+            class="fas fa-question-circle ms-1"
+            [title]="'AGENT_DESCRIPTION.FIELDS.TONE' | transloco"
+          ></i>
+        </label>
+        <select class="form-select" formControlName="tone">
+          <option value=""></option>
+          <option value="CASUAL">
+            {{ 'AGENT_EDITION.TONES.CASUAL' | transloco }}
+          </option>
+          <option value="PROFESSIONAL">
+            {{ 'AGENT_EDITION.TONES.PROFESSIONAL' | transloco }}
+          </option>
+          <option value="CONCISE">
+            {{ 'AGENT_EDITION.TONES.CONCISE' | transloco }}
+          </option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">
+          {{ 'AGENT_DESCRIPTION.FIELDS.PERSONALITY' | transloco }}
+          <i
+            class="fas fa-question-circle ms-1"
+            [title]="'AGENT_DESCRIPTION.FIELDS.PERSONALITY' | transloco"
+          ></i>
+        </label>
+        <textarea rows="2" class="form-control" formControlName="persona"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">
+          {{ 'AGENT_DESCRIPTION.FIELDS.WELCOME' | transloco }}
+          <i
+            class="fas fa-question-circle ms-1"
+            [title]="'AGENT_DESCRIPTION.FIELDS.WELCOME' | transloco"
+          ></i>
+        </label>
+        <input type="text" class="form-control" formControlName="welcomeMessage" />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">
+          {{ 'AGENT_DESCRIPTION.FIELDS.CONTEXT' | transloco }}
+          <i
+            class="fas fa-question-circle ms-1"
+            [title]="'AGENT_DESCRIPTION.FIELDS.CONTEXT' | transloco"
+          ></i>
+        </label>
+        <textarea rows="3" class="form-control" formControlName="context"></textarea>
+        <div class="text-danger" *ngIf="form.get('meta.descriptionFields.context')?.invalid && form.get('meta.descriptionFields.context')?.touched">
+          {{ 'AGENT_DESCRIPTION.VALIDATION.CONTEXT_REQUIRED' | transloco }}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">
+          {{ 'AGENT_DESCRIPTION.FIELDS.OUTPUT' | transloco }}
+          <i
+            class="fas fa-question-circle ms-1"
+            [title]="'AGENT_DESCRIPTION.FIELDS.OUTPUT' | transloco"
+          ></i>
+        </label>
+        <input type="text" class="form-control" formControlName="outputFormat" />
+      </div>
+    </fieldset>
   </div>
 
   <div class="mb-3" formGroupName="params">
