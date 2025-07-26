@@ -9,6 +9,10 @@ import {
   TableRowEvent,
 } from 'ng-hub-ui-table';
 import { map } from 'rxjs/operators';
+import { upperFirst } from 'lodash';
+import { Translations } from '../../shared/services/translations.service';
+import { Confirmable } from '../../shared/decorators/confirm.decorator';
+import { firstValueFrom } from 'rxjs';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { AgentChat } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
@@ -48,6 +52,17 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
       ),
       property: 'updated_at',
     },
+    {
+      property: null as any,
+      buttons: [
+        {
+          tooltip: upperFirst(Translations.instant('GENERIC.BUTTONS.REMOVE')),
+          icon: { type: 'material', value: 'delete' },
+          classlist: 'btn btn-table-danger',
+          handler: (event) => this.delete((event as TableRowEvent<AgentChat>).data),
+        },
+      ],
+    },
   ];
 
   /**
@@ -70,6 +85,17 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
     } else {
       this.router.navigate(['./', event.data.id], { relativeTo: this.route });
     }
+  }
+
+  /** Delete a chat with confirmation */
+  @Confirmable({
+    content: 'CHAT_LIST.CONFIRM.DELETE',
+    confirmButtonText: 'GENERIC.BUTTONS.REMOVE',
+    denyButtonText: 'GENERIC.BUTTONS.CANCEL',
+  })
+  override async delete(chat: AgentChat): Promise<void> {
+    await firstValueFrom(this.dataSvc.deleteChat(String(chat.id)));
+    this.paginatedData.reload();
   }
 
   formatDate(timestamp: number): string {

@@ -118,4 +118,9 @@ export class AgentChatService extends CollectionService<AgentChat> {
         })
       );
   }
+
+  /** Deletes a chat by identifier */
+  deleteChat(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.baseURL}/chats/${id}`);
+  }
 }
