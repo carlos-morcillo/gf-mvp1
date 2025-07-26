@@ -1,0 +1,226 @@
+{
+  "AGENT_CHAT_LIST": {
+    "TITLES": {
+      "MAIN": "Agent Chats"
+    },
+    "COLUMNS": {
+      "ID": "Id",
+      "AGENT": "Agent",
+      "UPDATED": "Updated"
+    },
+    "BUTTONS": {
+      "NEW_CHAT": "New Chat"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No chats found"
+    }
+  },
+  "AGENT_CHAT": {
+    "TITLES": {
+      "MAIN": "Chat"
+    },
+    "PLACEHOLDER": {
+      "INPUT": "Type a message"
+    },
+    "BUTTONS": {
+      "VISION": "Vision",
+      "FILE_UPLOAD": "File upload",
+      "WEB_SEARCH": "Web search",
+      "IMAGE_GENERATION": "Image generation",
+      "CODE_INTERPRETER": "Code interpreter",
+      "CITATIONS": "Citations",
+      "USAGE": "Usage",
+      "SEND": "Send"
+    },
+    "STATUS": {
+      "SENDING": "Sending...",
+      "LOADING": "Loading conversation...",
+      "ERROR": "Unable to load conversation"
+    },
+    "NEW_BUTTON": "New Chat"
+  },
+  "AGENT_EDITION": {
+    "TITLES": {
+      "MAIN": "Agent"
+    },
+    "LABELS": {
+      "NAME": "Name",
+      "TONE": "Tone",
+      "PERSONA": "Persona",
+      "WELCOME_MESSAGE": "Welcome message",
+      "CONTEXT": "Context",
+      "OUTPUT_FORMAT": "Output format",
+      "MODEL": "Model",
+      "ACTIVE": "Active",
+      "SKILLS": "Skills",
+      "KNOWLEDGE": "Knowledge bases",
+      "FILES": "Files",
+      "UPLOAD_IMAGE": "Profile image"
+    },
+    "TIPS": {
+      "NAME": "Unique identifier for the agent",
+      "PERSONALITY": "Briefly describe how the agent should behave"
+    },
+    "TONES": {
+      "CASUAL": "Casual",
+      "PROFESSIONAL": "Professional",
+      "CONCISE": "Concise"
+    },
+    "BUTTONS": {
+      "SAVE": "Save"
+    },
+    "FORM": {
+      "DRAG_DROP": "Drag image here or click to select"
+    }
+  },
+  "AGENT_LIST": {
+    "TITLES": {
+      "MAIN": "Agents"
+    },
+    "COLUMNS": {
+      "PIN": "",
+      "NAME": "Name",
+      "MODEL": "Model",
+      "FEATURES": "Features"
+    },
+    "BUTTONS": {
+      "ADD": "Add"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No agents found"
+    }
+  },
+  "CHAT_LIST": {
+    "NEW_CHAT_BUTTON": "New Chat",
+    "STATUS": {
+      "LOADING": "Loading..."
+    },
+    "NO_CHATS": "No chats available"
+  },
+  "CREATE_COMPANY": {
+    "TITLES": {
+      "MAIN": "Register Company"
+    },
+    "FIELDS": {
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "PASSWORD": "Password"
+    },
+    "BUTTONS": {
+      "SAVE": "Create",
+      "BACK": "Back to login"
+    },
+    "STATUS": {
+      "SAVING": "Saving..."
+    }
+  },
+  "DASHBOARD": {
+    "TITLES": {
+      "MAIN": "Dashboard"
+    },
+    "SECTIONS": {
+      "QUICK_ACCESS": "Quick Access",
+      "RECENT_ACTIVITY": "Recent Activity"
+    },
+    "METRICS": {
+      "TRAININGS_COMPLETED": "Trainings completed",
+      "DOCUMENTS_INDEXED": "Indexed documents",
+      "AVERAGE_SCORE": "Average score",
+      "ACTIVE_AGENTS": "Active agents"
+    },
+    "ACTIONS": {
+      "NEW_DOC": "New document",
+      "NEW_AGENT": "Create agent",
+      "RUN_TRAINING": "Launch training"
+    },
+    "LOGS": {
+      "USER_CREATED_AGENT": "User Juan created an agent",
+      "DOC_INDEXED": "Document Manual.pdf indexed",
+      "TRAINING_UPDATED": "Basic training updated"
+    }
+  },
+  "EVALUATION": {
+    "TITLES": {
+      "MAIN": "Evaluation"
+    }
+  },
+  "KNOWLEDGE_EDITION": {
+    "TITLES": {
+      "MAIN": "Knowledge Base"
+    },
+    "FORM": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "SAVE_BUTTON": "Save",
+      "SUCCESS": "Knowledge base saved successfully"
+    }
+  },
+  "KNOWLEDGE_LIST": {
+    "TITLES": {
+      "MAIN": "Knowledge Bases"
+    },
+    "COLUMNS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CREATED_AT": "Created"
+    },
+    "BUTTONS": {
+      "ADD": "Add"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No knowledge bases found"
+    }
+  },
+  "LANGUAGES": {
+    "ES": "Español",
+    "CA": "Català",
+    "EU": "Euskara",
+    "GL": "Galego",
+    "AST": "Asturianu",
+    "OC": "Aranés"
+  },
+  "LOGIN": {
+    "TABS": {
+      "STANDARD": "Standard",
+      "LDAP": "LDAP"
+    },
+    "FIELDS": {
+      "EMAIL": "Email",
+      "PASSWORD": "Password",
+      "USER": "User"
+    },
+    "BUTTONS": {
+      "SUBMIT": "Login",
+      "CREATE_COMPANY": "Create company"
+    },
+    "STATUS": {
+      "LOADING": "Loading..."
+    }
+  },
+  "PROFILE": {
+    "TITLES": {
+      "MAIN": "User Profile"
+    }
+  },
+  "SIDEBAR": {
+    "MENU": {
+      "DASHBOARD": "Dashboard",
+      "AGENTS": "Agents",
+      "TRAINING": "Training",
+      "EVALUATION": "Evaluation",
+      "CHATS": "Chats",
+      "DOCUMENTATION": "Documentation",
+      "EMPLOYEE_PORTAL": "Employee Portal",
+      "KNOWLEDGE": "Knowledge",
+      "TITLE": "Menu"
+    },
+    "ACTIONS": {
+      "LOGOUT": "Logout"
+    }
+  },
+  "TRAINING": {
+    "TITLES": {
+      "MAIN": "Training"
+    }
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "AGENT_CHAT_LIST": {
+    "TITLES": {
+      "MAIN": "Chats de Agentes"
+    },
+    "COLUMNS": {
+      "ID": "Id",
+      "AGENT": "Agente",
+      "UPDATED": "Actualizado"
+    },
+    "BUTTONS": {
+      "NEW_CHAT": "Nuevo Chat"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "Sin chats"
+    }
+  },
+  "AGENT_CHAT": {
+    "TITLES": {
+      "MAIN": "Chat"
+    },
+    "PLACEHOLDER": {
+      "INPUT": "Escribe un mensaje"
+    },
+    "BUTTONS": {
+      "VISION": "Visión",
+      "FILE_UPLOAD": "Subir archivo",
+      "WEB_SEARCH": "Búsqueda web",
+      "IMAGE_GENERATION": "Generación de imágenes",
+      "CODE_INTERPRETER": "Intérprete de código",
+      "CITATIONS": "Citas",
+      "USAGE": "Uso",
+      "SEND": "Enviar"
+    },
+    "STATUS": {
+      "SENDING": "Enviando...",
+      "LOADING": "Cargando conversación...",
+      "ERROR": "No se pudo cargar la conversación"
+    },
+    "NEW_BUTTON": "Nuevo chat"
+  },
+  "AGENT_EDITION": {
+    "TITLES": {
+      "MAIN": "Agente"
+    },
+    "LABELS": {
+      "NAME": "Nombre",
+      "TONE": "Tono",
+      "PERSONA": "Personalidad",
+      "WELCOME_MESSAGE": "Mensaje de bienvenida",
+      "CONTEXT": "Contexto",
+      "OUTPUT_FORMAT": "Formato de salida",
+      "MODEL": "Modelo",
+      "ACTIVE": "Activo",
+      "SKILLS": "Habilidades",
+      "KNOWLEDGE": "Bases de conocimiento",
+      "FILES": "Archivos",
+      "UPLOAD_IMAGE": "Imagen de perfil"
+    },
+    "TIPS": {
+      "NAME": "Identificador único del agente",
+      "PERSONALITY": "Describe brevemente el comportamiento"
+    },
+    "TONES": {
+      "CASUAL": "Cercano",
+      "PROFESSIONAL": "Profesional",
+      "CONCISE": "Conciso"
+    },
+    "BUTTONS": {
+      "SAVE": "Guardar"
+    },
+    "FORM": {
+      "DRAG_DROP": "Arrastra la imagen o haz clic para seleccionar"
+    }
+  },
+  "AGENT_LIST": {
+    "TITLES": {
+      "MAIN": "Agentes"
+    },
+    "COLUMNS": {
+      "PIN": "",
+      "NAME": "Nombre",
+      "MODEL": "Modelo",
+      "FEATURES": "Características"
+    },
+    "BUTTONS": {
+      "ADD": "Añadir"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No se encontraron agentes"
+    }
+  },
+  "CHAT_LIST": {
+    "NEW_CHAT_BUTTON": "Nuevo Chat",
+    "STATUS": {
+      "LOADING": "Cargando..."
+    },
+    "NO_CHATS": "No hay chats disponibles"
+  },
+  "CREATE_COMPANY": {
+    "TITLES": {
+      "MAIN": "Registrar compañía"
+    },
+    "FIELDS": {
+      "NAME": "Nombre",
+      "EMAIL": "Correo",
+      "PASSWORD": "Contraseña"
+    },
+    "BUTTONS": {
+      "SAVE": "Crear",
+      "BACK": "Volver al login"
+    },
+    "STATUS": {
+      "SAVING": "Guardando..."
+    }
+  },
+  "DASHBOARD": {
+    "TITLES": {
+      "MAIN": "Dashboard"
+    },
+    "SECTIONS": {
+      "QUICK_ACCESS": "Acceso rápido",
+      "RECENT_ACTIVITY": "Actividad reciente"
+    },
+    "METRICS": {
+      "TRAININGS_COMPLETED": "Formaciones completadas",
+      "DOCUMENTS_INDEXED": "Documentos indexados",
+      "AVERAGE_SCORE": "Puntuación media",
+      "ACTIVE_AGENTS": "Agentes activos"
+    },
+    "ACTIONS": {
+      "NEW_DOC": "Nuevo documento",
+      "NEW_AGENT": "Crear agente",
+      "RUN_TRAINING": "Lanzar training"
+    },
+    "LOGS": {
+      "USER_CREATED_AGENT": "Usuario Juan creó un agente",
+      "DOC_INDEXED": "Se indexó el documento Manual.pdf",
+      "TRAINING_UPDATED": "Actualizada la formación Básica"
+    }
+  },
+  "EVALUATION": {
+    "TITLES": {
+      "MAIN": "Evaluación"
+    }
+  },
+  "KNOWLEDGE_EDITION": {
+    "TITLES": {
+      "MAIN": "Base de Conocimiento"
+    },
+    "FORM": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "SAVE_BUTTON": "Guardar",
+      "SUCCESS": "Base de conocimiento guardada correctamente"
+    }
+  },
+  "KNOWLEDGE_LIST": {
+    "TITLES": {
+      "MAIN": "Bases de Conocimiento"
+    },
+    "COLUMNS": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "CREATED_AT": "Creada"
+    },
+    "BUTTONS": {
+      "ADD": "Añadir"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No se encontraron bases de conocimiento"
+    }
+  },
+  "LANGUAGES": {
+    "ES": "Español",
+    "CA": "Català",
+    "EU": "Euskara",
+    "GL": "Galego",
+    "AST": "Asturianu",
+    "OC": "Aranés"
+  },
+  "LOGIN": {
+    "TABS": {
+      "STANDARD": "Estándar",
+      "LDAP": "LDAP"
+    },
+    "FIELDS": {
+      "EMAIL": "Correo",
+      "PASSWORD": "Contraseña",
+      "USER": "Usuario"
+    },
+    "BUTTONS": {
+      "SUBMIT": "Entrar",
+      "CREATE_COMPANY": "Crear compañía"
+    },
+    "STATUS": {
+      "LOADING": "Cargando..."
+    }
+  },
+  "PROFILE": {
+    "TITLES": {
+      "MAIN": "Perfil de usuario"
+    }
+  },
+  "SIDEBAR": {
+    "MENU": {
+      "DASHBOARD": "Panel",
+      "AGENTS": "Agentes",
+      "TRAINING": "Formación",
+      "EVALUATION": "Evaluación",
+      "CHATS": "Chats",
+      "DOCUMENTATION": "Documentación",
+      "EMPLOYEE_PORTAL": "Portal empleado",
+      "KNOWLEDGE": "Conocimiento",
+      "TITLE": "Menú"
+    },
+    "ACTIONS": {
+      "LOGOUT": "Cerrar sesión"
+    }
+  },
+  "TRAINING": {
+    "TITLES": {
+      "MAIN": "Formación"
+    }
+  }
+}

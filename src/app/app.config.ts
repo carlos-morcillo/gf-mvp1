@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([tokenInterceptor])),
     provideTransloco({
       config: translocoConfig({
-        availableLangs: ['es', 'ca', 'eu', 'gl', 'ast', 'oc'],
+        availableLangs: ['es', 'ca', 'eu', 'gl', 'ast', 'oc', 'en'],
         defaultLang: 'es',
         fallbackLang: 'es',
         reRenderOnLangChange: true,
