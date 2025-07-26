@@ -8,7 +8,7 @@ import {
   TableComponent,
 } from 'ng-hub-ui-table';
 
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { PinnedAgentsService } from '../../shared/services';
 import { Agent } from './agent';
@@ -35,6 +35,7 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
   override dataSvc = inject(AgentsService);
   pinnedSvc = inject(PinnedAgentsService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
 
   /** Table column definitions */
   override headers: PaginableTableHeader[] = [
@@ -76,8 +77,8 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
     this.router.navigate(['./', agentId, 'chats', 'new']);
   }
 
-  goToChats(item: Agent) {
-    console.log(item);
-    debugger;
+  /** Navigate to agent edition on row click */
+  goToAgent({ data }: { data: Agent }): void {
+    this.router.navigate(['./', data.id], { relativeTo: this.route });
   }
 }

@@ -36,4 +36,14 @@ export class AgentsService extends CollectionService<Agent> {
       agent
     );
   }
+
+  /** Retrieves an agent by identifier */
+  getAgent(id: string): Observable<Agent> {
+    return this.http.get<Agent>(`${environment.baseURL}/${this.path}/${id}`);
+  }
+
+  /** Updates an existing agent */
+  updateAgent(id: string, agent: Partial<Agent>): Observable<Agent> {
+    return this.http.put<Agent>(`${environment.baseURL}/${this.path}/${id}`, agent);
+  }
 }
