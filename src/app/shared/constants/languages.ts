@@ -10,4 +10,5 @@ export const LANGUAGES: LanguageOption[] = [
   { code: 'gl', labelKey: 'LANGUAGES.GL' },
   { code: 'ast', labelKey: 'LANGUAGES.AST' },
   { code: 'oc', labelKey: 'LANGUAGES.OC' },
+  { code: 'en', labelKey: 'LANGUAGES.EN' },
 ];
