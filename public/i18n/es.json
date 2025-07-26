@@ -73,6 +73,21 @@
       "DRAG_DROP": "Arrastra la imagen o haz clic para seleccionar"
     }
   },
+  "AGENT_FORM": {
+    "LABELS": {
+      "NAME": "¿Cómo quieres llamar a tu agente?",
+      "DESCRIPTION": "Describe de forma breve qué hace este agente.",
+      "BASE_MODEL": "Elige el modelo de lenguaje en el que se basa tu agente",
+      "SYSTEM": "Mensaje del sistema",
+      "CAPABILITIES": "Habilidades",
+      "KNOWLEDGE": "Bases de conocimiento",
+      "PROFILE_IMAGE": "Imagen de perfil",
+      "ACTIVE": "Agente activo"
+    },
+    "TIPS": {
+      "CAPABILITIES": "Activa las habilidades que deseas que tu agente tenga. Puedes combinarlas libremente."
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agentes"

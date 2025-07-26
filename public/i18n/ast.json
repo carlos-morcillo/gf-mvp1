@@ -73,6 +73,21 @@
       "DRAG_DROP": "Arrastra la imagen o haz clic para seleccionar"
     }
   },
+  "AGENT_FORM": {
+    "LABELS": {
+      "NAME": "¿Cómo quieres llamar al to axente?",
+      "DESCRIPTION": "Describe de mou breve qué fai esti axente.",
+      "BASE_MODEL": "Escueyi'l modelu de llinguaxe nel que se basa'l to axente",
+      "SYSTEM": "Mensaxe del sistema",
+      "CAPABILITIES": "Habilidaes",
+      "KNOWLEDGE": "Bases de conocimientu",
+      "PROFILE_IMAGE": "Imaxe de perfil",
+      "ACTIVE": "Axente activu"
+    },
+    "TIPS": {
+      "CAPABILITIES": "Activa les habilidaes que quies que tenga'l to axente. Pues combinales llibremente."
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agentes"

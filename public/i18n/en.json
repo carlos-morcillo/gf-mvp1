@@ -73,6 +73,21 @@
       "DRAG_DROP": "Drag image here or click to select"
     }
   },
+  "AGENT_FORM": {
+    "LABELS": {
+      "NAME": "How would you like to name your agent?",
+      "DESCRIPTION": "Briefly describe what this agent does.",
+      "BASE_MODEL": "Choose the language model powering your agent",
+      "SYSTEM": "System message",
+      "CAPABILITIES": "Capabilities",
+      "KNOWLEDGE": "Knowledge bases",
+      "PROFILE_IMAGE": "Profile image",
+      "ACTIVE": "Active agent"
+    },
+    "TIPS": {
+      "CAPABILITIES": "Enable the skills you want your agent to have. You can combine them freely."
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agents"

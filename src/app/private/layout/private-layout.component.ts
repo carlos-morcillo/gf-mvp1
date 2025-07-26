@@ -3,7 +3,7 @@ import { PinnedAgentsService } from '../../shared/services';
 import { AuthService } from '../../auth/auth.service';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AvatarComponent } from 'ng-hub-ui-avatar';
 import { LANGUAGES } from '../../shared/constants';
 
@@ -19,6 +19,7 @@ export class PrivateLayoutComponent {
 
   pinnedSvc = inject(PinnedAgentsService);
   auth = inject(AuthService);
+  transloco = inject(TranslocoService);
 
   /** Available languages list */
   languages = LANGUAGES;
@@ -27,9 +28,14 @@ export class PrivateLayoutComponent {
 
   user = this.auth.user;
 
+  constructor() {
+    this.transloco.setActiveLang(this.currentLang());
+  }
+
   changeLang(lang: string) {
     this.currentLang.set(lang);
-    this.auth.setLanguage(lang);
+    this.transloco.setActiveLang(lang);
+    localStorage.setItem('language', lang);
   }
 
   logout(): void {

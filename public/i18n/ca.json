@@ -73,6 +73,21 @@
       "DRAG_DROP": "Arrastra la imagen o haz clic para seleccionar"
     }
   },
+  "AGENT_FORM": {
+    "LABELS": {
+      "NAME": "Com vols anomenar el teu agent?",
+      "DESCRIPTION": "Descriu breument què fa aquest agent.",
+      "BASE_MODEL": "Tria el model de llenguatge en què es basa l'agent",
+      "SYSTEM": "Missatge del sistema",
+      "CAPABILITIES": "Habilitats",
+      "KNOWLEDGE": "Bases de coneixement",
+      "PROFILE_IMAGE": "Imatge de perfil",
+      "ACTIVE": "Agent actiu"
+    },
+    "TIPS": {
+      "CAPABILITIES": "Activa les habilitats que vols que tingui l'agent. Pots combinar-les lliurement."
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agentes"
