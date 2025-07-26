@@ -1,12 +1,34 @@
 {
-  "FORM": {
-    "TITLE": "Create Agent",
+  "TITLES": {
+    "MAIN": "Agent"
+  },
+  "LABELS": {
     "NAME": "Name",
+    "TONE": "Tone",
+    "PERSONA": "Persona",
+    "WELCOME_MESSAGE": "Welcome message",
+    "CONTEXT": "Context",
+    "OUTPUT_FORMAT": "Output format",
     "MODEL": "Model",
-    "DESCRIPTION": "Description",
-    "UPLOAD_IMAGE": "Upload Image",
-    "DRAG_DROP": "Drag image here or click to select",
-    "IS_ACTIVE": "Active",
-    "CREATE": "Create Agent"
+    "ACTIVE": "Active",
+    "SKILLS": "Skills",
+    "KNOWLEDGE": "Knowledge bases",
+    "FILES": "Files",
+    "UPLOAD_IMAGE": "Profile image"
+  },
+  "TIPS": {
+    "NAME": "Unique identifier for the agent",
+    "PERSONALITY": "Briefly describe how the agent should behave"
+  },
+  "TONES": {
+    "CASUAL": "Casual",
+    "PROFESSIONAL": "Professional",
+    "CONCISE": "Concise"
+  },
+  "BUTTONS": {
+    "SAVE": "Save"
+  },
+  "FORM": {
+    "DRAG_DROP": "Drag image here or click to select"
   }
 }

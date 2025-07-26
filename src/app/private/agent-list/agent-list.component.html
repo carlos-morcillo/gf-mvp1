@@ -12,6 +12,7 @@
     [loading]="paginatedData.isLoading()"
     [data]="paginatedData.value()"
     [searchable]="false"
+    [clickFn]="goToAgent.bind(this)"
   >
     <ng-template paginableTableCell header="pin" let-item="item">
       <button type="button" class="btn btn-link p-0" (click)="togglePin(item)">

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AgentResolver } from './agent-edition/agent.resolver';
 import { authGuard } from './auth.guard';
 import { PrivateLayoutComponent } from './layout/private-layout.component';
 
@@ -64,6 +65,7 @@ export const PRIVATE_ROUTES: Routes = [
               import('./agent-edition/agent-edition.component').then(
                 (c) => c.AgentEditionComponent
               ),
+            resolve: { agent: AgentResolver },
           },
         ],
       },
