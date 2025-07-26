@@ -1,18 +1,21 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, inject, resource } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { firstValueFrom } from 'rxjs';
 import { Agent } from '../agent-list/agent';
 import { AgentsService } from '../agent-list/agents.service';
-import { KnowledgeService } from '../knowledge-list/knowledge.service';
 import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
-import {
-  AgentCapability,
-  AGENT_CAPABILITIES,
-} from './agent-capability.enum';
+import { KnowledgeService } from '../knowledge-list/knowledge.service';
+import { AGENT_CAPABILITIES } from './agent-capability.enum';
 
 /**
  * Component used for both creation and edition of AI agents.
@@ -40,6 +43,14 @@ export class AgentEditionComponent {
   /** Capabilities displayed in the template */
   readonly capabilities = AGENT_CAPABILITIES;
 
+  set system(value: string) {
+    this.form.get('params.system')?.patchValue(value);
+  }
+
+  get system(): FormControl<string | null> | null {
+    return this.form.get('params.system') as FormControl;
+  }
+
   /** Base models available in the backend */
   modelsResource = resource({
     loader: () => firstValueFrom(this.agentsSvc.baseModels()),
@@ -61,17 +72,17 @@ export class AgentEditionComponent {
     name: this.fb.nonNullable.control('', Validators.required),
     params: this.fb.group({
       system: [''],
-    }),
-    meta: this.fb.group({
-      profile_image_url: [''],
-      description: [''],
-      descriptionFields: this.fb.group({
+      systemFields: this.fb.group({
         tone: [''],
         persona: [''],
         welcomeMessage: [''],
         context: ['', Validators.required],
         outputFormat: [''],
       }),
+    }),
+    meta: this.fb.group({
+      profile_image_url: [''],
+      description: [''],
       capabilities: this.createCapabilitiesGroup(),
       suggestion_prompts: this.fb.control<any[]>([]),
       tags: this.fb.control<string[]>([]),
@@ -111,7 +122,7 @@ export class AgentEditionComponent {
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
-      this.form.patchValue({ meta: { profile_image_url: this.imagePreview } });
+      this.form.get('meta.profile_image_url')?.patchValue(this.imagePreview);
     };
     reader.readAsDataURL(file);
   }
@@ -136,13 +147,12 @@ export class AgentEditionComponent {
     }
   }
 
-
   /** Patches the form with agent data when editing */
   private patchForm(agent: Agent): void {
     this.imagePreview = agent.meta.profile_image_url;
     this.form.patchValue(agent);
     this.parseCapabilitiesToForm(agent.meta.capabilities);
-    this.patchDescriptionFields(agent.meta.description);
+    this.patchSystemFields(agent.params.system);
   }
 
   /** Submits the form creating or updating the agent */
@@ -153,9 +163,7 @@ export class AgentEditionComponent {
     }
 
     const metaGroup = this.form.controls.meta;
-    metaGroup.controls.description.setValue(
-      this.composeDescriptionFromFields()
-    );
+    this.system = this.composeSystemFromFields();
 
     const value = this.form.getRawValue();
     const { descriptionFields, ...meta } = value.meta as any;
@@ -190,8 +198,8 @@ export class AgentEditionComponent {
    * context field. Subfields exist only for frontend editing convenience and are
    * never persisted individually.
    */
-  private patchDescriptionFields(description: string): void {
-    const group = this.form.controls.meta.controls.descriptionFields;
+  private patchSystemFields(description: string): void {
+    const group = this.form.get('params.systemFields') as FormGroup;
     const regex = /^##([A-Z_]+):[ \t]*([\s\S]*?)(?=^##[A-Z_]+:|$)/gm;
     const segments: Record<string, string> = {};
     let match: RegExpExecArray | null;
@@ -223,14 +231,10 @@ export class AgentEditionComponent {
    * Builds the final text to store in meta.description from the structured
    * fields. Only this composed text is persisted in the backend.
    */
-  private composeDescriptionFromFields(): string {
-    const {
-      tone,
-      persona,
-      welcomeMessage,
-      context,
-      outputFormat,
-    } = this.form.controls.meta.controls.descriptionFields.getRawValue();
+  private composeSystemFromFields(): string {
+    const { tone, persona, welcomeMessage, context, outputFormat } = this.form
+      .get('params.systemFields')
+      ?.getRawValue();
 
     return [
       `##TONE: ${tone}`,
@@ -245,7 +249,9 @@ export class AgentEditionComponent {
    * Parses the capabilities object received from the backend into the form
    * group controls.
    */
-  private parseCapabilitiesToForm(capabilities: Partial<Record<string, boolean>>): void {
+  private parseCapabilitiesToForm(
+    capabilities: Partial<Record<string, boolean>>
+  ): void {
     const group = this.form.controls.meta.controls.capabilities;
     for (const key of this.capabilities) {
       group.controls[key].setValue(!!capabilities?.[key]);

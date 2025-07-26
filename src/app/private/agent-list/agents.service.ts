@@ -46,9 +46,10 @@ export class AgentsService extends CollectionService<Agent> {
 
   /** Updates an existing agent */
   updateAgent(id: string, agent: Partial<Agent>): Observable<Agent> {
-    return this.http.put<Agent>(
-      `${environment.baseURL}/${this.path}/${id}`,
-      agent
+    return this.http.post<Agent>(
+      `${environment.baseURL}/${this.path}/model/update`,
+      agent,
+      { params: { id } }
     );
   }
 }
