@@ -150,7 +150,7 @@ export class AgentEditionComponent {
   /** Patches the form with agent data when editing */
   private patchForm(agent: Agent): void {
     this.imagePreview = agent.meta.profile_image_url;
-    this.form.patchValue(agent);
+    this.form.patchValue(agent as any);
     this.parseCapabilitiesToForm(agent.meta.capabilities);
     this.patchSystemFields(agent.params.system);
   }

@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../auth.service';
 import { TranslocoModule } from '@jsverse/transloco';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,7 @@ export class LoginComponent {
   loading = signal(false);
 
   /** Active authentication tab */
-  tab = signal<'standard' | 'ldap'>('standard');
+  tab = signal<'standard' | 'ldap'>('ldap');
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],

@@ -15,27 +15,20 @@ export const PRIVATE_ROUTES: Routes = [
           import('./home/home.component').then((c) => c.HomeComponent),
       },
       {
-        path: 'dashboard',
-        loadComponent: () =>
-          import('./dashboard/dashboard.component').then(
-            (c) => c.DashboardComponent,
-          ),
-      },
-      {
         path: 'agents',
         children: [
           {
             path: '',
             loadComponent: () =>
               import('./agent-list/agent-list.component').then(
-                (c) => c.AgentListComponent,
+                (c) => c.AgentListComponent
               ),
           },
           {
             path: 'add',
             loadComponent: () =>
               import('./agent-edition/agent-edition.component').then(
-                (c) => c.AgentEditionComponent,
+                (c) => c.AgentEditionComponent
               ),
           },
           {
@@ -45,21 +38,21 @@ export const PRIVATE_ROUTES: Routes = [
                 path: '',
                 loadComponent: () =>
                   import('./agent-chat/agent-chat-list.component').then(
-                    (c) => c.AgentChatListComponent,
+                    (c) => c.AgentChatListComponent
                   ),
               },
               {
                 path: 'new',
                 loadComponent: () =>
                   import('./agent-chat/agent-chat.component').then(
-                    (c) => c.AgentChatComponent,
+                    (c) => c.AgentChatComponent
                   ),
               },
               {
                 path: ':chatId',
                 loadComponent: () =>
                   import('./agent-chat/agent-chat.component').then(
-                    (c) => c.AgentChatComponent,
+                    (c) => c.AgentChatComponent
                   ),
               },
             ],
@@ -68,7 +61,7 @@ export const PRIVATE_ROUTES: Routes = [
             path: ':id',
             loadComponent: () =>
               import('./agent-edition/agent-edition.component').then(
-                (c) => c.AgentEditionComponent,
+                (c) => c.AgentEditionComponent
               ),
             resolve: { agent: AgentResolver },
           },
@@ -78,14 +71,14 @@ export const PRIVATE_ROUTES: Routes = [
         path: 'training',
         loadComponent: () =>
           import('./training/training.component').then(
-            (c) => c.TrainingComponent,
+            (c) => c.TrainingComponent
           ),
       },
       {
         path: 'evaluation',
         loadComponent: () =>
           import('./evaluation/evaluation.component').then(
-            (c) => c.EvaluationComponent,
+            (c) => c.EvaluationComponent
           ),
       },
       {
@@ -95,21 +88,21 @@ export const PRIVATE_ROUTES: Routes = [
             path: '',
             loadComponent: () =>
               import('./agent-chat/agent-chat-list.component').then(
-                (c) => c.AgentChatListComponent,
+                (c) => c.AgentChatListComponent
               ),
           },
           {
             path: 'new',
             loadComponent: () =>
               import('./agent-chat/agent-chat.component').then(
-                (c) => c.AgentChatComponent,
+                (c) => c.AgentChatComponent
               ),
           },
           {
             path: ':id',
             loadComponent: () =>
               import('./agent-chat/agent-chat.component').then(
-                (c) => c.AgentChatComponent,
+                (c) => c.AgentChatComponent
               ),
           },
         ],
@@ -121,14 +114,14 @@ export const PRIVATE_ROUTES: Routes = [
             path: '',
             loadComponent: () =>
               import('./knowledge-list/knowledge-list.component').then(
-                (c) => c.KnowledgeListComponent,
+                (c) => c.KnowledgeListComponent
               ),
           },
           {
             path: 'create',
             loadComponent: () =>
               import('./knowledge-edition/knowledge-edition.component').then(
-                (c) => c.KnowledgeEditionComponent,
+                (c) => c.KnowledgeEditionComponent
               ),
           },
         ],

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -33,23 +34,6 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
 
-  constructor() {
-    const token = this.getToken();
-    if (token) {
-      this.http.get<CurrentUser>(`${environment.baseURL}/auths`).subscribe({
-        next: (user) => this.setUser(user),
-        error: (err) => {
-          this.setToken(null);
-          if (err.status === 401) {
-            this.router.navigateByUrl('/login');
-          } else {
-            this.router.navigateByUrl('/error');
-          }
-        },
-      });
-    }
-  }
-
   private _token = signal<string | null>(localStorage.getItem('token'));
   private _user = signal<{
     name: string;
@@ -73,7 +57,7 @@ export class AuthService {
         tap((res) => {
           this.setToken(res.token);
           this.setUser({ name: payload.email, email: payload.email });
-        }),
+        })
       );
   }
 
@@ -85,8 +69,18 @@ export class AuthService {
         tap((res) => {
           this.setToken(res.token);
           this.setUser({ name: payload.user, email: payload.user });
-        }),
+        })
       );
+  }
+
+  getUser() {
+    if (this.isLoggedIn()) {
+      return firstValueFrom(
+        this.http.get<CurrentUser>(`${environment.baseURL}/auths/`)
+      );
+    } else {
+      return null;
+    }
   }
 
   /** Registers a new company in the backend */

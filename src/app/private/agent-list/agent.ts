@@ -81,5 +81,3 @@ export interface Agent {
   created_at: number;
   user?: AgentUser;
 }
-
-
