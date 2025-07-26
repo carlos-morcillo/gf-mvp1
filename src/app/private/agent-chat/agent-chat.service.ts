@@ -9,7 +9,7 @@ import { ChatMessage } from './chat-message';
 
 /** Interface representing a full chat retrieved from WebUI */
 export interface Chat {
-  id: string | number;
+  id: string;
   messages: ChatMessage[];
   agent: string;
 }

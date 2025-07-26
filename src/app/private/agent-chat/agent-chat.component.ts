@@ -3,13 +3,14 @@ import {
   Component,
   ElementRef,
   ViewChild,
-  inject,
   WritableSignal,
   effect,
+  inject,
+  model,
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AgentChatService } from './agent-chat.service';
 import { ChatMessage } from './chat-message';
@@ -57,38 +58,38 @@ export class AgentChatComponent {
   @ViewChild('scrollContainer') scrollContainer?: ElementRef<HTMLDivElement>;
 
   /** Agent identifier captured from the route */
-  agentId = this.route.snapshot.paramMap.get('agentId') ?? 'default';
+  agentId = model<string>('', { alias: 'agentId' });
   /** Chat identifier from the route */
-  chatId = this.route.snapshot.paramMap.get('chatId');
+  chatId = model<string | null>(null, { alias: 'id' });
+
+  asdf = effect(() => {
+    const chatId = this.chatId();
+    const agentId = this.agentId();
+    if (chatId && chatId !== 'new') {
+      // Retrieve complete history for existing chats
+      this.loading.set(true);
+      this.error.set(false);
+      this.chatSvc
+        .getChat(chatId)
+        .then((chat) => {
+          this.messages.set(chat.messages);
+          this.loading.set(false);
+        })
+        .catch(() => {
+          this.messages.set([]);
+          this.loading.set(false);
+          this.error.set(true);
+        });
+    } else {
+      this.messages.set([]);
+    }
+  });
 
   constructor() {
     // Keep the latest message in view once Angular renders the DOM
     effect(() => {
       this.messages();
       queueMicrotask(() => this.scrollToBottom());
-    });
-
-    this.route.paramMap.subscribe((params) => {
-      this.agentId = params.get('agentId') ?? 'default';
-      this.chatId = params.get('chatId');
-      if (this.chatId && this.chatId !== 'new') {
-        // Retrieve complete history for existing chats
-        this.loading.set(true);
-        this.error.set(false);
-        this.chatSvc
-          .getChat(this.chatId)
-          .then((chat) => {
-            this.messages.set(chat.messages);
-            this.loading.set(false);
-          })
-          .catch(() => {
-            this.messages.set([]);
-            this.loading.set(false);
-            this.error.set(true);
-          });
-      } else {
-        this.messages.set([]);
-      }
     });
   }
 
@@ -98,16 +99,21 @@ export class AgentChatComponent {
     if (!content) {
       return;
     }
-    if (!this.chatId || this.chatId === 'new') {
+    if (!this.chatId() || this.chatId() === 'new') {
       this.chatSvc
-        .createChatWithAgent(this.agentId, content)
+        .createChatWithAgent(this.agentId(), content)
         .then((chat) => {
-          this.chatId = String(chat.id);
-          this.router.navigate(['/agents', this.agentId, 'chats', this.chatId]);
+          this.chatId.set(chat.id);
+          this.router.navigate([
+            '/agents',
+            this.agentId(),
+            'chats',
+            this.chatId(),
+          ]);
         })
         .catch(() => {});
     } else {
-      this.chatSvc.sendMessage(this.agentId, content).subscribe();
+      this.chatSvc.sendMessage(this.agentId(), content).subscribe();
     }
     this.inputValue = '';
   }
