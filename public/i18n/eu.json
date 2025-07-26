@@ -88,6 +88,20 @@
       "CAPABILITIES": "Gaitu agenteak izan ditzan gaitasunak. Askatasunez konbina ditzakezu."
     }
   },
+  "AGENT_DESCRIPTION": {
+    "TITLE": "¿Cómo debe comportarse tu agente?",
+    "INTRO": "Completa los siguientes campos para definir cómo quieres que tu agente se exprese, se relacione y responda. Esta información se convertirá en una descripción interna que el modelo de IA usará para funcionar correctamente.",
+    "FIELDS": {
+      "TONE": "Tono conversacional",
+      "PERSONALITY": "Personalidad del agente",
+      "WELCOME": "Mensaje de bienvenida",
+      "CONTEXT": "Contexto",
+      "OUTPUT": "Formato de salida"
+    },
+    "VALIDATION": {
+      "CONTEXT_REQUIRED": "El contexto es obligatorio"
+    }
+  },
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agentes"

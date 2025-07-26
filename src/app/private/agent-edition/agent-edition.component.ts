@@ -65,6 +65,13 @@ export class AgentEditionComponent {
     meta: this.fb.group({
       profile_image_url: [''],
       description: [''],
+      descriptionFields: this.fb.group({
+        tone: [''],
+        persona: [''],
+        welcomeMessage: [''],
+        context: ['', Validators.required],
+        outputFormat: [''],
+      }),
       capabilities: this.createCapabilitiesGroup(),
       suggestion_prompts: this.fb.control<any[]>([]),
       tags: this.fb.control<string[]>([]),
@@ -104,7 +111,7 @@ export class AgentEditionComponent {
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
-      this.form.patchValue({ profile_image_url: this.imagePreview });
+      this.form.patchValue({ meta: { profile_image_url: this.imagePreview } });
     };
     reader.readAsDataURL(file);
   }
@@ -135,6 +142,7 @@ export class AgentEditionComponent {
     this.imagePreview = agent.meta.profile_image_url;
     this.form.patchValue(agent);
     this.parseCapabilitiesToForm(agent.meta.capabilities);
+    this.patchDescriptionFields(agent.meta.description);
   }
 
   /** Submits the form creating or updating the agent */
@@ -144,11 +152,17 @@ export class AgentEditionComponent {
       return;
     }
 
+    const metaGroup = this.form.controls.meta;
+    metaGroup.controls.description.setValue(
+      this.composeDescriptionFromFields()
+    );
+
     const value = this.form.getRawValue();
+    const { descriptionFields, ...meta } = value.meta as any;
     const payload: Agent = {
       ...value,
       meta: {
-        ...value.meta,
+        ...meta,
         capabilities: this.composeCapabilitiesFromForm(),
       },
     } as Agent;
@@ -160,6 +174,71 @@ export class AgentEditionComponent {
     request.subscribe(() => {
       this.router.navigate(['/private/agents']);
     });
+  }
+
+  /**
+   * Splits the meta.description text into the structured form fields.
+   *
+   * The backend stores description as a single text block. When editing, this
+   * method parses that text looking for segments like:
+   *   ##TONE: value
+   *   ##PERSONALITY: value
+   *   ##WELCOME: value
+   *   ##CONTEXT: value
+   *   ##OUTPUT: value
+   * If no such structure is detected, the whole description is copied into the
+   * context field. Subfields exist only for frontend editing convenience and are
+   * never persisted individually.
+   */
+  private patchDescriptionFields(description: string): void {
+    const group = this.form.controls.meta.controls.descriptionFields;
+    const regex = /^##([A-Z_]+):[ \t]*([\s\S]*?)(?=^##[A-Z_]+:|$)/gm;
+    const segments: Record<string, string> = {};
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(description))) {
+      segments[match[1]] = match[2].trim();
+    }
+
+    if (Object.keys(segments).length) {
+      group.patchValue({
+        tone: segments['TONE'] || '',
+        persona: segments['PERSONALITY'] || '',
+        welcomeMessage: segments['WELCOME'] || '',
+        context: segments['CONTEXT'] || '',
+        outputFormat: segments['OUTPUT'] || '',
+      });
+    } else {
+      group.patchValue({
+        tone: '',
+        persona: '',
+        welcomeMessage: '',
+        context: description || '',
+        outputFormat: '',
+      });
+    }
+  }
+
+  /**
+   * Builds the final text to store in meta.description from the structured
+   * fields. Only this composed text is persisted in the backend.
+   */
+  private composeDescriptionFromFields(): string {
+    const {
+      tone,
+      persona,
+      welcomeMessage,
+      context,
+      outputFormat,
+    } = this.form.controls.meta.controls.descriptionFields.getRawValue();
+
+    return [
+      `##TONE: ${tone}`,
+      `##PERSONALITY: ${persona}`,
+      `##WELCOME: ${welcomeMessage}`,
+      `##CONTEXT: ${context}`,
+      `##OUTPUT: ${outputFormat}`,
+    ].join('\n');
   }
 
   /**
