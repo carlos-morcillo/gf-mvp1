@@ -117,6 +117,9 @@
     },
     "EMPTY": {
       "NO_RESULTS": "No agents found"
+    },
+    "CONFIRM": {
+      "DELETE": "¿Estás seguro de que deseas eliminar este agente?"
     }
   },
   "CHAT_LIST": {
@@ -124,7 +127,10 @@
     "STATUS": {
       "LOADING": "Loading..."
     },
-    "NO_CHATS": "No chats available"
+    "NO_CHATS": "No chats available",
+    "CONFIRM": {
+      "DELETE": "¿Estás seguro de que deseas eliminar esta conversación?"
+    }
   },
   "CREATE_COMPANY": {
     "TITLES": {
@@ -266,5 +272,10 @@
   },
   "HOME": {
     "IFRAME_FALLBACK": "Your browser cannot display the content"
+  },
+  "GENERIC": {
+    "BUTTONS": {
+      "REMOVE": "Eliminar"
+    }
   }
 }

@@ -14,15 +14,7 @@
     [searchable]="false"
     [clickFn]="goToAgent.bind(this)"
   >
-    <ng-template paginableTableCell header="pin" let-item="item">
-      <button type="button" class="btn btn-link p-0" (click)="togglePin(item)">
-        <i
-          class="fa-solid fa-thumbtack"
-          [class.text-warning]="isPinned(item)"
-          [class.text-secondary]="!isPinned(item)"
-        ></i>
-      </button>
-    </ng-template>
+
     <ng-template
       paginableTableCell
       header="meta.capabilities"
@@ -36,17 +28,6 @@
 
         }
       </div>
-    </ng-template>
-    <ng-template paginableTableCell header="chat" let-item="item">
-      <a [routerLink]="['./', item.id, 'chats']" class="btn btn-link p-0">
-        {{ "AGENT_CHAT.CHATS" | transloco }}
-      </a>
-      <a
-        [routerLink]="['./', item.id, 'chats', 'new']"
-        class="btn btn-link p-0"
-      >
-        {{ "AGENT_CHAT.NEW_BUTTON" | transloco }}
-      </a>
     </ng-template>
 
     <ng-template noDataTpt>

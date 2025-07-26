@@ -52,4 +52,9 @@ export class AgentsService extends CollectionService<Agent> {
       { params: { id } }
     );
   }
+
+  /** Deletes an agent by id */
+  deleteAgent(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.baseURL}/agents/${id}`);
+  }
 }
