@@ -15,6 +15,7 @@ export class UserResolver implements Resolve<any | null> {
       this.authSvc.logout();
       return null;
     }
+    this.authSvc.setUser(user);
     return user;
   }
 }
