@@ -1,0 +1,122 @@
+<!-- chat.component.html -->
+<div class="chat-container">
+  <!-- Información de sesión -->
+  @if (sessionId$ | async; as sessionId) {
+  <div class="session-info">
+    <small>Session ID: {{ sessionId }}</small>
+  </div>
+  }
+
+  <!-- Contenedor de mensajes -->
+  @if (chatHistory$ | async; as history) {
+  <div class="messages-container">
+    @for (message of getOrderedMessages(history); track message) {
+    <div [class]="'message message-' + message.role">
+      <div class="message-header">
+        <span class="role">{{ message.role }}</span>
+        <span class="timestamp">{{
+          message.timestamp * 1000 | date : "short"
+        }}</span>
+      </div>
+      <div class="message-content">
+        {{ message.content }}
+        <!-- Indicador de streaming -->
+        @if (!message.done && message.role === 'assistant') {
+        <span class="streaming-indicator">▋</span>
+        }
+      </div>
+      <!-- Mostrar archivos si existen -->
+      @if (message.files) {
+      <div class="message-files">
+        @for (file of message.files; track file) {
+        <div class="file-item">📎 {{ file.name }}</div>
+        }
+      </div>
+      }
+      <!-- Mostrar fuentes si existen -->
+      @if (message.sources) {
+      <div class="message-sources">
+        <details>
+          <summary>Sources ({{ message.sources.length }})</summary>
+          @for (source of message.sources; track source) {
+          <div class="source-item">
+            <a [href]="source.url" target="_blank">{{ source.title }}</a>
+          </div>
+          }
+        </details>
+      </div>
+      }
+      <!-- Mostrar error si existe -->
+      @if (message.error) {
+      <div class="message-error">⚠️ {{ message.error.content }}</div>
+      }
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Indicador de procesamiento -->
+  @if (isProcessing$ | async) {
+  <div class="processing-indicator">
+    <div class="spinner"></div>
+    <span>Procesando mensaje...</span>
+  </div>
+  }
+
+  <!-- Input de mensaje -->
+  <div class="input-container">
+    <div class="input-row">
+      <textarea
+        [(ngModel)]="currentMessage"
+        (keydown.enter)="!$any($event).shiftKey && sendMessage()"
+        [disabled]="(isProcessing$ | async)!"
+        placeholder="Escribe tu mensaje..."
+        class="message-input"
+        rows="3"
+      >
+      </textarea>
+
+      <div class="input-actions">
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          multiple
+          style="display: none"
+        />
+
+        <button
+          (click)="fileInput.click()"
+          class="file-button"
+          [disabled]="isProcessing$ | async"
+        >
+          📎
+        </button>
+
+        <button
+          (click)="sendMessage()"
+          [disabled]="(isProcessing$ | async) || !currentMessage.trim()"
+          class="send-button"
+        >
+          @if (!(isProcessing$ | async)) {
+          <span>Enviar</span>
+          } @if (isProcessing$ | async) {
+          <span>Enviando...</span>
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- Mostrar archivos seleccionados -->
+    @if (files.length > 0) {
+    <div class="selected-files">
+      @for (file of files; track file; let i = $index) {
+      <div class="selected-file">
+        <span>{{ file.name }}</span>
+        <button (click)="files.splice(i, 1)" class="remove-file">×</button>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>

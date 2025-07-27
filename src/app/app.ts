@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BootstrapTestComponent } from './bootstrap-test/bootstrap-test.component';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, BootstrapTestComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

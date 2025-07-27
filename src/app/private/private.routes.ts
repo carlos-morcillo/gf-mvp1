@@ -108,9 +108,7 @@ export const PRIVATE_ROUTES: Routes = [
             path: ':chatId',
             resolve: { chat: ChatResolver },
             loadComponent: () =>
-              import('./agent-chat/agent-chat.component').then(
-                (c) => c.AgentChatComponent
-              ),
+              import('../chat/chat.component').then((c) => c.ChatComponent),
           },
         ],
       },

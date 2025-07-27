@@ -300,15 +300,16 @@ $grays: (
 // // fusv-enable
 
 // scss-docs-start theme-color-variables
-$primary: #fabada;
-$secondary: #e5f1fc;
-$success: #409d44;
-$info: #2f78cc;
-$warning: #d46a08;
-$danger: #e31f1f;
-$light: $gray-100;
-$medium: $gray-400;
-$dark: $gray-800;
+$primary: #00b86b; // Verde principal SDI
+
+$secondary: #b2e8d3; // Verde menta suave (versión clara y relajada del primary)
+$success: #009e5c; // Verde oscuro profesional
+$info: #0077cc; // Azul informativo elegante
+$warning: #f0ad4e; // Amarillo claro
+$danger: #d9534f; // Rojo Bootstrap
+$light: #f8f9fa; // Fondo general claro
+$medium: #dee2e6; // Gris intermedio
+$dark: #212529; // Fondo oscuro o texto
 // scss-docs-end theme-color-variables
 
 // scss-docs-start theme-colors-map
