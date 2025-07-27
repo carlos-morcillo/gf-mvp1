@@ -1,12 +1,19 @@
-<div class="container-fluid d-flex flex-column gap-4">
-  <h1>{{ "AGENT_LIST.TITLES.MAIN" | transloco }}</h1>
-
-  <div class="d-flex justify-content-end gap-2">
-    <button class="btn btn-primary" [routerLink]="['.', 'add']">
+<div class="list-page__header">
+  <div class="list-page__header-actions">
+    <h2 class="list-page__title">
+      {{ "AGENT_LIST.TITLES.MAIN" | transloco }}
+    </h2>
+    <button class="btn btn-primary" [routerLink]="['./add']">
+      <span class="list-page__button-icon material-symbols-outlined">add</span>
       {{ "AGENT_LIST.BUTTONS.ADD" | transloco }}
     </button>
   </div>
+  <p class="list-page__description">
+    {{ "AGENT_LIST.DESCRIPTIONS.MAIN" | transloco }}
+  </p>
+</div>
 
+<div class="list-page__content">
   <hub-ui-table
     [headers]="headers"
     [loading]="paginatedData.isLoading()"
@@ -21,6 +28,7 @@
     [(ordination)]="ordination"
     [(perPage)]="perPage"
     [(page)]="page"
+    class="list-page__table"
   >
     <ng-template
       paginableTableCell

@@ -32,6 +32,9 @@ import { AgentsService } from './agents.service';
     RouterLink,
   ],
   templateUrl: './agent-list.component.html',
+  host: {
+    class: 'list-page list-page--container',
+  },
 })
 export class AgentListComponent extends PaginatedListComponent<Agent> {
   /** Service responsible for fetching agent data */
