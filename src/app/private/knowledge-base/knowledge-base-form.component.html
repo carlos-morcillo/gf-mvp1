@@ -1,0 +1,56 @@
+<div class="container-fluid py-4">
+  <h1 class="mb-4">{{ formTitle() }}</h1>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="vstack gap-3">
+    <div class="form-floating mb-3">
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="form-control"
+        placeholder="Nombra tu base de conocimientos"
+      />
+      <label for="name">¿En qué estás trabajando?</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <textarea
+        id="description"
+        formControlName="description"
+        class="form-control"
+        style="height: 120px"
+        placeholder="Describe tu Base de Conocimientos y sus objetivos"
+      ></textarea>
+      <label for="description">¿Qué estás tratando de conseguir?</label>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Visibilidad</label>
+      <select formControlName="visibility" class="form-select">
+        <option value="private">Privado</option>
+      </select>
+      <div class="form-text">
+        Solo pueden acceder los usuarios y grupos con permiso
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Grupos</label>
+      <ng-select
+        [items]="groups()"
+        [loading]="false"
+        bindLabel="name"
+        bindValue="id"
+        [multiple]="true"
+        placeholder="Seleccionar un grupo"
+        formControlName="groups"
+      ></ng-select>
+      <div class="form-text" *ngIf="!(groups()?.length)">
+        No hay grupos con acceso, añade un grupo para otorgar acceso
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg w-100">
+      {{ isEditMode() ? 'Actualizar Conocimiento' : 'Crear Conocimiento' }}
+    </button>
+  </form>
+</div>
