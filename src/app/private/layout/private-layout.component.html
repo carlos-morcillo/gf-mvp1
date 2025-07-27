@@ -40,7 +40,26 @@
           {{ "SIDEBAR.MENU.INTRANET" | transloco }}
         </a>
       </li>
-
+      <li>
+        <a
+          class="nav-link"
+          routerLink="/private/evaluation"
+          (click)="menuOpen.set(false)"
+        >
+          <i class="fa fa-clipboard-check me-2"></i>
+          {{ "SIDEBAR.MENU.EVALUATION" | transloco }}
+        </a>
+      </li>
+      <li>
+        <a
+          class="nav-link"
+          routerLink="/private/training"
+          (click)="menuOpen.set(false)"
+        >
+          <i class="fa fa-book-open me-2"></i>
+          {{ "SIDEBAR.MENU.TRAINING" | transloco }}
+        </a>
+      </li>
       <li>
         <a
           class="nav-link"
@@ -65,26 +84,7 @@
         </ul>
         }
       </li>
-      <li>
-        <a
-          class="nav-link"
-          routerLink="/private/training"
-          (click)="menuOpen.set(false)"
-        >
-          <i class="fa fa-book-open me-2"></i>
-          {{ "SIDEBAR.MENU.TRAINING" | transloco }}
-        </a>
-      </li>
-      <li>
-        <a
-          class="nav-link"
-          routerLink="/private/evaluation"
-          (click)="menuOpen.set(false)"
-        >
-          <i class="fa fa-clipboard-check me-2"></i>
-          {{ "SIDEBAR.MENU.EVALUATION" | transloco }}
-        </a>
-      </li>
+
       <li>
         <a
           class="nav-link"
@@ -99,12 +99,6 @@
         <a class="nav-link" href="#" (click)="menuOpen.set(false)">
           <i class="fa fa-file-alt me-2"></i>
           {{ "SIDEBAR.MENU.DOCUMENTATION" | transloco }}
-        </a>
-      </li>
-      <li>
-        <a class="nav-link" href="#" (click)="menuOpen.set(false)">
-          <i class="fa fa-user-shield me-2"></i>
-          {{ "SIDEBAR.MENU.EMPLOYEE_PORTAL" | transloco }}
         </a>
       </li>
       <li>
@@ -177,7 +171,18 @@
             {{ "SIDEBAR.MENU.INTRANET" | transloco }}
           </a>
         </li>
-
+        <li>
+          <a class="nav-link" routerLink="/private/evaluation">
+            <i class="fa fa-clipboard-check me-2"></i>
+            {{ "SIDEBAR.MENU.EVALUATION" | transloco }}
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" routerLink="/private/training">
+            <i class="fa fa-book-open me-2"></i>
+            {{ "SIDEBAR.MENU.TRAINING" | transloco }}
+          </a>
+        </li>
         <li>
           <a class="nav-link" routerLink="/private/agents">
             <i class="fa fa-brain me-2"></i>
@@ -195,18 +200,7 @@
           </ul>
           }
         </li>
-        <li>
-          <a class="nav-link" routerLink="/private/training">
-            <i class="fa fa-book-open me-2"></i>
-            {{ "SIDEBAR.MENU.TRAINING" | transloco }}
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" routerLink="/private/evaluation">
-            <i class="fa fa-clipboard-check me-2"></i>
-            {{ "SIDEBAR.MENU.EVALUATION" | transloco }}
-          </a>
-        </li>
+
         <li>
           <a class="nav-link" routerLink="/private/chats">
             <i class="fa fa-comments me-2"></i>
@@ -217,12 +211,6 @@
           <a class="nav-link" href="#">
             <i class="fa fa-file-alt me-2"></i>
             {{ "SIDEBAR.MENU.DOCUMENTATION" | transloco }}
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#">
-            <i class="fa fa-user-shield me-2"></i>
-            {{ "SIDEBAR.MENU.EMPLOYEE_PORTAL" | transloco }}
           </a>
         </li>
         <li>
