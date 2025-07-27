@@ -3,6 +3,9 @@
     "TITLES": {
       "MAIN": "Agent Chats"
     },
+    "DESCRIPTIONS": {
+      "MAIN": "Conversaciones de tus agentes"
+    },
     "COLUMNS": {
       "ID": "Id",
       "AGENT": "Agent",
@@ -42,6 +45,9 @@
   "AGENT_EDITION": {
     "TITLES": {
       "MAIN": "Agent"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Crea o edita un agente"
     },
     "LABELS": {
       "NAME": "Name",
@@ -105,6 +111,9 @@
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agents"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Administra tus agentes"
     },
     "COLUMNS": {
       "PIN": "",
@@ -316,8 +325,7 @@
     "public": "Público",
     "restricted": "Restringido",
     "privateDesc": "Solo pueden acceder los usuarios y grupos con permiso"
-  }
-  ,
+  },
   "ASIDE": {
     "LABELS": {
       "HOME": "Inicio",
@@ -342,6 +350,9 @@
     "TITLES": {
       "CREATE": "Crear Base de Conocimiento",
       "EDIT": "Editar Base de Conocimiento"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Crea o edita una base de conocimiento"
     },
     "LABELS": {
       "NAME": "Nombre",
@@ -375,6 +386,9 @@
     "TITLES": {
       "DETAIL": "Detalle de Base de Conocimiento",
       "FILES": "Archivos Asociados"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Información de la base de conocimiento"
     },
     "LABELS": {
       "NAME": "Nombre",
@@ -426,6 +440,9 @@
   "KNOWLEDGEBASELIST": {
     "TITLES": {
       "MAIN": "Bases de Conocimiento"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Gestiona tus bases de conocimiento"
     },
     "COLUMNS": {
       "NAME": "Nombre",

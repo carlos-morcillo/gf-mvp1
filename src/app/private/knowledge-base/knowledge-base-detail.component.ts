@@ -9,6 +9,9 @@ import { FileUploadComponent } from './file-upload.component';
   standalone: true,
   imports: [FileUploadComponent, RouterLink, TranslocoModule],
   templateUrl: './knowledge-base-detail.component.html',
+  host: {
+    class: 'list-page list-page--container',
+  },
 })
 export class KnowledgeBaseDetailComponent {
   knowledge = input.required<KnowledgeBase>({ alias: 'knowledge' });

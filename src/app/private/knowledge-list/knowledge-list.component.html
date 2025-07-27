@@ -1,12 +1,18 @@
-<div class="container-fluid d-flex flex-column gap-4">
-  <h1>{{ 'KNOWLEDGEBASELIST.TITLES.MAIN' | transloco }}</h1>
-
-  <div class="d-flex justify-content-end gap-2">
+<div class="list-page__header">
+  <div class="list-page__header-actions">
+    <h2 class="list-page__title">
+      {{ "KNOWLEDGEBASELIST.TITLES.MAIN" | transloco }}
+    </h2>
     <button class="btn btn-primary" [routerLink]="['.', 'add']">
-      {{ 'KNOWLEDGEBASELIST.BUTTONS.ADD' | transloco }}
+      {{ "KNOWLEDGEBASELIST.BUTTONS.ADD" | transloco }}
     </button>
   </div>
+  <p class="list-page__description">
+    {{ "KNOWLEDGEBASELIST.DESCRIPTIONS.MAIN" | transloco }}
+  </p>
+</div>
 
+<div class="list-page__content">
   <hub-ui-table
     [headers]="headers"
     [loading]="paginatedData.isLoading()"
@@ -25,7 +31,7 @@
       {{ formatDate(property) }}
     </ng-template>
     <ng-template noDataTpt>
-      {{ 'KNOWLEDGEBASELIST.EMPTY.NO_RESULTS' | transloco }}
+      {{ "KNOWLEDGEBASELIST.EMPTY.NO_RESULTS" | transloco }}
     </ng-template>
   </hub-ui-table>
 </div>

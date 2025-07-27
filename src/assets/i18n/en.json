@@ -3,6 +3,9 @@
     "TITLES": {
       "MAIN": "Agent Chats"
     },
+    "DESCRIPTIONS": {
+      "MAIN": "Chats between users and agents"
+    },
     "COLUMNS": {
       "ID": "Id",
       "AGENT": "Agent",
@@ -42,6 +45,9 @@
   "AGENT_EDITION": {
     "TITLES": {
       "MAIN": "Agent"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Create or edit an agent"
     },
     "LABELS": {
       "NAME": "Name",
@@ -105,6 +111,9 @@
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agents"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Manage your agents"
     },
     "COLUMNS": {
       "PIN": "",
@@ -316,8 +325,7 @@
     "public": "Public",
     "restricted": "Restricted",
     "privateDesc": "Only allowed users and groups can access"
-  }
-  ,
+  },
   "ASIDE": {
     "LABELS": {
       "HOME": "Home",
@@ -342,6 +350,9 @@
     "TITLES": {
       "CREATE": "Create Knowledge Base",
       "EDIT": "Edit Knowledge Base"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Create or edit a knowledge base"
     },
     "LABELS": {
       "NAME": "Name",
@@ -375,6 +386,9 @@
     "TITLES": {
       "DETAIL": "Knowledge Base Detail",
       "FILES": "Associated Files"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Details of the selected knowledge base"
     },
     "LABELS": {
       "NAME": "Name",
@@ -426,6 +440,9 @@
   "KNOWLEDGEBASELIST": {
     "TITLES": {
       "MAIN": "Knowledge Bases"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Manage your knowledge bases"
     },
     "COLUMNS": {
       "NAME": "Name",

@@ -1,5 +1,13 @@
-<div class="container-fluid py-4">
-  <h1 class="mb-4">{{ formTitle() }}</h1>
+<div class="list-page__header">
+  <div class="list-page__header-actions">
+    <h2 class="list-page__title">{{ formTitle() }}</h2>
+  </div>
+  <p class="list-page__description">
+    {{ "KNOWLEDGEBASEEDITION.DESCRIPTIONS.MAIN" | transloco }}
+  </p>
+</div>
+
+<div class="list-page__content">
   <form [formGroup]="form" (ngSubmit)="submit()" class="vstack gap-3">
     <div class="form-floating mb-3">
       <input
@@ -9,7 +17,9 @@
         class="form-control"
         placeholder="{{ 'KNOWLEDGEBASEEDITION.PLACEHOLDERS.NAME' | transloco }}"
       />
-      <label for="name">{{ 'KNOWLEDGEBASEEDITION.LABELS.NAME' | transloco }}</label>
+      <label for="name">{{
+        "KNOWLEDGEBASEEDITION.LABELS.NAME" | transloco
+      }}</label>
     </div>
 
     <div class="form-floating mb-3">
@@ -18,30 +28,32 @@
         formControlName="description"
         class="form-control"
         style="height: 120px"
-        placeholder="{{ 'KNOWLEDGEBASEEDITION.PLACEHOLDERS.DESCRIPTION' | transloco }}"
+        placeholder="{{
+          'KNOWLEDGEBASEEDITION.PLACEHOLDERS.DESCRIPTION' | transloco
+        }}"
       ></textarea>
       <label for="description">
-        {{ 'KNOWLEDGEBASEEDITION.LABELS.DESCRIPTION' | transloco }}
+        {{ "KNOWLEDGEBASEEDITION.LABELS.DESCRIPTION" | transloco }}
       </label>
     </div>
 
     <div class="mb-3">
       <label class="form-label">
-        {{ 'KNOWLEDGEBASEEDITION.LABELS.VISIBILITY' | transloco }}
+        {{ "KNOWLEDGEBASEEDITION.LABELS.VISIBILITY" | transloco }}
       </label>
       <select formControlName="visibility" class="form-select">
         <option value="private">
-          {{ 'KNOWLEDGEBASEEDITION.LABELS.PRIVATE' | transloco }}
+          {{ "KNOWLEDGEBASEEDITION.LABELS.PRIVATE" | transloco }}
         </option>
       </select>
       <div class="form-text">
-        {{ 'KNOWLEDGEBASEEDITION.MESSAGES.PRIVATE_DESC' | transloco }}
+        {{ "KNOWLEDGEBASEEDITION.MESSAGES.PRIVATE_DESC" | transloco }}
       </div>
     </div>
 
     <div class="mb-3">
       <label class="form-label">
-        {{ 'KNOWLEDGEBASEEDITION.LABELS.GROUPS' | transloco }}
+        {{ "KNOWLEDGEBASEEDITION.LABELS.GROUPS" | transloco }}
       </label>
       <ng-select
         [items]="groups.value()"
@@ -50,21 +62,23 @@
         bindLabel="name"
         bindValue="id"
         [multiple]="true"
-        placeholder="{{ 'KNOWLEDGEBASEEDITION.PLACEHOLDERS.SELECT_GROUP' | transloco }}"
+        placeholder="{{
+          'KNOWLEDGEBASEEDITION.PLACEHOLDERS.SELECT_GROUP' | transloco
+        }}"
         formControlName="groups"
       ></ng-select>
       @if (!groups.value()?.length) {
-      <div class="form-text">
-        {{ 'KNOWLEDGEBASEEDITION.MESSAGES.NO_GROUPS' | transloco }}
-      </div>
+        <div class="form-text">
+          {{ "KNOWLEDGEBASEEDITION.MESSAGES.NO_GROUPS" | transloco }}
+        </div>
       }
     </div>
 
     <button type="submit" class="btn btn-primary btn-lg w-100">
       {{
         isEditMode()
-          ? ('KNOWLEDGEBASEEDITION.BUTTONS.UPDATE' | transloco)
-          : ('KNOWLEDGEBASEEDITION.BUTTONS.CREATE' | transloco)
+          ? ("KNOWLEDGEBASEEDITION.BUTTONS.UPDATE" | transloco)
+          : ("KNOWLEDGEBASEEDITION.BUTTONS.CREATE" | transloco)
       }}
     </button>
   </form>

@@ -3,6 +3,9 @@
     "TITLES": {
       "MAIN": "Agent Chats"
     },
+    "DESCRIPTIONS": {
+      "MAIN": "Chats between users and agents"
+    },
     "COLUMNS": {
       "ID": "Id",
       "AGENT": "Agent",
@@ -105,6 +108,9 @@
   "AGENT_LIST": {
     "TITLES": {
       "MAIN": "Agents"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Manage your agents"
     },
     "COLUMNS": {
       "PIN": "",

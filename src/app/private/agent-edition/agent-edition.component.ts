@@ -33,6 +33,9 @@ import { AGENT_CAPABILITIES } from './agent-capability.enum';
   ],
   templateUrl: './agent-edition.component.html',
   styleUrl: './agent-edition.component.scss',
+  host: {
+    class: 'list-page list-page--container',
+  },
 })
 export class AgentEditionComponent {
   private fb = inject(FormBuilder);
@@ -251,7 +254,7 @@ export class AgentEditionComponent {
    * group controls.
    */
   private parseCapabilitiesToForm(
-    capabilities: Partial<Record<string, boolean>>
+    capabilities: Partial<Record<string, boolean>>,
   ): void {
     const group = this.form.controls.meta.controls.capabilities;
     for (const key of this.capabilities) {

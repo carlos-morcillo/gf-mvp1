@@ -1,11 +1,18 @@
-<div class="container-fluid d-flex flex-column gap-4">
-  <div class="d-flex justify-content-between align-items-center">
-    <h1>{{ "AGENT_CHAT_LIST.TITLES.MAIN" | transloco }}</h1>
+<div class="list-page__header">
+  <div class="list-page__header-actions">
+    <h2 class="list-page__title">
+      {{ "AGENT_CHAT_LIST.TITLES.MAIN" | transloco }}
+    </h2>
     <button class="btn btn-primary" [routerLink]="['./', 'add']">
       {{ "CHAT_LIST.NEW_CHAT_BUTTON" | transloco }}
     </button>
   </div>
+  <p class="list-page__description">
+    {{ "AGENT_CHAT_LIST.DESCRIPTIONS.MAIN" | transloco }}
+  </p>
+</div>
 
+<div class="list-page__content">
   <hub-ui-table
     [headers]="headers"
     [loading]="paginatedData.isLoading()"
