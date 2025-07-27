@@ -1,0 +1,5 @@
+<div class="container-fluid py-4" *ngIf="knowledge() as kb">
+  <h1 class="mb-3">{{ kb.name }}</h1>
+  <p>{{ kb.description }}</p>
+  <app-file-upload [knowledgeBaseId]="kb.id"></app-file-upload>
+</div>

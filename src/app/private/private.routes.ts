@@ -181,20 +181,34 @@ export const PRIVATE_ROUTES: Routes = [
         ],
       },
       {
-        path: 'knowledge',
+        path: 'knowledge-bases',
         children: [
+          {
+            path: 'add',
+            loadComponent: () =>
+              import('./knowledge-base/knowledge-base-form.component').then(
+                (c) => c.KnowledgeBaseFormComponent
+              ),
+          },
+          {
+            path: ':knowledgeId',
+            loadComponent: () =>
+              import('./knowledge-base/knowledge-base-detail.component').then(
+                (c) => c.KnowledgeBaseDetailComponent
+              ),
+          },
+          {
+            path: ':knowledgeId/edit',
+            loadComponent: () =>
+              import('./knowledge-base/knowledge-base-form.component').then(
+                (c) => c.KnowledgeBaseFormComponent
+              ),
+          },
           {
             path: '',
             loadComponent: () =>
               import('./knowledge-list/knowledge-list.component').then(
                 (c) => c.KnowledgeListComponent
-              ),
-          },
-          {
-            path: 'create',
-            loadComponent: () =>
-              import('./knowledge-edition/knowledge-edition.component').then(
-                (c) => c.KnowledgeEditionComponent
               ),
           },
         ],
