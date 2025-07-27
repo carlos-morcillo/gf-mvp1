@@ -28,7 +28,18 @@ export class AgentChatService extends CollectionService<AgentChat> {
   override list(
     request: Partial<PagedDataRequestParam> = {}
   ): Observable<AgentChat[]> {
-    return this.http.get<AgentChat[]>(`${environment.baseURL}/${this.path}/`);
+    const params: any = {};
+    if (request.page) params['page'] = request.page;
+    return this.http.get<AgentChat[]>(`${environment.baseURL}/${this.path}`, {
+      params,
+    });
+  }
+
+  searchChats(term: string): Observable<AgentChat[]> {
+    return this.http.get<AgentChat[]>(
+      `${environment.baseURL}/chats/search`,
+      { params: { query: term } }
+    );
   }
 
   /**

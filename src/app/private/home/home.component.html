@@ -3,86 +3,145 @@
     <div class="col-12 mb-4">
       <h1 class="fw-bold fs-4 mb-1">{{ 'DASHBOARD.TITLE' | transloco }}</h1>
       <p class="mb-3">{{ 'DASHBOARD.SUBTITLE' | transloco }}</p>
-      <input
-        type="text"
-        class="form-control mb-4 w-100"
-        [placeholder]="'DASHBOARD.SEARCH.PLACEHOLDER' | transloco"
-      />
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-lg-8">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h5 mb-0">{{ 'DASHBOARD.RECENT_CONVERSATIONS' | transloco }}</h2>
-        <button class="btn btn-sm btn-light border">
-          {{ 'DASHBOARD.SEE_ALL' | transloco }}
+      <div class="input-group mb-4">
+        <input
+          type="search"
+          class="form-control"
+          [formControl]="searchControl"
+          [placeholder]="'DASHBOARD.SEARCH.PLACEHOLDER' | transloco"
+        />
+        <button
+          *ngIf="searchControl.value"
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="clearSearch()"
+        >
+          <i class="fa fa-times"></i>
         </button>
       </div>
-      @for (chat of chats(); track chat.id) {
+    </div>
+  </div>
+  <ng-container *ngIf="!showResults(); else resultsBlock">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 mb-0">{{ 'DASHBOARD.RECENT_CONVERSATIONS' | transloco }}</h2>
+          <button class="btn btn-sm btn-light border">
+            {{ 'DASHBOARD.SEE_ALL' | transloco }}
+          </button>
+        </div>
+        @for (chat of chats(); track chat.id) {
+        <div
+          class="card p-3 mb-3 shadow-sm chat"
+          role="button"
+          (click)="openChat(chat.id)"
+        >
+          <div class="d-flex align-items-center">
+            <div class="me-3">
+              <img
+                *ngIf="chat.avatar"
+                [src]="chat.avatar"
+                class="rounded-circle"
+                width="40"
+                height="40"
+              />
+            </div>
+            <div class="flex-grow-1">
+              <div class="fw-bold">{{ chat.title }}</div>
+              <small class="text-muted">{{ chat.agentName }}</small>
+              @if (chat.active) {
+              <span class="badge bg-success ms-2">Activa</span>
+              }
+            </div>
+            <div class="ms-auto text-nowrap small text-muted">
+              {{ timeAgo(chat.updatedAt) }}
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+      <div class="col-12 col-lg-4">
+        <div class="mb-4">
+          <h2 class="h6">{{ 'DASHBOARD.QUICK_ACTIONS.TITLE' | transloco }}</h2>
+          <button class="btn btn-success btn-sm w-100 text-start mb-2" (click)="openNewAgent()">
+            {{ 'DASHBOARD.QUICK_ACTIONS.NEW_AGENT' | transloco }}
+          </button>
+          <button class="btn btn-outline-secondary btn-sm w-100 text-start mb-2" (click)="exploreMarketplace()">
+            {{ 'DASHBOARD.QUICK_ACTIONS.EXPLORE_MARKETPLACE' | transloco }}
+          </button>
+          <button class="btn btn-outline-secondary btn-sm w-100 text-start mb-2" (click)="viewFavorites()">
+            {{ 'DASHBOARD.QUICK_ACTIONS.FAVORITES' | transloco }}
+          </button>
+        </div>
+        <div>
+          <h2 class="h6">{{ 'DASHBOARD.AVAILABLE_AGENTS.TITLE' | transloco }}</h2>
+          @for (ag of agents(); track ag.id) {
+          <div
+            class="card p-2 mb-2 d-flex align-items-center agent"
+            role="button"
+            (click)="openAgent(ag.id)"
+          >
+            <img
+              *ngIf="ag.avatar"
+              [src]="ag.avatar"
+              class="rounded-circle me-2"
+              width="32"
+              height="32"
+            />
+            <div class="flex-grow-1">
+              <span class="fw-bold">{{ ag.name }}</span>
+            </div>
+            <span class="badge bg-secondary text-capitalize">{{ ag.type }}</span>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #resultsBlock>
+  <div class="row">
+    <div class="col-12">
+      <h2 class="h6">{{ 'DASHBOARD.RESULTS.AGENTS' | transloco }}</h2>
+      @for (ag of resultAgents(); track ag.id) {
       <div
-        class="card p-3 mb-3 shadow-sm chat"
+        class="card p-2 mb-2 d-flex align-items-center agent"
+        role="button"
+        (click)="openAgent(ag.id)"
+      >
+        <img
+          *ngIf="ag.avatar"
+          [src]="ag.avatar"
+          class="rounded-circle me-2"
+          width="32"
+          height="32"
+        />
+        <div class="flex-grow-1">
+          <span class="fw-bold">{{ ag.name }}</span>
+        </div>
+        <span class="badge bg-secondary text-capitalize">{{ ag.type }}</span>
+      </div>
+      }
+
+      <h2 class="h6 mt-4">{{ 'DASHBOARD.RESULTS.CHATS' | transloco }}</h2>
+      @for (chat of resultChats(); track chat.id) {
+      <div
+        class="card p-3 mb-2 shadow-sm chat"
         role="button"
         (click)="openChat(chat.id)"
       >
         <div class="d-flex align-items-center">
-          <div class="me-3">
-            <img
-              *ngIf="chat.avatar"
-              [src]="chat.avatar"
-              class="rounded-circle"
-              width="40"
-              height="40"
-            />
-          </div>
+          <div class="me-3"></div>
           <div class="flex-grow-1">
             <div class="fw-bold">{{ chat.title }}</div>
-            <small class="text-muted">{{ chat.agentName }}</small>
-            @if (chat.active) {
-            <span class="badge bg-success ms-2">Activa</span>
-            }
           </div>
           <div class="ms-auto text-nowrap small text-muted">
-            {{ timeAgo(chat.updatedAt) }}
+            {{ timeAgo(chat.updated_at) }}
           </div>
         </div>
       </div>
       }
     </div>
-    <div class="col-12 col-lg-4">
-      <div class="mb-4">
-        <h2 class="h6">{{ 'DASHBOARD.QUICK_ACTIONS.TITLE' | transloco }}</h2>
-        <button class="btn btn-success btn-sm w-100 text-start mb-2" (click)="openNewAgent()">
-          {{ 'DASHBOARD.QUICK_ACTIONS.NEW_AGENT' | transloco }}
-        </button>
-        <button class="btn btn-outline-secondary btn-sm w-100 text-start mb-2" (click)="exploreMarketplace()">
-          {{ 'DASHBOARD.QUICK_ACTIONS.EXPLORE_MARKETPLACE' | transloco }}
-        </button>
-        <button class="btn btn-outline-secondary btn-sm w-100 text-start mb-2" (click)="viewFavorites()">
-          {{ 'DASHBOARD.QUICK_ACTIONS.FAVORITES' | transloco }}
-        </button>
-      </div>
-      <div>
-        <h2 class="h6">{{ 'DASHBOARD.AVAILABLE_AGENTS.TITLE' | transloco }}</h2>
-        @for (ag of agents(); track ag.id) {
-        <div
-          class="card p-2 mb-2 d-flex align-items-center agent"
-          role="button"
-          (click)="openAgent(ag.id)"
-        >
-          <img
-            *ngIf="ag.avatar"
-            [src]="ag.avatar"
-            class="rounded-circle me-2"
-            width="32"
-            height="32"
-          />
-          <div class="flex-grow-1">
-            <span class="fw-bold">{{ ag.name }}</span>
-          </div>
-          <span class="badge bg-secondary text-capitalize">{{ ag.type }}</span>
-        </div>
-        }
-      </div>
-    </div>
   </div>
+</ng-template>
 </div>
