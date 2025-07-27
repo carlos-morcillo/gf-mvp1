@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { KnowledgeFile } from './knowledge-base.service';
+import { environment } from '../../../environments/environment';
 
 export interface FileUploadResponse {
-  file_id: string;
-  name: string;
-  size: number;
-  type: string;
-  upload_url?: string;
+  id: string;
+  user_id: string;
+  hash: string;
+  filename: string;
+  //   data: Data;
+  //   meta: Meta;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface FileAssociationRequest {
@@ -33,15 +35,10 @@ export class FileService {
     knowledgeId: string,
     fileId: string
   ): Observable<void> {
+    debugger;
     return this.#http.post<void>(
       `${environment.baseURL}/knowledge/${knowledgeId}/file/add`,
       { file_id: fileId } as FileAssociationRequest
-    );
-  }
-
-  getKnowledgeFiles(knowledgeId: string): Observable<KnowledgeFile[]> {
-    return this.#http.get<KnowledgeFile[]>(
-      `${environment.baseURL}/knowledge/${knowledgeId}/files`
     );
   }
 

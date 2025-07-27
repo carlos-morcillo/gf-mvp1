@@ -15,10 +15,20 @@ export interface KnowledgeBase {
     role: string;
     profile_image_url: string;
   };
-  files: {
-    id: string;
-    meta: Record<string, any>;
-    created_at: number;
-    updated_at: number;
-  }[];
+  files: Array<File>;
+}
+
+interface File {
+  id: string;
+  meta: FileMeta;
+  created_at: number;
+  updated_at: number;
+}
+
+interface FileMeta {
+  name: string;
+  content_type: string;
+  size: number;
+  data: any;
+  collection_name: string;
 }

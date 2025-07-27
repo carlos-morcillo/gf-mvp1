@@ -1,5 +1,5 @@
 @if (knowledge(); as kb) {
-<div class="container-fluid py-4">
+<div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="m-0">{{ kb.name }}</h1>
     <a
@@ -12,9 +12,8 @@
   </div>
   <p>{{ kb.description }}</p>
   <app-file-upload [knowledgeBaseId]="kb.id" class="mb-4"></app-file-upload>
-  @if (files.hasValue()) { @if (files.value()?.length) {
   <div class="row g-3">
-    @for (file of files.value(); track file) {
+    @for (file of kb.files; track file) {
     <div class="col-md-6 col-lg-4">
       <div class="card h-100 shadow-sm border-0">
         <div class="card-body">
@@ -22,10 +21,9 @@
         </div>
       </div>
     </div>
+    } @empty {
+    <p>{{ "knowledgeBase.noFiles" | transloco }}</p>
     }
   </div>
-  } @else {
-  <p>{{ "knowledgeBase.noFiles" | transloco }}</p>
-  } }
 </div>
 }

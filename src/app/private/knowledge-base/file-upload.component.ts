@@ -1,9 +1,7 @@
-
-import { Component, Input, signal, computed, inject } from '@angular/core';
-import { FileService } from './file.service';
-import { KnowledgeFile } from './knowledge-base.service';
-import { firstValueFrom } from 'rxjs';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { TranslocoModule } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
+import { FileService } from './file.service';
 
 interface FileUploadItem {
   file: File;
@@ -18,13 +16,13 @@ interface FileUploadItem {
   imports: [TranslocoModule],
   template: `
     <div
-      class="file-drop-zone"
+      class="file-drop-zone alert alert-secondary text-center p-4 border-primary"
       [class.drag-over]="dragOver"
       (drop)="onDrop($event)"
       (dragover)="onDragOver($event)"
       (dragleave)="onDragLeave($event)"
       (click)="fileInput.click()"
-      >
+    >
       <p class="m-0">
         {{ 'fileUpload.dragDropText' | transloco }}
       </p>
@@ -34,36 +32,34 @@ interface FileUploadItem {
         #fileInput
         multiple
         (change)="onFiles($event)"
-        />
+      />
     </div>
     @for (item of uploadQueue(); track item) {
-      <div class="mt-3">
-        @if (item.status === 'uploading') {
-          <div class="progress">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              [style.width.%]="item.progress"
-            ></div>
-          </div>
-        }
-        @if (item.status === 'completed') {
-          <div class="text-success">
-            {{ item.file.name }} - {{ 'fileUpload.success' | transloco }}
-          </div>
-        }
-        @if (item.status === 'error') {
-          <div class="text-danger">
-            {{ item.file.name }} - {{ 'fileUpload.error' | transloco }}
-          </div>
-        }
+    <div class="mt-3">
+      @if (item.status === 'uploading') {
+      <div class="progress">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          [style.width.%]="item.progress"
+        ></div>
       </div>
+      } @if (item.status === 'completed') {
+      <div class="alert-success">
+        {{ item.file.name }} - {{ 'fileUpload.success' | transloco }}
+      </div>
+      } @if (item.status === 'error') {
+      <div class="alert-danger">
+        {{ item.file.name }} - {{ 'fileUpload.error' | transloco }}
+      </div>
+      }
+    </div>
     }
-    `,
+  `,
   styleUrl: './file-upload.component.scss',
 })
 export class FileUploadComponent {
-  @Input() knowledgeBaseId: string | null = null;
+  readonly knowledgeBaseId = input<string | null>(null);
 
   uploadQueue = signal<FileUploadItem[]>([]);
   dragOver = false;
@@ -99,21 +95,20 @@ export class FileUploadComponent {
   }
 
   private async handleFiles(files: File[]) {
-    if (!this.knowledgeBaseId) return;
+    const knowledgeBaseId = this.knowledgeBaseId();
+    if (!knowledgeBaseId) return;
     for (const file of files) {
       const item: FileUploadItem = { file, progress: 0, status: 'pending' };
       this.uploadQueue.update((q) => [...q, item]);
       try {
         item.status = 'uploading';
         const uploaded = await firstValueFrom(this.#fileSvc.uploadFile(file));
+        debugger;
         await firstValueFrom(
-          this.#fileSvc.associateFileToKnowledge(
-            this.knowledgeBaseId!,
-            uploaded.file_id
-          )
+          this.#fileSvc.associateFileToKnowledge(knowledgeBaseId!, uploaded.id)
         );
         item.status = 'completed';
-        item.id = uploaded.file_id;
+        item.id = uploaded.id;
       } catch {
         item.status = 'error';
       }
