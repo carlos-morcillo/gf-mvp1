@@ -5,13 +5,13 @@ import {
   WritableSignal,
   effect,
   inject,
-  input,
   model,
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
 import { AgentChat, Message } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
 
@@ -63,7 +63,7 @@ export class AgentChatComponent {
   /** Chat identifier from the route */
   chatId = model<string | undefined | null>(null, { alias: 'chatId' });
 
-  chat = input<AgentChat | null>(null);
+  chat = model<AgentChat | null>(null);
 
   chatEffect = effect(() => {
     const chat = this.chat();
@@ -141,6 +141,11 @@ export class AgentChatComponent {
         this.chatId()!,
         content
       );
+      debugger;
+      const chat = await firstValueFrom(this.chatsSvc.find(this.chatId()!));
+      debugger;
+      this.chat.set(chat);
+
       debugger;
       //   this.chatsSvc
       //     .sendMessage(this.agentId(), this.chatId()!, content)

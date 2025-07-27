@@ -30,6 +30,17 @@
           {{ "SIDEBAR.MENU.HOME" | transloco }}
         </a>
       </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="/private/intranet"
+          (click)="menuOpen.set(false)"
+        >
+          <i class="fa fa-house me-2"></i>
+          {{ "SIDEBAR.MENU.INTRANET" | transloco }}
+        </a>
+      </li>
+
       <li>
         <a
           class="nav-link"
@@ -160,6 +171,13 @@
             {{ "SIDEBAR.MENU.HOME" | transloco }}
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/private/intranet">
+            <i class="fa fa-house me-2"></i>
+            {{ "SIDEBAR.MENU.INTRANET" | transloco }}
+          </a>
+        </li>
+
         <li>
           <a class="nav-link" routerLink="/private/agents">
             <i class="fa fa-brain me-2"></i>

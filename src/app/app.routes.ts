@@ -30,7 +30,6 @@ export const routes: Routes = [
         (m) => m.ErrorPageComponent
       ),
   },
-  { path: 'home', redirectTo: 'private/home', pathMatch: 'full' },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: '**',

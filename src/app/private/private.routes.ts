@@ -17,6 +17,13 @@ export const PRIVATE_ROUTES: Routes = [
           import('./home/home.component').then((c) => c.HomeComponent),
       },
       {
+        path: 'intranet',
+        loadComponent: () =>
+          import('../intranet/intranet.component').then(
+            (c) => c.IntranetComponent
+          ),
+      },
+      {
         path: 'profile',
         resolve: { user: UserResolver },
         loadComponent: () =>

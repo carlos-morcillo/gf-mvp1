@@ -177,13 +177,10 @@ export class AgentChatService extends CollectionService<AgentChat> {
    * @param chatId Existing chat ID to append to
    * @param content User message content
    */
-  async sendMessage2(
-    agentId: string,
-    chatId: string,
-    content: string
-  ): Promise<Message> {
+  async sendMessage2(agentId: string, chatId: string, content: string) {
     // 1. Prepare user message
     const userMessageId = uuidv4();
+    const lastMessage = this.messages()[this.messages().length - 1]!;
     const userMessage: Message = {
       id: userMessageId,
       parentId: this.messages()[this.messages().length - 1]?.id ?? null,
@@ -196,6 +193,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
     const sessionId = uuidv4();
     // 2. Call completions with streaming
     const completionReq = {
+      id: lastMessage.id,
       model: agentId,
       chat_id: chatId,
       stream: true,
@@ -255,7 +253,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
       }
     }
     reader.releaseLock();
-
+    debugger;
     if (!assistantId) assistantId = uuidv4();
 
     const assistantMessage: Message = {
@@ -269,17 +267,18 @@ export class AgentChatService extends CollectionService<AgentChat> {
 
     // 3. Call completed to persist conversation
     const completedReq = {
+      id: lastMessage.id,
       model: agentId,
       chat_id: chatId,
       session_id: sessionId || '',
-      id: assistantId,
+      //   id: assistantId,
       messages: this.messages(),
     };
-    await firstValueFrom(
+    const result = await firstValueFrom(
       this.http.post(`https://gpt.sdi.es/api/chat/completed`, completedReq)
     );
 
-    return assistantMessage;
+    return result;
   }
 
   /**
