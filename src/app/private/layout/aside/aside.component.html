@@ -77,8 +77,13 @@
   <div class="sidebar-footer flex-shrink-0 p-2">
     <div class="dropdown dropup w-100">
       <button
+        id="userDropdown"
         class="btn text-start w-100 d-flex align-items-center gap-2 p-3"
         data-bs-toggle="dropdown"
+        data-bs-auto-close="outside"
+        data-bs-boundary="viewport"
+        data-bs-placement="top-end"
+        data-bs-offset="0,8"
       >
         <hub-avatar
           [name]="currentUser()?.name"
@@ -115,6 +120,10 @@
                 type="button"
                 id="languageDropdown"
                 data-bs-toggle="dropdown"
+                data-bs-auto-close="true"
+                data-bs-boundary="viewport"
+                data-bs-placement="right-start"
+                data-bs-flip="false"
                 aria-expanded="false"
               >
                 <span class="d-flex align-items-center">

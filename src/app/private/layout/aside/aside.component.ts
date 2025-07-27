@@ -5,6 +5,7 @@ import {
   afterNextRender,
   inject,
   signal,
+  OnDestroy,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import * as bootstrap from 'bootstrap';
@@ -95,7 +96,7 @@ const MENU_ITEMS: MenuItem[] = [
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.scss'],
 })
-export class AsideComponent {
+export class AsideComponent implements OnDestroy {
   @Output() navigate = new EventEmitter<void>();
 
   auth = inject(AuthService);
@@ -111,15 +112,51 @@ export class AsideComponent {
 
   pinnedChats = this.chatSvc.pinnedChats;
 
+  private userDropdown: any;
+  private languageDropdown: any;
+
   constructor() {
     afterNextRender(() => {
-      const dropdownElements = document.querySelectorAll(
-        '[data-bs-toggle="dropdown"]'
-      );
-      dropdownElements.forEach((el) => {
-        new bootstrap.Dropdown(el);
-      });
+      const userEl = document.getElementById('userDropdown');
+      if (userEl) {
+        this.userDropdown = new bootstrap.Dropdown(userEl, {
+          autoClose: 'outside',
+          boundary: 'viewport',
+          offset: [0, 8],
+          popperConfig: {
+            strategy: 'fixed',
+            placement: 'top-end',
+          },
+        });
+      }
+
+      const langEl = document.getElementById('languageDropdown');
+      if (langEl) {
+        this.languageDropdown = new bootstrap.Dropdown(langEl, {
+          autoClose: true,
+          boundary: 'viewport',
+          popperConfig: {
+            strategy: 'fixed',
+            placement: 'right-start',
+            modifiers: [
+              {
+                name: 'flip',
+                options: { fallbackPlacements: [] },
+              },
+            ],
+          },
+        });
+
+        langEl.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+        });
+      }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userDropdown?.dispose();
+    this.languageDropdown?.dispose();
   }
 
   changeLanguage(lang: string) {
