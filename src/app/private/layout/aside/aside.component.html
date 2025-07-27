@@ -57,18 +57,27 @@
             </div>
           </div>
         </div>
-        } @else {
+        } @else { @if (item.target === '_blank') {
         <a
           class="nav-link d-flex align-items-center py-2 px-3 rounded"
-          [routerLink]="item.route"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: item.id === 'home' }"
-          (click)="navigate.emit()"
+          [href]="item.route"
+          [class.disabled]="item.disabled"
         >
           <i class="bi bi-{{ item.icon }} me-3"></i>
           <span>{{ item.label | transloco }}</span>
         </a>
-        }
+        } @else {
+        <a
+          class="nav-link d-flex align-items-center py-2 px-3 rounded"
+          [routerLink]="item.route"
+          routerLinkActive="nav-item-active"
+          [routerLinkActiveOptions]="{ exact: item.id === 'home' }"
+          (click)="navigate.emit()"
+          [class.disabled]="item.disabled"
+        >
+          <i class="bi bi-{{ item.icon }} me-3"></i>
+          <span>{{ item.label | transloco }}</span> </a
+        >} }
       </li>
       }
     </ul>

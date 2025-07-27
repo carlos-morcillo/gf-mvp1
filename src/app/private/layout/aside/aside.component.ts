@@ -22,6 +22,8 @@ interface MenuItem {
   route?: string;
   isCollapsible?: boolean;
   children?: MenuItem[];
+  disabled?: boolean;
+  target?: string;
 }
 
 const MENU_ITEMS: MenuItem[] = [
@@ -30,18 +32,21 @@ const MENU_ITEMS: MenuItem[] = [
     label: 'ASIDE.LABELS.HOME',
     icon: 'house',
     route: '/private/home',
+    disabled: false,
   },
   {
     id: 'intranet',
     label: 'ASIDE.LABELS.INTRANET',
     icon: 'building',
     route: '/private/intranet',
+    disabled: false,
   },
   {
     id: 'agents',
     label: 'ASIDE.LABELS.MY_AGENTS',
     icon: 'person',
     route: '/private/agents',
+    disabled: false,
   },
   {
     id: 'chats',
@@ -51,40 +56,56 @@ const MENU_ITEMS: MenuItem[] = [
     children: [],
   },
   {
+    id: 'knowledge-bases',
+    label: 'SIDEBAR.MENU.KNOWLEDGE',
+    route: '/private/knowledge-bases',
+
+    icon: 'book',
+    isCollapsible: false,
+    children: [],
+  },
+  {
     id: 'marketplace',
     label: 'ASIDE.LABELS.MARKETPLACE',
     icon: 'cart',
     route: '/marketplace',
+    disabled: true,
   },
   {
     id: 'evaluation',
     label: 'ASIDE.LABELS.EVALUATION',
     icon: 'easel',
-    route: '/evaluation',
+    route:
+      'https://forms.office.com/Pages/ResponsePage.aspx?id=Hiqttwiab0u1GUVodBQvvZYuSP2sOIFNoxLuOyYj9KdURVlETUtFRFhDTlJMWE9NSVk0ODVZMkpHUS4u',
+    target: '_blank',
+    disabled: false,
   },
   {
     id: 'training',
     label: 'ASIDE.LABELS.TRAINING',
     icon: 'mortarboard',
-    route: '/training',
+    route: '/private/training',
   },
   {
     id: 'gamification',
     label: 'ASIDE.LABELS.GAMIFICATION',
     icon: 'trophy',
     route: '/gamification',
+    disabled: true,
   },
   {
     id: 'settings',
     label: 'ASIDE.LABELS.SETTINGS',
     icon: 'gear',
     route: '/settings',
+    disabled: true,
   },
   {
     id: 'help',
     label: 'ASIDE.LABELS.HELP',
     icon: 'question-circle',
     route: '/help',
+    disabled: true,
   },
 ];
 
