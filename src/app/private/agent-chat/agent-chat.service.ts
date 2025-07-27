@@ -30,16 +30,15 @@ export class AgentChatService extends CollectionService<AgentChat> {
   ): Observable<AgentChat[]> {
     const params: any = {};
     if (request.page) params['page'] = request.page;
-    return this.http.get<AgentChat[]>(`${environment.baseURL}/${this.path}`, {
+    return this.http.get<AgentChat[]>(`${environment.baseURL}/${this.path}/`, {
       params,
     });
   }
 
   searchChats(term: string): Observable<AgentChat[]> {
-    return this.http.get<AgentChat[]>(
-      `${environment.baseURL}/chats/search`,
-      { params: { query: term } }
-    );
+    return this.http.get<AgentChat[]>(`${environment.baseURL}/chats/search`, {
+      params: { query: term },
+    });
   }
 
   /**

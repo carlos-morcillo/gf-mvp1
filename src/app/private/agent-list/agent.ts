@@ -80,4 +80,6 @@ export interface Agent {
   updated_at: number;
   created_at: number;
   user?: AgentUser;
+  avatar?: any;
+  type?: any;
 }

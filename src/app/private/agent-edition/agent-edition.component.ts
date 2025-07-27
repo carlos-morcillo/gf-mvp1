@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { firstValueFrom } from 'rxjs';
@@ -25,6 +25,7 @@ import { AGENT_CAPABILITIES } from './agent-capability.enum';
   selector: 'app-agent-edition',
   standalone: true,
   imports: [
+    RouterLink,
     ReactiveFormsModule,
     NgSelectModule,
     TranslocoModule,

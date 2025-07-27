@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import { AgentChat } from '../agent-chat/agent-chat.model';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, TranslocoModule, RouterLink, ReactiveFormsModule],
+  imports: [TranslocoModule, RouterLink, ReactiveFormsModule],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
