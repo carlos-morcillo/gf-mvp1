@@ -1,70 +1,67 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, computed, inject, resource } from '@angular/core';
 
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
-import { debounceTime, firstValueFrom } from 'rxjs';
-import { AgentChat } from '../agent-chat/agent-chat.model';
+import { firstValueFrom, map } from 'rxjs';
 import { AgentChatService } from '../agent-chat/agent-chat.service';
-import { Agent } from '../agent-list/agent';
 import { AgentsService } from '../agent-list/agents.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TranslocoModule, ReactiveFormsModule],
+  imports: [TranslocoModule, ReactiveFormsModule, RouterLink],
   templateUrl: './home.component.html',
+  host: {
+    class: 'list-page list-page--container',
+  },
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   private router = inject(Router);
   private agentsSvc = inject(AgentsService);
   private chatsSvc = inject(AgentChatService);
 
-  chats: WritableSignal<AgentChat[]> = signal([]);
-  agents: WritableSignal<Agent[]> = signal([]);
   searchControl = new FormControl('');
-  showResults = signal(false);
-  resultAgents: WritableSignal<Agent[]> = signal([]);
-  resultChats: WritableSignal<AgentChat[]> = signal([]);
+  searchSignal = toSignal(this.searchControl.valueChanges);
 
-  async ngOnInit(): Promise<void> {
-    const [agents, chats] = await Promise.all([
-      firstValueFrom(this.agentsSvc.list()),
-      firstValueFrom(this.chatsSvc.list({ page: 1 })),
-    ]);
-    this.agents.set(agents);
-    this.chats.set(chats.sort((a, b) => b.updated_at - a.updated_at));
+  chats = resource({
+    loader: () =>
+      firstValueFrom(
+        this.chatsSvc.paginate({ page: 1 }).pipe(map(({ data }) => data))
+      ),
+  });
 
-    this.searchControl.valueChanges.subscribe((val) => {
-      this.showResults.set(!!val);
-      if (!val) {
-        this.resultAgents.set([]);
-        this.resultChats.set([]);
-      }
-    });
-
-    this.searchControl.valueChanges
-      .pipe(debounceTime(1000))
-      .subscribe((term) => this.performSearch(term ?? ''));
-  }
-
-  private async performSearch(term: string): Promise<void> {
-    if (!term) return;
-    const [agents, chats] = await Promise.all([
-      firstValueFrom(this.agentsSvc.list()),
-      firstValueFrom(this.chatsSvc.searchChats(term)),
-    ]);
-    this.resultAgents.set(
-      agents.filter((a) => a.name.toLowerCase().includes(term.toLowerCase()))
+  resultChats = computed(() => {
+    const searchTerm = this.searchSignal()?.toLowerCase() ?? '';
+    if (!searchTerm || !this.chats.hasValue()) {
+      return [];
+    }
+    return (
+      this.chats
+        .value()
+        ?.filter((chat) => chat.title.toLowerCase().includes(searchTerm)) ?? []
     );
-    this.resultChats.set(chats.sort((a, b) => b.updated_at - a.updated_at));
-  }
+  });
+
+  agents = resource({
+    loader: () =>
+      firstValueFrom(
+        this.agentsSvc.paginate({ page: 1 }).pipe(map(({ data }) => data))
+      ),
+  });
+
+  resultAgents = computed(() => {
+    const searchTerm = this.searchSignal()?.toLowerCase() ?? '';
+    if (!searchTerm || !this.agents.hasValue()) {
+      return [];
+    }
+    return (
+      this.agents
+        .value()
+        ?.filter((agent) => agent.name.toLowerCase().includes(searchTerm)) ?? []
+    );
+  });
 
   clearSearch(): void {
     this.searchControl.setValue('');

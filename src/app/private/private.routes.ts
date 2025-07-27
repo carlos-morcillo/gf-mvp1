@@ -12,6 +12,7 @@ export const PRIVATE_ROUTES: Routes = [
     canActivate: [authGuard],
     component: PrivateLayoutComponent,
     children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
         loadComponent: () =>

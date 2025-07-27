@@ -6,7 +6,7 @@
   </div>
 
   <div class="sidebar-body flex-grow-1 overflow-y-auto p-2">
-    <button
+    <!-- <button
       class="btn btn-outline-success btn-sm w-100 mb-3"
       style="border-style: dashed"
       routerLink="/private/agents/add"
@@ -14,7 +14,7 @@
     >
       <i class="bi bi-plus"></i>
       {{ "ASIDE.BUTTONS.CREATE_NEW_AGENT" | transloco }}
-    </button>
+    </button> -->
 
     <ul class="nav flex-column">
       @for (item of menuItems; track item.id) {
@@ -22,8 +22,8 @@
         @if (item.id === 'chats') {
         <div class="collapsible-section">
           <button
-            class="btn btn-link text-start w-100 d-flex align-items-center justify-content-between"
-            (click)="toggleChatsCollapse()"
+            class="sidebar-body-item btn text-start w-100 d-flex align-items-center justify-content-between"
+            [routerLink]="['/private/chats']"
           >
             <div class="d-flex align-items-center">
               <i class="bi bi-{{ item.icon }} me-2"></i>
@@ -31,6 +31,8 @@
             </div>
             <i
               class="bi"
+              role="button"
+              (click)="toggleChatsCollapse(); $event.stopPropagation()"
               [class.bi-chevron-down]="!chatsCollapsed()"
               [class.bi-chevron-right]="chatsCollapsed()"
             ></i>
@@ -39,24 +41,12 @@
             <div class="pinned-chats-container">
               @for (chat of pinnedChats(); track chat) {
               <a
-                [routerLink]="['/chats', chat.id]"
-                class="pinned-chat-item d-flex align-items-center p-2 text-decoration-none"
+                [routerLink]="['/private/chats', chat.id]"
+                class="text-muted pinned-chat-item d-flex align-items-center p-2 text-decoration-none text-truncate ps-4"
                 (click)="navigate.emit()"
               >
-                <div class="chat-avatar me-2">
-                  <i class="bi bi-chat-fill"></i>
-                </div>
-                <div class="flex-grow-1">
-                  <div class="chat-title">{{ chat.title }}</div>
-                  <div class="chat-preview text-muted small">
-                    {{ chat.lastMessage }}
-                  </div>
-                </div>
-                @if (chat.unreadCount) {
-                <span class="badge bg-primary rounded-pill">{{
-                  chat.unreadCount
-                }}</span>
-                }
+                {{ chat.title }}
+                {{ chat.title }}
               </a>
               } @empty {
               <div class="alert alert-secondary" role="alert">
@@ -71,7 +61,7 @@
         <a
           class="nav-link d-flex align-items-center py-2 px-3 rounded"
           [routerLink]="item.route"
-          routerLinkActive="nav-item-active"
+          routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: item.id === 'home' }"
           (click)="navigate.emit()"
         >

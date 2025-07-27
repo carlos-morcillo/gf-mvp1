@@ -12,7 +12,9 @@ export interface AgentChat {
   folder_id: null;
 }
 
-interface Meta {}
+interface Meta {
+  profile_image_url: string | null;
+}
 
 export interface Chat {
   agentId: string;

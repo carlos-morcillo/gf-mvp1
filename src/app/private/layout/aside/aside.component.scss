@@ -5,11 +5,15 @@
 
   .sidebar-header {
     padding: var(--bs-spacer-3);
-    border-bottom: var(--bs-border-width) solid var(--bs-border-color-translucent);
+    border-bottom: var(--bs-border-width) solid
+      var(--bs-border-color-translucent);
   }
 
   .sidebar-body {
     padding: var(--bs-spacer-2) var(--bs-spacer-3);
+    .nav > li {
+      max-width: 100%;
+    }
   }
 
   .sidebar-footer {

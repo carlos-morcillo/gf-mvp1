@@ -19,7 +19,6 @@
     [data]="paginatedData.value()"
     [searchable]="false"
     [clickFn]="goToChat.bind(this)"
-    [searchable]="true"
     [options]="{ hoverableRows: true, scrollable: true }"
     [clickFn]="navigateTo.bind(this)"
     [(searchTerm)]="searchTerm"
@@ -31,29 +30,28 @@
     <ng-template cellTpt header="updated_at" let-property="property">
       {{ formatDate(property) }}
     </ng-template>
-    <ng-template cellTpt header="pin" let-row="row">
+    <ng-template cellTpt header="pin" let-item="item">
       <button
         type="button"
         class="btn btn-link p-0 pin-btn"
-        [class.pinned]="isPinned(row)"
+        [class.pinned]="isPinned(item)"
         [attr.aria-label]="
-          isPinned(row)
+          isPinned(item)
             ? ('CHATLIST.BUTTONS.UNPIN_CHAT' | transloco)
             : ('CHATLIST.BUTTONS.PIN_CHAT' | transloco)
         "
-        (click)="togglePin(row); $event.stopPropagation()"
-        [disabled]="loadingPins().has(row.id)"
+        (click)="togglePin(item); $event.stopPropagation()"
+        [disabled]="loadingPins().has(item.id)"
       >
-        <ng-container *ngIf="!loadingPins().has(row.id); else loading">
-          <i
-            class="bi"
-            [class.bi-pin-fill]="isPinned(row)"
-            [class.bi-pin]="!isPinned(row)"
-          ></i>
-        </ng-container>
-        <ng-template #loading>
-          <span class="spinner-border spinner-border-sm"></span>
-        </ng-template>
+        @if (!loadingPins().has(item.id)) {
+        <i
+          class="bi"
+          [class.bi-pin-fill]="isPinned(item)"
+          [class.bi-pin]="!isPinned(item)"
+        ></i>
+        } @else {
+        <span class="spinner-border spinner-border-sm"></span>
+        }
       </button>
     </ng-template>
     <ng-template noDataTpt>

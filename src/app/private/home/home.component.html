@@ -1,39 +1,44 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-12 mb-4">
-      <h1 class="fw-bold fs-4 mb-1">{{ "DASHBOARD.TITLE" | transloco }}</h1>
-      <p class="mb-3">{{ "DASHBOARD.SUBTITLE" | transloco }}</p>
-      <div class="input-group mb-4">
-        <input
-          type="search"
-          class="form-control"
-          [formControl]="searchControl"
-          [placeholder]="'DASHBOARD.SEARCH.PLACEHOLDER' | transloco"
-        />
-        @if (searchControl.value) {
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          (click)="clearSearch()"
-        >
-          <i class="fa fa-times"></i>
-        </button>
-        }
-      </div>
-    </div>
+<div class="list-page__header">
+  <div class="list-page__header-actions">
+    <h3 class="list-page__title">
+      {{ "DASHBOARD.TITLE" | transloco }}
+    </h3>
   </div>
-  @if (!showResults()) {
+  <p class="list-page__description">
+    {{ "DASHBOARD.SUBTITLE" | transloco }}
+  </p>
+  <div class="input-group mb-4">
+    <input
+      type="search"
+      class="form-control"
+      [formControl]="searchControl"
+      [placeholder]="'DASHBOARD.SEARCH.PLACEHOLDER' | transloco"
+    />
+    @if (searchControl.value) {
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="clearSearch()"
+    >
+      <i class="fa fa-times"></i>
+    </button>
+    }
+  </div>
+</div>
+
+<div class="list-page__content">
+  @if (!searchSignal()) {
   <div class="row">
     <div class="col-12 col-lg-8">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h5 mb-0">
+        <h3 class="h5 mb-0">
           {{ "DASHBOARD.RECENT_CONVERSATIONS" | transloco }}
-        </h2>
-        <button class="btn btn-sm btn-light border">
+        </h3>
+        <button class="btn btn-light border" routerLink="/private/chats">
           {{ "DASHBOARD.SEE_ALL" | transloco }}
         </button>
       </div>
-      @for (chat of chats(); track chat.id) {
+      @for (chat of chats.value(); track chat.id) {
       <div
         class="card p-3 mb-3 shadow-sm chat"
         role="button"
@@ -41,6 +46,9 @@
       >
         <div class="d-flex align-items-center">
           <div class="me-3">
+            <span class="text-bg-primary p-2 rounded-circle">
+              <i class="fa fa-message"></i>
+            </span>
             <!-- @if (chat.avatar) {
                   <img
                     [src]="chat.avatar"
@@ -57,38 +65,40 @@
                   <span class="badge bg-success ms-2">Activa</span>
                 } -->
           </div>
-          <!-- <div class="ms-auto text-nowrap small text-muted">
-                {{ timeAgo(chat.updatedAt) }}
-              </div> -->
+          <div class="ms-auto text-nowrap small text-muted">
+            {{ timeAgo(chat.updated_at) }}
+          </div>
         </div>
       </div>
       }
     </div>
     <div class="col-12 col-lg-4">
       <div class="mb-4">
-        <h2 class="h6">{{ "DASHBOARD.QUICK_ACTIONS.TITLE" | transloco }}</h2>
+        <h3 class="h6">{{ "DASHBOARD.QUICK_ACTIONS.TITLE" | transloco }}</h3>
         <button
-          class="btn btn-success btn-sm w-100 text-start mb-2"
+          class="btn btn-success w-100 text-start mb-2"
           (click)="openNewAgent()"
         >
           {{ "DASHBOARD.QUICK_ACTIONS.NEW_AGENT" | transloco }}
         </button>
         <button
-          class="btn btn-outline-secondary btn-sm w-100 text-start mb-2"
+          class="btn btn-outline-secondary w-100 text-start mb-2"
           (click)="exploreMarketplace()"
+          disabled
         >
           {{ "DASHBOARD.QUICK_ACTIONS.EXPLORE_MARKETPLACE" | transloco }}
         </button>
         <button
-          class="btn btn-outline-secondary btn-sm w-100 text-start mb-2"
+          class="btn btn-outline-secondary w-100 text-start mb-2"
           (click)="viewFavorites()"
+          disabled
         >
           {{ "DASHBOARD.QUICK_ACTIONS.FAVORITES" | transloco }}
         </button>
       </div>
       <div>
-        <h2 class="h6">{{ "DASHBOARD.AVAILABLE_AGENTS.TITLE" | transloco }}</h2>
-        @for (ag of agents(); track ag.id) {
+        <h3 class="h6">{{ "DASHBOARD.AVAILABLE_AGENTS.TITLE" | transloco }}</h3>
+        @for (ag of agents.value(); track ag.id) {
         <div
           class="card p-2 mb-2 d-flex align-items-center agent"
           role="button"
@@ -114,44 +124,53 @@
   } @else {
   <div class="row">
     <div class="col-12">
-      <h2 class="h6">{{ "DASHBOARD.RESULTS.AGENTS" | transloco }}</h2>
-      @for (ag of resultAgents(); track ag.id) {
-      <div
-        class="card p-2 mb-2 d-flex align-items-center agent"
-        role="button"
-        (click)="openAgent(ag.id)"
-      >
-        @if (ag.avatar) {
-        <img
-          [src]="ag.avatar"
-          class="rounded-circle me-2"
-          width="32"
-          height="32"
-        />
+      <h3 class="h6">{{ "DASHBOARD.RESULTS.AGENTS" | transloco }}</h3>
+      @if (resultAgents().length) {
+      <ul class="list-group">
+        @for (ag of resultAgents(); track ag.id) {
+        <li class="list-group-item d-flex gap-2 align-items-center">
+          @if (ag.meta?.profile_image_url) {
+          <img
+            [src]="ag.meta.profile_image_url"
+            class="rounded-circle me-2"
+            width="32"
+            height="32"
+          />
+          }
+          <div class="flex-grow-1">
+            <span class="fw-bold">{{ ag.name }}</span>
+          </div>
+        </li>
         }
-        <div class="flex-grow-1">
-          <span class="fw-bold">{{ ag.name }}</span>
-        </div>
-        <span class="badge bg-secondary text-capitalize">{{ ag.type }}</span>
+      </ul>
+
+      } @else {
+      <div class="alert alert-info" role="alert">
+        No se han encontrado agentes con ese nombre
       </div>
+
       }
-      <h2 class="h6 mt-4">{{ "DASHBOARD.RESULTS.CHATS" | transloco }}</h2>
-      @for (chat of resultChats(); track chat.id) {
-      <div
-        class="card p-3 mb-2 shadow-sm chat"
-        role="button"
-        (click)="openChat(chat.id)"
-      >
-        <div class="d-flex align-items-center">
-          <div class="me-3"></div>
+
+      <h3 class="h6 mt-4">{{ "DASHBOARD.RESULTS.CHATS" | transloco }}</h3>
+      @if (resultAgents().length) {
+      <ul class="list-group">
+        @for (chat of resultChats(); track chat.id) {
+        <li class="list-group-item d-flex gap-2 align-items-center">
           <div class="flex-grow-1">
             <div class="fw-bold">{{ chat.title }}</div>
           </div>
           <div class="ms-auto text-nowrap small text-muted">
             {{ timeAgo(chat.updated_at) }}
           </div>
-        </div>
+        </li>
+        }
+      </ul>
+
+      } @else {
+      <div class="alert alert-info" role="alert">
+        No se han encontrado chats con ese nombre
       </div>
+
       }
     </div>
   </div>

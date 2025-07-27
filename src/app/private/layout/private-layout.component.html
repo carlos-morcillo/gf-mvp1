@@ -4,7 +4,12 @@
 </button>
 
 <!-- Offcanvas for mobile -->
-<div class="offcanvas offcanvas-start" [class.show]="menuOpen()" tabindex="-1" style="visibility: {{ menuOpen() ? 'visible' : 'hidden' }};">
+<div
+  class="offcanvas offcanvas-start"
+  [class.show]="menuOpen()"
+  tabindex="-1"
+  style="visibility: {{ menuOpen() ? 'visible' : 'hidden' }};"
+>
   <div class="offcanvas-header">
     <button type="button" class="btn-close" (click)="toggleMenu()"></button>
   </div>
@@ -13,14 +18,17 @@
   </div>
 </div>
 @if (menuOpen()) {
-  <div class="offcanvas-backdrop fade show d-md-none" (click)="toggleMenu()"></div>
+<div
+  class="offcanvas-backdrop fade show d-md-none"
+  (click)="toggleMenu()"
+></div>
 }
 
 <div class="private-layout">
   <div class="aside-container d-none d-md-block">
     <app-aside></app-aside>
   </div>
-  <div class="main-content">
+  <div class="main-content bg-light">
     <router-outlet></router-outlet>
   </div>
 </div>

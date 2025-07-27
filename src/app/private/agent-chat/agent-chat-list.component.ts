@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { upperFirst } from 'lodash';
@@ -10,11 +10,11 @@ import {
   TableRowEvent,
 } from 'ng-hub-ui-table';
 import { firstValueFrom } from 'rxjs';
+import { ChatService } from '../../chat/chat.service';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
+import { Toast } from '../../shared/services/toast.service';
 import { AgentChat } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
-import { ChatService } from '../../chat/chat.service';
-import { Toast } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-agent-chat-list',
@@ -42,7 +42,9 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
   loadingPins = signal<Set<string>>(new Set());
 
   /** Determine if a chat is pinned */
-  isPinned = (chat: AgentChat) => this.chatSvc.isPinned(chat.id);
+  isPinned = (chat: AgentChat) => {
+    return this.chatSvc.isPinned(chat.id);
+  };
 
   /** Toggle pin state of a chat */
   async togglePin(chat: AgentChat): Promise<void> {
@@ -96,7 +98,7 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
     },
     {
       title: this.translocoSvc.selectTranslate(
-        'AGENT_CHAT_LIST.COLUMNS.UPDATED',
+        'AGENT_CHAT_LIST.COLUMNS.UPDATED'
       ),
       property: 'updated_at',
     },
@@ -105,7 +107,7 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
       buttons: [
         {
           tooltip: upperFirst(
-            this.translocoSvc.translate('GENERIC.BUTTONS.REMOVE'),
+            this.translocoSvc.translate('GENERIC.BUTTONS.REMOVE')
           ),
           icon: { type: 'font-awesome', value: 'fa-trash' },
           classlist: 'btn text-danger',
