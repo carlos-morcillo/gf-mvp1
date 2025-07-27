@@ -1,10 +1,40 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { Injectable, WritableSignal, computed, signal } from '@angular/core';
 import { Observable, firstValueFrom } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../../environments/environment';
 import { CollectionService } from '../../shared/services';
 import { PagedDataRequestParam } from '../../shared/types/paged-data-request-param';
 import { AgentChat, Message } from './agent-chat.model';
+
+interface ChatMessage {
+  id: string;
+  parentId: string | null;
+  childrenIds: string[];
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  files?: any[];
+  timestamp: number;
+  models?: string[];
+  done?: boolean;
+  error?: any;
+  sources?: any[];
+  statusHistory?: any[];
+}
+
+interface ChatHistory {
+  messages: { [key: string]: ChatMessage };
+  current_id: string | null;
+}
+
+interface UpdateChatPayload {
+  models: string[];
+  messages: any[];
+  history: ChatHistory;
+  params?: any;
+  files?: any[];
+  title?: string;
+  tags?: string[];
+}
 
 @Injectable({ providedIn: 'root' })
 export class AgentChatService extends CollectionService<AgentChat> {
@@ -21,6 +51,20 @@ export class AgentChatService extends CollectionService<AgentChat> {
 
   /** In-memory message history */
   readonly messages: WritableSignal<Message[]> = signal([]);
+
+  history = computed(() => {
+    const messages = this.messages() ?? [];
+    const lastMessage = messages.at(-1);
+    return {
+      messages: messages.reduce((acc, v) => {
+        return { ...acc, [v.id!.toString()]: v };
+      }, {}),
+      current_id: lastMessage?.id ?? null,
+    };
+  });
+
+  streaming = signal<boolean>(false);
+  stream = signal<string | null>(null);
 
   /** Flag indicating that a request is in progress */
   readonly sending = signal(false);
@@ -104,80 +148,12 @@ export class AgentChatService extends CollectionService<AgentChat> {
   }
 
   /**
-   * Sends a user message to an existing chat and persists the assistant's reply.
-   * Uses HttpClient without streaming support (stream: false).
-   */
-  async sendMessage(
-    agentId: string,
-    chatId: string,
-    content: string
-  ): Promise<Message> {
-    this.sending.set(true);
-    // Generate user message
-    const userMsgId = uuidv4();
-    const userMsg: Message = {
-      id: userMsgId,
-      parentId: this.messages()[this.messages().length - 1]?.id ?? null,
-      role: 'user',
-      content,
-      timestamp: Math.floor(Date.now() / 1000),
-    };
-    this.messages.update((messages) => [...messages, userMsg]);
-
-    // Call completions endpoint without streaming
-    const completionPayload = {
-      model: agentId,
-      chat_id: chatId,
-      stream: false,
-      messages: this.messages().map((m) => ({
-        role: m.role,
-        content: m.content,
-      })),
-    };
-
-    const completionResp: any = await firstValueFrom(
-      this.http.post(
-        `https://gpt.sdi.es/api/chat/completions`,
-        completionPayload
-      )
-    );
-
-    const assistantMessage = completionResp.choices[0].message;
-    const assistantId = assistantMessage.id ?? uuidv4();
-
-    // Build assistant message object
-    const assistantMsg: Message = {
-      id: assistantId,
-      parentId: userMsgId,
-      role: 'assistant',
-      content: assistantMessage.content,
-      timestamp: Math.floor(Date.now() / 1000),
-    };
-    this.messages.update((messages) => [...messages, assistantMsg]);
-
-    // Call completed endpoint to persist
-    const completedPayload = {
-      model: agentId,
-      chat_id: chatId,
-      session_id: '', // No streaming => session_id may not be provided
-      id: assistantId,
-      messages: this.messages(),
-    };
-
-    await firstValueFrom(
-      this.http.post(`https://gpt.sdi.es/api/chat/completed`, completedPayload)
-    );
-    this.sending.set(false);
-    return assistantMsg;
-  }
-
-  /**
    * Sends a message to an existing chat and persists the assistant's reply.
    * @param agentId Identifier used as model name
    * @param chatId Existing chat ID to append to
    * @param content User message content
    */
-  async sendMessage2(
+  async sendMessage(
     agentId: string,
     chatId: string,
     content: string
@@ -194,6 +170,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
     this.messages.update((messages) => [...messages, userMessage]);
 
     const sessionId = uuidv4();
+
     // 2. Call completions with streaming
     const completionReq = {
       model: agentId,
@@ -223,6 +200,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
     let partial = '';
     let done = false;
 
+    this.streaming.set(true);
     while (!done) {
       const { value, done: streamDone } = await reader.read();
       done = streamDone;
@@ -244,6 +222,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
             const delta = parsed.choices?.[0]?.delta;
             if (delta?.content) {
               text += delta.content;
+              this.stream.set(text);
             }
             assistantId = assistantId ?? parsed.id;
             // sessionId = sessionId ?? parsed.session_id;
@@ -256,7 +235,8 @@ export class AgentChatService extends CollectionService<AgentChat> {
     }
     reader.releaseLock();
 
-    if (!assistantId) assistantId = uuidv4();
+    this.stream.set(null);
+    this.streaming.set(false);
 
     const assistantMessage: Message = {
       id: assistantId,
@@ -279,7 +259,65 @@ export class AgentChatService extends CollectionService<AgentChat> {
       this.http.post(`https://gpt.sdi.es/api/chat/completed`, completedReq)
     );
 
+    await this.updateChatById(chatId, {
+      history: this.history(),
+      messages: this.messages(),
+      models: [agentId],
+    });
+
     return assistantMessage;
+  }
+
+  /**
+   * Actualizar updateChatById para usar la estructura correcta
+   */
+  async updateChatById(
+    chatId: string,
+    chatData: UpdateChatPayload
+  ): Promise<any> {
+    if (!chatId || chatId === 'local') {
+      console.log('Skipping update for local/temporary chat');
+      return null;
+    }
+
+    // ✅ ESTRUCTURA CORRECTA: como en el código Svelte [2]
+    const payload = {
+      chat: {
+        models: chatData.models,
+        messages: chatData.messages, // Ya incluyen los IDs correctos
+        history: chatData.history, // Estructura completa con IDs
+        params: chatData.params || {},
+        files: chatData.files || [],
+        ...(chatData.title && { title: chatData.title }),
+        ...(chatData.tags && { tags: chatData.tags }),
+      },
+    };
+
+    try {
+      const result = await firstValueFrom(
+        this.http.post(`${environment.baseURL}/${this.path}/${chatId}`, payload)
+      );
+      debugger;
+      // const response = await fetch(`${environment.baseURL}/chats/${chatId}`, {
+      //   method: 'POST',
+      //   headers: headers,
+      //   body: JSON.stringify(payload),
+      // });
+
+      // if (!response.ok) {
+      //   const errorData = await response.json().catch(() => ({}));
+      //   throw new Error(
+      // 	`HTTP ${response.status}: ${errorData.detail || response.statusText}`
+      //   );
+      // }
+
+      // const result = await response.json();
+      console.log('Chat updated successfully:', chatId);
+      return result;
+    } catch (error) {
+      console.error('Error updating chat:', error);
+      throw error;
+    }
   }
 
   /**

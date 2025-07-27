@@ -8,6 +8,7 @@
     },
     "COLUMNS": {
       "ID": "Id",
+      "TITLE": "Title",
       "AGENT": "Agent",
       "UPDATED": "Updated"
     },

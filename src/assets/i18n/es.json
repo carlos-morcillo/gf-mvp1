@@ -8,8 +8,9 @@
     },
     "COLUMNS": {
       "ID": "Id",
-      "AGENT": "Agent",
-      "UPDATED": "Updated"
+      "TITLE": "Título",
+      "AGENT": "Agente",
+      "UPDATED": "Actualizado"
     },
     "BUTTONS": {
       "NEW_CHAT": "New Chat"

@@ -11,7 +11,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
-import { firstValueFrom } from 'rxjs';
 import { AgentChat, Message } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
 
@@ -74,39 +73,6 @@ export class AgentChatComponent {
     this.agentId.set(chat.chat.agentId);
   });
 
-  //   messages = resource({
-  // 	params: () => ({chat: this.chat()}),
-  // 	loader: async ({params: {chat}}) =>{
-  // 		if(!chat) {
-  // 			return null;
-  // 		}
-  // 		return this.chatsSvc.getMessages()
-  // 	}
-  //   })
-
-  //   chatEffect = effect(() => {
-  //     const chatId = this.chatId();
-  //     const agentId = this.agentId();
-  //     if (chatId && chatId !== 'new') {
-  //       // Retrieve complete history for existing chats
-  //       this.loading.set(true);
-  //       this.error.set(false);
-  //       this.chatSvc
-  //         .find(chatId)
-  //         .then((chat) => {
-  //           this.messages.set(chat.messages);
-  //           this.loading.set(false);
-  //         })
-  //         .catch(() => {
-  //           this.messages.set([]);
-  //           this.loading.set(false);
-  //           this.error.set(true);
-  //         });
-  //     } else {
-  //       this.messages.set([]);
-  //     }
-  //   });
-
   constructor() {
     // Keep the latest message in view once Angular renders the DOM
     effect(() => {
@@ -122,34 +88,19 @@ export class AgentChatComponent {
       return;
     }
     if (!this.chatId() || this.chatId() === 'add') {
-      debugger;
       this.chatsSvc
         .createChatWithAgent(this.agentId(), content)
         .then((chat: AgentChat) => {
           this.chatId.set(chat.id);
-          this.router.navigate([
-            '/agents',
-            this.agentId(),
-            'chats',
-            this.chatId(),
-          ]);
+          this.router.navigate(['chats', this.chatId()]);
         })
         .catch(() => {});
     } else {
-      const result = await this.chatsSvc.sendMessage2(
+      const result = await this.chatsSvc.sendMessage(
         this.agentId(),
         this.chatId()!,
         content
       );
-      debugger;
-      const chat = await firstValueFrom(this.chatsSvc.find(this.chatId()!));
-      debugger;
-      this.chat.set(chat);
-
-      debugger;
-      //   this.chatsSvc
-      //     .sendMessage(this.agentId(), this.chatId()!, content)
-      //     .subscribe();
     }
     this.inputValue = '';
   }

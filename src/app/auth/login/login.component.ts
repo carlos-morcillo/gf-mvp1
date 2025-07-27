@@ -40,7 +40,7 @@ export class LoginComponent {
     this.auth.login(this.form.getRawValue()).subscribe({
       next: () => {
         this.loading.set(false);
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/private/home');
       },
       error: () => this.loading.set(false),
     });
@@ -56,7 +56,7 @@ export class LoginComponent {
     this.auth.loginLdap(this.ldapForm.getRawValue()).subscribe({
       next: () => {
         this.loading.set(false);
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/private/home');
       },
       error: () => this.loading.set(false),
     });
