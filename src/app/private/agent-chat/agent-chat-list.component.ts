@@ -25,6 +25,9 @@ import { AgentChatService } from './agent-chat.service';
     TranslocoModule,
   ],
   templateUrl: './agent-chat-list.component.html',
+  host: {
+    class: 'list-page list-page--container',
+  },
 })
 export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
   override dataSvc = inject(AgentChatService);
@@ -45,7 +48,7 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
     },
     {
       title: this.translocoSvc.selectTranslate(
-        'AGENT_CHAT_LIST.COLUMNS.UPDATED'
+        'AGENT_CHAT_LIST.COLUMNS.UPDATED',
       ),
       property: 'updated_at',
     },
@@ -54,7 +57,7 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
       buttons: [
         {
           tooltip: upperFirst(
-            this.translocoSvc.translate('GENERIC.BUTTONS.REMOVE')
+            this.translocoSvc.translate('GENERIC.BUTTONS.REMOVE'),
           ),
           icon: { type: 'font-awesome', value: 'fa-trash' },
           classlist: 'btn text-danger',

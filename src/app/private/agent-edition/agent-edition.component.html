@@ -1,221 +1,234 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="onSubmit()"
-  class="container py-4 vstack gap-3"
-  (drop)="onDrop($event)"
-  (dragover)="$event.preventDefault()"
->
-  <div class="d-flex mb-3">
+<div class="list-page__header">
+  <div class="list-page__header-actions">
     <button type="button" class="btn btn-link me-2" routerLink="../">
       <i class="fas fa-arrow-left"></i>
     </button>
-    <h1 class="h3 mb-0">{{ "AGENT_EDITION.TITLES.MAIN" | transloco }}</h1>
+    <h2 class="list-page__title">
+      {{ "AGENT_EDITION.TITLES.MAIN" | transloco }}
+    </h2>
   </div>
+  <p class="list-page__description">
+    {{ "AGENT_EDITION.DESCRIPTIONS.MAIN" | transloco }}
+  </p>
+</div>
 
-  <div class="mb-3">
-    <label class="form-label">{{ "AGENT_FORM.LABELS.ID" | transloco }}</label>
-    <input class="form-control" type="text" formControlName="id" />
-  </div>
+<div class="list-page__content">
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="vstack gap-3"
+    (drop)="onDrop($event)"
+    (dragover)="$event.preventDefault()"
+  >
+    <div class="mb-3">
+      <label class="form-label">{{ "AGENT_FORM.LABELS.ID" | transloco }}</label>
+      <input class="form-control" type="text" formControlName="id" />
+    </div>
 
-  <div class="mb-3">
-    <label class="form-label">{{ "AGENT_FORM.LABELS.NAME" | transloco }}</label>
-    <input class="form-control" type="text" formControlName="name" />
-  </div>
+    <div class="mb-3">
+      <label class="form-label">{{
+        "AGENT_FORM.LABELS.NAME" | transloco
+      }}</label>
+      <input class="form-control" type="text" formControlName="name" />
+    </div>
 
-  <div class="mb-3" formGroupName="meta">
-    <label class="form-label">{{
-      "AGENT_FORM.LABELS.DESCRIPTION" | transloco
-    }}</label>
-    <textarea
-      rows="3"
-      class="form-control"
-      formControlName="description"
-    ></textarea>
-  </div>
+    <div class="mb-3" formGroupName="meta">
+      <label class="form-label">{{
+        "AGENT_FORM.LABELS.DESCRIPTION" | transloco
+      }}</label>
+      <textarea
+        rows="3"
+        class="form-control"
+        formControlName="description"
+      ></textarea>
+    </div>
 
-  <div class="mb-3" formGroupName="params">
-    <fieldset formGroupName="systemFields" class="border rounded p-3">
-      <legend class="float-none w-auto fs-6 mb-2">
-        {{ "AGENT_DESCRIPTION.TITLE" | transloco }}
-      </legend>
-      <p class="small text-muted">
-        {{ "AGENT_DESCRIPTION.INTRO" | transloco }}
-      </p>
+    <div class="mb-3" formGroupName="params">
+      <fieldset formGroupName="systemFields" class="border rounded p-3">
+        <legend class="float-none w-auto fs-6 mb-2">
+          {{ "AGENT_DESCRIPTION.TITLE" | transloco }}
+        </legend>
+        <p class="small text-muted">
+          {{ "AGENT_DESCRIPTION.INTRO" | transloco }}
+        </p>
 
-      <div class="mb-3">
-        <label class="form-label">
-          {{ "AGENT_DESCRIPTION.FIELDS.TONE" | transloco }}
-          <i
-            class="fas fa-question-circle ms-1"
-            [title]="'AGENT_DESCRIPTION.FIELDS.TONE' | transloco"
-          ></i>
-        </label>
-        <select class="form-select" formControlName="tone">
-          <option value=""></option>
-          <option value="CASUAL">
-            {{ "AGENT_EDITION.TONES.CASUAL" | transloco }}
-          </option>
-          <option value="PROFESSIONAL">
-            {{ "AGENT_EDITION.TONES.PROFESSIONAL" | transloco }}
-          </option>
-          <option value="CONCISE">
-            {{ "AGENT_EDITION.TONES.CONCISE" | transloco }}
-          </option>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">
-          {{ "AGENT_DESCRIPTION.FIELDS.PERSONALITY" | transloco }}
-          <i
-            class="fas fa-question-circle ms-1"
-            [title]="'AGENT_DESCRIPTION.FIELDS.PERSONALITY' | transloco"
-          ></i>
-        </label>
-        <textarea
-          rows="2"
-          class="form-control"
-          formControlName="persona"
-        ></textarea>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">
-          {{ "AGENT_DESCRIPTION.FIELDS.WELCOME" | transloco }}
-          <i
-            class="fas fa-question-circle ms-1"
-            [title]="'AGENT_DESCRIPTION.FIELDS.WELCOME' | transloco"
-          ></i>
-        </label>
-        <input
-          type="text"
-          class="form-control"
-          formControlName="welcomeMessage"
-        />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">
-          {{ "AGENT_DESCRIPTION.FIELDS.CONTEXT" | transloco }}
-          <i
-            class="fas fa-question-circle ms-1"
-            [title]="'AGENT_DESCRIPTION.FIELDS.CONTEXT' | transloco"
-          ></i>
-        </label>
-        <textarea
-          rows="3"
-          class="form-control"
-          formControlName="context"
-        ></textarea>
-        @if (form.get('meta.descriptionFields.context')?.invalid &&
-        form.get('meta.descriptionFields.context')?.touched) {
-        <div class="text-danger">
-          {{ "AGENT_DESCRIPTION.VALIDATION.CONTEXT_REQUIRED" | transloco }}
+        <div class="mb-3">
+          <label class="form-label">
+            {{ "AGENT_DESCRIPTION.FIELDS.TONE" | transloco }}
+            <i
+              class="fas fa-question-circle ms-1"
+              [title]="'AGENT_DESCRIPTION.FIELDS.TONE' | transloco"
+            ></i>
+          </label>
+          <select class="form-select" formControlName="tone">
+            <option value=""></option>
+            <option value="CASUAL">
+              {{ "AGENT_EDITION.TONES.CASUAL" | transloco }}
+            </option>
+            <option value="PROFESSIONAL">
+              {{ "AGENT_EDITION.TONES.PROFESSIONAL" | transloco }}
+            </option>
+            <option value="CONCISE">
+              {{ "AGENT_EDITION.TONES.CONCISE" | transloco }}
+            </option>
+          </select>
         </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            {{ "AGENT_DESCRIPTION.FIELDS.PERSONALITY" | transloco }}
+            <i
+              class="fas fa-question-circle ms-1"
+              [title]="'AGENT_DESCRIPTION.FIELDS.PERSONALITY' | transloco"
+            ></i>
+          </label>
+          <textarea
+            rows="2"
+            class="form-control"
+            formControlName="persona"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            {{ "AGENT_DESCRIPTION.FIELDS.WELCOME" | transloco }}
+            <i
+              class="fas fa-question-circle ms-1"
+              [title]="'AGENT_DESCRIPTION.FIELDS.WELCOME' | transloco"
+            ></i>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="welcomeMessage"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            {{ "AGENT_DESCRIPTION.FIELDS.CONTEXT" | transloco }}
+            <i
+              class="fas fa-question-circle ms-1"
+              [title]="'AGENT_DESCRIPTION.FIELDS.CONTEXT' | transloco"
+            ></i>
+          </label>
+          <textarea
+            rows="3"
+            class="form-control"
+            formControlName="context"
+          ></textarea>
+          @if (
+            form.get("meta.descriptionFields.context")?.invalid &&
+            form.get("meta.descriptionFields.context")?.touched
+          ) {
+            <div class="text-danger">
+              {{ "AGENT_DESCRIPTION.VALIDATION.CONTEXT_REQUIRED" | transloco }}
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">
+            {{ "AGENT_DESCRIPTION.FIELDS.OUTPUT" | transloco }}
+            <i
+              class="fas fa-question-circle ms-1"
+              [title]="'AGENT_DESCRIPTION.FIELDS.OUTPUT' | transloco"
+            ></i>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="outputFormat"
+          />
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">{{
+        "AGENT_FORM.LABELS.BASE_MODEL" | transloco
+      }}</label>
+      <ng-select
+        [items]="modelsResource.value()"
+        [loading]="modelsResource.isLoading()"
+        bindLabel="name"
+        bindValue="id"
+        formControlName="base_model_id"
+      ></ng-select>
+    </div>
+
+    <div class="mb-3" formGroupName="meta">
+      <label class="form-label">
+        {{ "AGENT_FORM.LABELS.CAPABILITIES" | transloco }}
+        <i
+          class="fas fa-question-circle ms-1"
+          [title]="'AGENT_FORM.TIPS.CAPABILITIES' | transloco"
+        ></i>
+      </label>
+      <div formGroupName="capabilities" class="d-flex flex-wrap gap-3">
+        @for (cap of capabilities; track cap) {
+          <div class="form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              [id]="cap"
+              [formControlName]="cap"
+            />
+            <label class="form-check-label" [for]="cap">{{
+              cap | titlecase
+            }}</label>
+          </div>
         }
       </div>
+    </div>
 
-      <div class="mb-3">
-        <label class="form-label">
-          {{ "AGENT_DESCRIPTION.FIELDS.OUTPUT" | transloco }}
-          <i
-            class="fas fa-question-circle ms-1"
-            [title]="'AGENT_DESCRIPTION.FIELDS.OUTPUT' | transloco"
-          ></i>
-        </label>
+    <div class="mb-3" formGroupName="meta">
+      <label class="form-label">{{
+        "AGENT_FORM.LABELS.KNOWLEDGE" | transloco
+      }}</label>
+      <ng-select
+        [items]="knowledgeResource.value()"
+        [loading]="knowledgeResource.isLoading()"
+        bindLabel="name"
+        [multiple]="true"
+        formControlName="knowledge"
+      ></ng-select>
+    </div>
+
+    <div class="mb-3" formGroupName="meta">
+      <label class="form-label">{{
+        "AGENT_FORM.LABELS.PROFILE_IMAGE" | transloco
+      }}</label>
+      <div class="border rounded p-3 text-center">
+        @if (imagePreview) {
+          <img [src]="imagePreview" class="img-thumbnail mb-2" alt="preview" />
+        }
         <input
-          type="text"
+          type="file"
+          accept="image/*"
           class="form-control"
-          formControlName="outputFormat"
+          (change)="onImageSelect($event)"
         />
+        <small class="text-muted">{{
+          "AGENT_EDITION.FORM.DRAG_DROP" | transloco
+        }}</small>
       </div>
-    </fieldset>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">{{
-      "AGENT_FORM.LABELS.BASE_MODEL" | transloco
-    }}</label>
-    <ng-select
-      [items]="modelsResource.value()"
-      [loading]="modelsResource.isLoading()"
-      bindLabel="name"
-      bindValue="id"
-      formControlName="base_model_id"
-    ></ng-select>
-  </div>
-
-  <div class="mb-3" formGroupName="meta">
-    <label class="form-label">
-      {{ "AGENT_FORM.LABELS.CAPABILITIES" | transloco }}
-      <i
-        class="fas fa-question-circle ms-1"
-        [title]="'AGENT_FORM.TIPS.CAPABILITIES' | transloco"
-      ></i>
-    </label>
-    <div formGroupName="capabilities" class="d-flex flex-wrap gap-3">
-      @for (cap of capabilities; track cap) {
-      <div class="form-check">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          [id]="cap"
-          [formControlName]="cap"
-        />
-        <label class="form-check-label" [for]="cap">{{
-          cap | titlecase
-        }}</label>
-      </div>
-      }
     </div>
-  </div>
 
-  <div class="mb-3" formGroupName="meta">
-    <label class="form-label">{{
-      "AGENT_FORM.LABELS.KNOWLEDGE" | transloco
-    }}</label>
-    <ng-select
-      [items]="knowledgeResource.value()"
-      [loading]="knowledgeResource.isLoading()"
-      bindLabel="name"
-      [multiple]="true"
-      formControlName="knowledge"
-    ></ng-select>
-  </div>
-
-  <div class="mb-3" formGroupName="meta">
-    <label class="form-label">{{
-      "AGENT_FORM.LABELS.PROFILE_IMAGE" | transloco
-    }}</label>
-    <div class="border rounded p-3 text-center">
-      @if (imagePreview) {
-      <img [src]="imagePreview" class="img-thumbnail mb-2" alt="preview" />
-      }
+    <div class="form-check mb-3">
       <input
-        type="file"
-        accept="image/*"
-        class="form-control"
-        (change)="onImageSelect($event)"
+        type="checkbox"
+        class="form-check-input"
+        formControlName="is_active"
+        id="active"
       />
-      <small class="text-muted">{{
-        "AGENT_EDITION.FORM.DRAG_DROP" | transloco
-      }}</small>
+      <label for="active" class="form-check-label">{{
+        "AGENT_FORM.LABELS.ACTIVE" | transloco
+      }}</label>
     </div>
-  </div>
 
-  <div class="form-check mb-3">
-    <input
-      type="checkbox"
-      class="form-check-input"
-      formControlName="is_active"
-      id="active"
-    />
-    <label for="active" class="form-check-label">{{
-      "AGENT_FORM.LABELS.ACTIVE" | transloco
-    }}</label>
-  </div>
-
-  <button type="submit" class="btn btn-primary w-100">
-    {{ "AGENT_EDITION.BUTTONS.SAVE" | transloco }}
-  </button>
-</form>
+    <button type="submit" class="btn btn-primary w-100">
+      {{ "AGENT_EDITION.BUTTONS.SAVE" | transloco }}
+    </button>
+  </form>
+</div>

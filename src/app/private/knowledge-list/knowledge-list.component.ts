@@ -22,24 +22,29 @@ import { KnowledgeBase } from './knowledge-base.model';
     TranslocoModule,
   ],
   templateUrl: './knowledge-list.component.html',
+  host: {
+    class: 'list-page list-page--container',
+  },
 })
 export class KnowledgeListComponent extends PaginatedListComponent<KnowledgeBase> {
   override dataSvc = inject(KnowledgeBaseService);
 
   override headers: PaginableTableHeader[] = [
     {
-      title: this.translocoSvc.selectTranslate('KNOWLEDGEBASELIST.COLUMNS.NAME'),
+      title: this.translocoSvc.selectTranslate(
+        'KNOWLEDGEBASELIST.COLUMNS.NAME',
+      ),
       property: 'name',
     },
     {
       title: this.translocoSvc.selectTranslate(
-        'KNOWLEDGEBASELIST.COLUMNS.DESCRIPTION'
+        'KNOWLEDGEBASELIST.COLUMNS.DESCRIPTION',
       ),
       property: 'description',
     },
     {
       title: this.translocoSvc.selectTranslate(
-        'KNOWLEDGEBASELIST.COLUMNS.CREATED_AT'
+        'KNOWLEDGEBASELIST.COLUMNS.CREATED_AT',
       ),
       property: 'created_at',
     },

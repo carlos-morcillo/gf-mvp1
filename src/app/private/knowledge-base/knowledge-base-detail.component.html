@@ -1,29 +1,35 @@
 @if (knowledge(); as kb) {
-<div class="container py-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="m-0">{{ kb.name }}</h1>
-    <a
-      class="btn btn-outline-primary btn-sm"
-      [routerLink]="['/private/knowledge-bases', kb.id, 'edit']"
-    >
-      <i class="bi bi-pencil"></i>
-      {{ 'KNOWLEDGEBASEDETAIL.BUTTONS.EDIT' | transloco }}
-    </a>
-  </div>
-  <p>{{ kb.description }}</p>
-  <app-file-upload [knowledgeBaseId]="kb.id" class="mb-4"></app-file-upload>
-  <div class="row g-3">
-    @for (file of kb.files; track file) {
-    <div class="col-md-6 col-lg-4">
-      <div class="card h-100 shadow-sm border-0">
-        <div class="card-body">
-          <h6 class="card-title">{{ file.meta.name || file.id }}</h6>
-        </div>
-      </div>
+  <div class="list-page__header">
+    <div class="list-page__header-actions">
+      <h2 class="list-page__title">{{ kb.name }}</h2>
+      <a
+        class="btn btn-outline-primary btn-sm"
+        [routerLink]="['/private/knowledge-bases', kb.id, 'edit']"
+      >
+        <i class="bi bi-pencil"></i>
+        {{ "KNOWLEDGEBASEDETAIL.BUTTONS.EDIT" | transloco }}
+      </a>
     </div>
-    } @empty {
-    <p>{{ 'KNOWLEDGEBASEDETAIL.MESSAGES.NO_FILES' | transloco }}</p>
-    }
+    <p class="list-page__description">
+      {{ "KNOWLEDGEBASEDETAIL.DESCRIPTIONS.MAIN" | transloco }}
+    </p>
   </div>
-</div>
+
+  <div class="list-page__content">
+    <p>{{ kb.description }}</p>
+    <app-file-upload [knowledgeBaseId]="kb.id" class="mb-4"></app-file-upload>
+    <div class="row g-3">
+      @for (file of kb.files; track file) {
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+              <h6 class="card-title">{{ file.meta.name || file.id }}</h6>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <p>{{ "KNOWLEDGEBASEDETAIL.MESSAGES.NO_FILES" | transloco }}</p>
+      }
+    </div>
+  </div>
 }

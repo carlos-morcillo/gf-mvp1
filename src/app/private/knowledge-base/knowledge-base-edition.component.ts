@@ -1,4 +1,3 @@
-
 import {
   Component,
   computed,
@@ -22,6 +21,9 @@ import { KnowledgeBaseService } from './knowledge-base.service';
   standalone: true,
   imports: [ReactiveFormsModule, NgSelectModule, TranslocoModule],
   templateUrl: './knowledge-base-edition.component.html',
+  host: {
+    class: 'list-page list-page--container',
+  },
 })
 export class KnowledgeBaseEditionComponent {
   #fb = inject(FormBuilder);
@@ -32,7 +34,7 @@ export class KnowledgeBaseEditionComponent {
   #transloco = inject(TranslocoService);
 
   knowledgeBaseId = toSignal(
-    this.#route.paramMap.pipe(map((m) => m.get('knowledgeId')))
+    this.#route.paramMap.pipe(map((m) => m.get('knowledgeId'))),
   );
 
   groups = resource({
@@ -60,7 +62,7 @@ export class KnowledgeBaseEditionComponent {
   readonly formTitle = computed(() =>
     this.isEditMode()
       ? this.#transloco.translate('KNOWLEDGEBASEEDITION.TITLES.EDIT')
-      : this.#transloco.translate('KNOWLEDGEBASEEDITION.TITLES.CREATE')
+      : this.#transloco.translate('KNOWLEDGEBASEEDITION.TITLES.CREATE'),
   );
 
   submit() {
