@@ -2,9 +2,9 @@ import {
   Component,
   EventEmitter,
   Output,
+  afterNextRender,
   inject,
   signal,
-  afterNextRender,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import * as bootstrap from 'bootstrap';
@@ -59,7 +59,7 @@ const MENU_ITEMS: MenuItem[] = [
   {
     id: 'evaluation',
     label: 'ASIDE.LABELS.EVALUATION',
-    icon: 'clock',
+    icon: 'easel',
     route: '/evaluation',
   },
   {
