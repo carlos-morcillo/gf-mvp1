@@ -8,7 +8,7 @@
   class="offcanvas offcanvas-start"
   [class.show]="menuOpen()"
   tabindex="-1"
-  style="visibility: {{ menuOpen() ? 'visible' : 'hidden' }};"
+  [style.visibility]="menuOpen() ? 'visible' : 'hidden'"
 >
   <div class="offcanvas-header">
     <button type="button" class="btn-close" (click)="toggleMenu()"></button>

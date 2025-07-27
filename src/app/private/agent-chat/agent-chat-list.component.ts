@@ -89,12 +89,8 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
       sortable: false,
     },
     {
-      title: this.translocoSvc.selectTranslate('AGENT_CHAT_LIST.COLUMNS.ID'),
-      property: 'id',
-    },
-    {
-      title: this.translocoSvc.selectTranslate('AGENT_CHAT_LIST.COLUMNS.AGENT'),
-      property: 'agent',
+      title: this.translocoSvc.selectTranslate('AGENT_CHAT_LIST.COLUMNS.TITLE'),
+      property: 'title',
     },
     {
       title: this.translocoSvc.selectTranslate(

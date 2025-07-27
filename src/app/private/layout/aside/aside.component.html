@@ -42,10 +42,9 @@
               @for (chat of pinnedChats(); track chat) {
               <a
                 [routerLink]="['/private/chats', chat.id]"
-                class="text-muted pinned-chat-item d-flex align-items-center p-2 text-decoration-none text-truncate ps-4"
+                class="text-muted pinned-chat-item p-2 text-decoration-none text-truncate d-block ps-4"
                 (click)="navigate.emit()"
               >
-                {{ chat.title }}
                 {{ chat.title }}
               </a>
               } @empty {
