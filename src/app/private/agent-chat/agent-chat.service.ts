@@ -1,4 +1,4 @@
-import { Injectable, WritableSignal, signal } from '@angular/core';
+import { Injectable, WritableSignal, computed, signal } from '@angular/core';
 import { Observable, firstValueFrom } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from '../../../environments/environment';
@@ -21,6 +21,17 @@ export class AgentChatService extends CollectionService<AgentChat> {
 
   /** In-memory message history */
   readonly messages: WritableSignal<Message[]> = signal([]);
+
+  history = computed(() => {
+    const messages = this.messages() ?? [];
+    const lastMessage = messages.at(-1);
+    return {
+      messages: messages.reduce((acc, v) => {
+        return { ...acc, [v.id!.toString()]: v };
+      }, {}),
+      currentId: lastMessage?.id ?? null,
+    };
+  });
 
   /** Flag indicating that a request is in progress */
   readonly sending = signal(false);
@@ -288,6 +299,12 @@ export class AgentChatService extends CollectionService<AgentChat> {
       this.http.post(`https://gpt.sdi.es/api/chat/completed`, completedReq)
     );
 
+    this.updateChatById(chatId, {
+      messages: this.messages(),
+      models: [agentId],
+      history: this.history(),
+    });
+
     return result;
   }
 
@@ -340,8 +357,75 @@ export class AgentChatService extends CollectionService<AgentChat> {
   //       );
   //   }
 
+  /**
+   * Actualizar updateChatById para usar la estructura correcta
+   */
+  async updateChatById(
+    chatId: string,
+    chatData: UpdateChatPayload
+  ): Promise<any> {
+    if (!chatId || chatId === 'local') {
+      console.log('Skipping update for local/temporary chat');
+      return null;
+    }
+    debugger;
+    // ✅ ESTRUCTURA CORRECTA: como en el código Svelte [2]
+    const payload = {
+      chat: {
+        models: chatData.models,
+        messages: chatData.messages, // Ya incluyen los IDs correctos
+        history: chatData.history, // Estructura completa con IDs
+        params: chatData.params || {},
+        files: chatData.files || [],
+        ...(chatData.title && { title: chatData.title }),
+        ...(chatData.tags && { tags: chatData.tags }),
+      },
+    };
+
+    try {
+      const result = await firstValueFrom(
+        this.http.post(`${environment.baseURL}/chats/${chatId}`, payload)
+      );
+      debugger;
+      // const response = await fetch(`${environment.baseURL}/chats/${chatId}`, {
+      //   method: 'POST',
+      //   headers: headers,
+      //   body: JSON.stringify(payload),
+      // });
+
+      // if (!response.ok) {
+      //   const errorData = await response.json().catch(() => ({}));
+      //   throw new Error(
+      // 	`HTTP ${response.status}: ${errorData.detail || response.statusText}`
+      //   );
+      // }
+
+      // const result = await response.json();
+      console.log('Chat updated successfully:', chatId);
+      return result;
+    } catch (error) {
+      console.error('Error updating chat:', error);
+      throw error;
+    }
+  }
+
   /** Deletes a chat by identifier */
   deleteChat(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.baseURL}/chats/${id}`);
   }
+}
+
+interface UpdateChatPayload {
+  models: string[];
+  messages: any[];
+  history: ChatHistory;
+  params?: any;
+  files?: any[];
+  title?: string;
+  tags?: string[];
+}
+
+interface ChatHistory {
+  messages: { [key: string]: Message };
+  currentId: string | null;
 }

@@ -1,7 +1,7 @@
 // chat.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { WebSocketService } from './websocket.service';
 
@@ -133,31 +133,34 @@ export class ChatService {
       userMessageId
     );
 
-    return new Observable((observer) => {
-      this.processCompletion(
-        chatId,
-        selectedModels[0], // Usar el primer modelo
-        messagesForAPI,
-        responseMessageId,
-        sessionId,
-        files,
-        selectedToolIds,
-        selectedFilterIds,
-        params,
-        settings
-      )
-        .then(() => {
-          observer.complete();
-        })
-        .catch((error) => {
-          observer.error(error);
-        });
-    });
+    // return new Observable((observer) => {
+    const result = await this.processCompletion(
+      chatId,
+      selectedModels[0], // Usar el primer modelo
+      messagesForAPI,
+      responseMessageId,
+      sessionId,
+      files,
+      selectedToolIds,
+      selectedFilterIds,
+      params,
+      settings
+    )
+      .then(() => {
+        debugger;
+        //   observer.complete();
+      })
+      .catch((error) => {
+        debugger;
+
+        //   observer.error(error);
+      });
+    // });
+    await this.saveChatAfterCompletion(chatId);
+    return of(result);
   }
 
-  // Migrado del proceso de completion del código Svelte
-
-  // Modificar el método processCompletion para incluir la actualización
+  // Modificar processCompletion para NO llamar saveChatAfterCompletion aquí
   private async processCompletion(
     chatId: string,
     modelId: string,
@@ -173,7 +176,6 @@ export class ChatService {
     const stream =
       params?.stream_response ?? settings?.params?.stream_response ?? true;
 
-    // Payload equivalente al del código Svelte
     const payload = {
       stream: stream,
       model: modelId,
@@ -185,18 +187,14 @@ export class ChatService {
       files: files.length > 0 ? files : undefined,
       filter_ids: selectedFilterIds.length > 0 ? selectedFilterIds : undefined,
       tool_ids: selectedToolIds.length > 0 ? selectedToolIds : undefined,
-
-      // Campos específicos del código Svelte
       session_id: sessionId,
       chat_id: chatId,
       id: responseMessageId,
-
       background_tasks: {
         title_generation: settings?.title?.auto ?? true,
         tags_generation: settings?.autoTags ?? true,
         follow_up_generation: settings?.autoFollowUps ?? true,
       },
-
       ...(stream ? { stream_options: { include_usage: true } } : {}),
     };
 
@@ -207,20 +205,58 @@ export class ChatService {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
+      if (!response.ok || !response.body) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      await this.handleStreamingResponse(
-        response,
-        responseMessageId,
-        chatId,
-        modelId,
-        messages
-      );
+      // ✅ SOLO manejar el streaming, el guardado se hace DENTRO de handleStreamingResponse
+      return new Promise<string>(async (resolve, reject) => {
+        try {
+          debugger;
+          const reader = response.body!.getReader();
+          const decoder = new TextDecoder('utf-8');
+          let text = '';
+          let assistantId: string | undefined;
+          let partial = '';
+          let done = false;
 
-      // ✅ NUEVO: Actualizar chat después del streaming
-      await this.saveChatAfterCompletion(chatId);
+          while (!done) {
+            const { value, done: streamDone } = await reader.read();
+            done = streamDone;
+            if (value) {
+              partial += decoder.decode(value, { stream: true });
+              const parts = partial.split('\n\n');
+              partial = parts.pop() ?? '';
+              for (const chunk of parts) {
+                if (!chunk.startsWith('data: ')) continue;
+                const data = chunk.slice(6).trim();
+                if (data === '[DONE]') {
+                  debugger;
+                  done = true;
+                  reader.releaseLock();
+                  resolve(text);
+                  return;
+                }
+                try {
+                  const parsed = JSON.parse(data);
+                  const delta = parsed.choices?.[0]?.delta;
+                  if (delta?.content) {
+                    console.log(delta.content);
+                    text += delta.content;
+                  }
+                  assistantId = assistantId ?? parsed.id;
+                } catch (e) {
+                  // ignore parse errors
+                }
+              }
+            }
+          }
+          reader.releaseLock();
+          resolve(text);
+        } catch (error) {
+          reject(error);
+        }
+      });
     } catch (error) {
       console.error('Error in completion:', error);
       this.handleCompletionError(error, responseMessageId);
@@ -228,36 +264,7 @@ export class ChatService {
     }
   }
 
-  /**
-   * Guarda el chat después de completar un mensaje
-   * Equivalente a saveChatHandler del código Svelte [1]
-   */
-  private async saveChatAfterCompletion(chatId: string): Promise<void> {
-    if (chatId === 'local') return; // No guardar chats temporales
-
-    try {
-      const currentHistory = this.chatHistory.value;
-      const currentMessages = this.createMessagesList(
-        currentHistory,
-        currentHistory.currentId
-      );
-
-      await this.updateChatById(chatId, {
-        models: this.selectedModels(),
-        messages: currentMessages,
-        history: currentHistory,
-        // params: this.chatParams,
-        // files: this.chatFiles,
-      });
-
-      console.log('Chat saved after completion');
-    } catch (error) {
-      console.error('Error saving chat after completion:', error);
-      // No lanzar error para no interrumpir la UX
-    }
-  }
-
-  // Manejo de streaming equivalente al código Svelte
+  // ✅ CORREGIR handleStreamingResponse para guardar AL FINAL
   private async handleStreamingResponse(
     response: Response,
     responseMessageId: string,
@@ -265,6 +272,7 @@ export class ChatService {
     modelId: string,
     messages: any[]
   ) {
+    debugger;
     const reader = response.body?.getReader();
     const decoder = new TextDecoder();
 
@@ -279,6 +287,12 @@ export class ChatService {
         const { done, value } = await reader.read();
 
         if (done) {
+          // ✅ AQUÍ es donde debe ir el guardado - cuando el streaming termina
+          console.log(
+            'Streaming completed. Full response length:',
+            fullResponse.length
+          );
+
           await this.callChatCompleted(
             chatId,
             modelId,
@@ -286,7 +300,12 @@ export class ChatService {
             messages,
             fullResponse
           );
+
           this.markMessageAsComplete(responseMessageId);
+
+          // ✅ GUARDAR DESPUÉS de que todo esté completo
+          await this.saveChatAfterCompletion(chatId);
+
           this.isProcessing.next(false);
           break;
         }
@@ -299,6 +318,13 @@ export class ChatService {
             const data = line.slice(6).trim();
 
             if (data === '[DONE]') {
+              debugger;
+              // ✅ TAMBIÉN aquí cuando recibimos [DONE]
+              console.log(
+                'Received [DONE]. Full response length:',
+                fullResponse.length
+              );
+
               await this.callChatCompleted(
                 chatId,
                 modelId,
@@ -306,7 +332,12 @@ export class ChatService {
                 messages,
                 fullResponse
               );
+
               this.markMessageAsComplete(responseMessageId);
+
+              // ✅ GUARDAR DESPUÉS de que todo esté completo
+              await this.saveChatAfterCompletion(chatId);
+
               this.isProcessing.next(false);
               return;
             }
@@ -314,7 +345,6 @@ export class ChatService {
             try {
               const parsed = JSON.parse(data);
 
-              // Manejar diferentes tipos de eventos como en el código Svelte
               if (parsed.choices && parsed.choices[0]) {
                 const choice = parsed.choices[0];
 
@@ -330,7 +360,6 @@ export class ChatService {
                 }
               }
 
-              // Manejar sources si están presentes
               if (parsed.sources) {
                 this.updateMessageSources(responseMessageId, parsed.sources);
               }
@@ -346,45 +375,103 @@ export class ChatService {
     }
   }
 
-  // Equivalente a chatCompleted del código Svelte
-  private async callChatCompleted(
-    chatId: string,
-    modelId: string,
-    responseMessageId: string,
-    messages: any[],
-    fullResponse: string
-  ) {
-    const sessionId = this.websocketService.getSessionId();
-    if (!sessionId) return;
-
-    const payload = {
-      model: modelId,
-      messages: messages.map((m) => ({
-        id: m.id,
-        role: m.role,
-        content: m.content,
-        timestamp: m.timestamp,
-        ...(m.sources ? { sources: m.sources } : {}),
-      })),
-      chat_id: chatId,
-      session_id: sessionId,
-      id: responseMessageId,
-    };
+  // ✅ ASEGURAR que saveChatAfterCompletion usa el estado más actualizado
+  private async saveChatAfterCompletion(chatId: string): Promise<void> {
+    if (chatId === 'local') return;
 
     try {
-      const response = await fetch(`https://gpt.sdi.es/api/chat/completed`, {
-        method: 'POST',
-        headers: this.headers,
-        body: JSON.stringify(payload),
+      // ✅ ESPERAR un poco para asegurar que el estado se haya actualizado
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      const currentHistory = this.chatHistory.value;
+      console.log('Saving chat. Current history:', {
+        currentId: currentHistory.currentId,
+        messageCount: Object.keys(currentHistory.messages).length,
+        lastMessage: currentHistory.messages[currentHistory.currentId],
       });
 
-      if (!response.ok) {
-        console.error('Error in chatCompleted:', response.status);
-      }
+      const currentMessages = this.createMessagesList(
+        currentHistory,
+        currentHistory.currentId
+      );
+
+      console.log(
+        'Messages to save:',
+        currentMessages.map((m) => ({
+          id: m.id,
+          role: m.role,
+          contentLength: m.content?.length || 0,
+          content: m.content?.substring(0, 100) + '...',
+        }))
+      );
+
+      await this.updateChatById(chatId, {
+        models: this.selectedModels(),
+        messages: currentMessages,
+        history: currentHistory,
+      });
+
+      console.log('Chat saved successfully after completion');
     } catch (error) {
-      console.error('Error calling chatCompleted:', error);
+      console.error('Error saving chat after completion:', error);
     }
   }
+
+  // ✅ ASEGURAR que updateMessageContent actualiza correctamente
+  private updateMessageContent(messageId: string, content: string) {
+    const currentHistory = this.chatHistory.value;
+    if (currentHistory.messages[messageId]) {
+      // ✅ CREAR una nueva referencia para triggerar la reactividad
+      const updatedMessage = {
+        ...currentHistory.messages[messageId],
+        content: content,
+      };
+
+      const updatedHistory = {
+        ...currentHistory,
+        messages: {
+          ...currentHistory.messages,
+          [messageId]: updatedMessage,
+        },
+      };
+
+      this.chatHistory.next(updatedHistory);
+
+      // ✅ LOG para debugging
+      console.log(
+        `Updated message ${messageId} content length:`,
+        content.length
+      );
+    }
+  }
+
+  // ✅ ASEGURAR que markMessageAsComplete funciona correctamente
+  private markMessageAsComplete(messageId: string) {
+    const currentHistory = this.chatHistory.value;
+    if (currentHistory.messages[messageId]) {
+      const updatedMessage = {
+        ...currentHistory.messages[messageId],
+        done: true,
+      };
+
+      const updatedHistory = {
+        ...currentHistory,
+        messages: {
+          ...currentHistory.messages,
+          [messageId]: updatedMessage,
+        },
+      };
+
+      this.chatHistory.next(updatedHistory);
+
+      console.log(
+        `Marked message ${messageId} as complete. Content length:`,
+        updatedMessage.content?.length || 0
+      );
+    }
+  }
+
+  //
 
   // Métodos auxiliares
   private generateUUID(): string {
@@ -395,43 +482,10 @@ export class ChatService {
     });
   }
 
-  private createMessagesList(history: ChatHistory, messageId: string): any[] {
-    const messages: any[] = [];
-    let currentId = messageId;
-
-    while (currentId && history.messages[currentId]) {
-      const message = history.messages[currentId];
-      messages.unshift({
-        role: message.role,
-        content: message.content,
-        ...(message.files ? { files: message.files } : {}),
-      });
-      currentId = message.parentId || '';
-    }
-
-    return messages;
-  }
-
-  private updateMessageContent(messageId: string, content: string) {
-    const currentHistory = this.chatHistory.value;
-    if (currentHistory.messages[messageId]) {
-      currentHistory.messages[messageId].content = content;
-      this.chatHistory.next({ ...currentHistory });
-    }
-  }
-
   private updateMessageSources(messageId: string, sources: any[]) {
     const currentHistory = this.chatHistory.value;
     if (currentHistory.messages[messageId]) {
       currentHistory.messages[messageId].sources = sources;
-      this.chatHistory.next({ ...currentHistory });
-    }
-  }
-
-  private markMessageAsComplete(messageId: string) {
-    const currentHistory = this.chatHistory.value;
-    if (currentHistory.messages[messageId]) {
-      currentHistory.messages[messageId].done = true;
       this.chatHistory.next({ ...currentHistory });
     }
   }
@@ -449,8 +503,59 @@ export class ChatService {
   }
 
   /**
-   * Actualiza un chat existente en Open WebUI
-   * Equivalente a updateChatById del código Svelte [1]
+   * Versión simplificada para actualizaciones rápidas
+   */
+  async quickUpdateChat(
+    chatId: string,
+    updates: Partial<UpdateChatPayload>
+  ): Promise<void> {
+    try {
+      const currentHistory = this.chatHistory.value;
+      const currentMessages = this.createMessagesList(
+        currentHistory,
+        currentHistory.currentId
+      );
+
+      await this.updateChatById(chatId, {
+        models: this.selectedModels(),
+        messages: currentMessages,
+        history: currentHistory,
+        ...updates,
+      });
+    } catch (error) {
+      // No lanzar error para no interrumpir la UX, solo loggear
+      console.error('Quick update failed:', error);
+    }
+  }
+
+  /**
+   * Crear lista de mensajes manteniendo IDs - equivalente al createMessagesList de Svelte [1]
+   */
+  private createMessagesList(history: ChatHistory, messageId: string): any[] {
+    const messages: any[] = [];
+    let currentId = messageId;
+
+    // Reconstruir la cadena de mensajes desde el messageId hacia atrás
+    const messageChain: any[] = [];
+    while (currentId && history.messages[currentId]) {
+      messageChain.unshift(history.messages[currentId]);
+      currentId = history.messages[currentId].parentId || '';
+    }
+
+    // Convertir a formato API manteniendo los IDs originales
+    return messageChain.map((message) => ({
+      id: message.id, // ✅ MANTENER el ID original
+      role: message.role,
+      content: message.content,
+      timestamp: message.timestamp,
+      ...(message.files ? { files: message.files } : {}),
+      ...(message.sources ? { sources: message.sources } : {}),
+      ...(message.info ? { info: message.info } : {}),
+    }));
+  }
+
+  /**
+   * Actualizar updateChatById para usar la estructura correcta
    */
   async updateChatById(
     chatId: string,
@@ -467,11 +572,12 @@ export class ChatService {
       Authorization: `Bearer ${this.apiToken}`,
     };
 
+    // ✅ ESTRUCTURA CORRECTA: como en el código Svelte [2]
     const payload = {
       chat: {
         models: chatData.models,
-        messages: chatData.messages,
-        history: chatData.history,
+        messages: chatData.messages, // Ya incluyen los IDs correctos
+        history: chatData.history, // Estructura completa con IDs
         params: chatData.params || {},
         files: chatData.files || [],
         ...(chatData.title && { title: chatData.title }),
@@ -503,28 +609,52 @@ export class ChatService {
   }
 
   /**
-   * Versión simplificada para actualizaciones rápidas
+   * Corregir callChatCompleted para usar IDs correctos
    */
-  async quickUpdateChat(
+  private async callChatCompleted(
     chatId: string,
-    updates: Partial<UpdateChatPayload>
-  ): Promise<void> {
-    try {
-      const currentHistory = this.chatHistory.value;
-      const currentMessages = this.createMessagesList(
-        currentHistory,
-        currentHistory.currentId
-      );
+    modelId: string,
+    responseMessageId: string,
+    messages: any[],
+    fullResponse: string
+  ) {
+    const sessionId = this.websocketService.getSessionId();
+    if (!sessionId) return;
 
-      await this.updateChatById(chatId, {
-        models: this.selectedModels(),
-        messages: currentMessages,
-        history: currentHistory,
-        ...updates,
+    // ✅ ESTRUCTURA CORRECTA: como en el código Svelte [1]
+    const payload = {
+      model: modelId,
+      messages: messages.map((m) => ({
+        id: m.id, // ✅ MANTENER ID original
+        role: m.role,
+        content: m.content,
+        info: m.info ? m.info : undefined,
+        timestamp: m.timestamp,
+        ...(m.usage ? { usage: m.usage } : {}),
+        ...(m.sources ? { sources: m.sources } : {}),
+      })),
+      filter_ids: [], // selectedFilterIds si los tienes
+      model_item: {}, // $models.find((m) => m.id === modelId) si tienes la lista
+      chat_id: chatId,
+      session_id: sessionId,
+      id: responseMessageId,
+    };
+
+    try {
+      const response = await fetch(`https://gpt.sdi.es/api/chat/completed`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${this.apiToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
+
+      if (!response.ok) {
+        console.error('Error in chatCompleted:', response.status);
+      }
     } catch (error) {
-      // No lanzar error para no interrumpir la UX, solo loggear
-      console.error('Quick update failed:', error);
+      console.error('Error calling chatCompleted:', error);
     }
   }
 }

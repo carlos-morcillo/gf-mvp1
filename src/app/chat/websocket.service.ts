@@ -1,5 +1,6 @@
 // websocket.service.ts (versión final)
 import { Injectable } from '@angular/core';
+import { uniqueId } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
@@ -13,7 +14,7 @@ export class WebSocketService {
   public sessionId$ = this.sessionId.asObservable();
 
   constructor() {
-    this.initializeSocket();
+    // this.initializeSocket();
   }
 
   private initializeSocket() {
@@ -69,14 +70,17 @@ export class WebSocketService {
   }
 
   getSessionId(): string | null {
+    return uniqueId('asdf');
     return this.socket?.id || null;
   }
 
   isConnected(): boolean {
+    return true;
     return this.socket?.connected || false;
   }
 
   waitForConnection(): Promise<string> {
+    return Promise.resolve(this.getSessionId()!);
     return new Promise((resolve, reject) => {
       if (this.isConnected() && this.getSessionId()) {
         resolve(this.getSessionId()!);

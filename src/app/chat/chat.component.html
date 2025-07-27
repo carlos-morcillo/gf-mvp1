@@ -1,40 +1,30 @@
 <!-- chat.component.html -->
 <div class="chat-container">
-  <!-- Información de sesión -->
-  @if (sessionId$ | async; as sessionId) {
-  <div class="session-info">
-    <small>Session ID: {{ sessionId }}</small>
-  </div>
-  }
-
   <!-- Contenedor de mensajes -->
-  @if (chatHistory$ | async; as history) {
-  <pre>{{ history | json }}</pre>
   <div class="messages-container">
-    @for (message of getOrderedMessages(history); track message) {
+    @for (message of chat()?.chat?.messages; track message) {
     <div [class]="'message message-' + message.role">
       <div class="message-header">
         <span class="role">{{ message.role }}</span>
         <span class="timestamp">{{
-          message.timestamp * 1000 | date : "short"
+          message.timestamp! * 1000 | date : "short"
         }}</span>
       </div>
       <div class="message-content">
         {{ message.content }}
         <!-- Indicador de streaming -->
-        @if (!message.done && message.role === 'assistant') {
+        <!-- @if (!message.done && message.role === 'assistant') {
         <span class="streaming-indicator">▋</span>
-        }
+        } -->
       </div>
       <!-- Mostrar archivos si existen -->
-      @if (message.files) {
+      <!-- @if (message.files) {
       <div class="message-files">
         @for (file of message.files; track file) {
         <div class="file-item">📎 {{ file.name }}</div>
         }
       </div>
       }
-      <!-- Mostrar fuentes si existen -->
       @if (message.sources) {
       <div class="message-sources">
         <details>
@@ -47,14 +37,12 @@
         </details>
       </div>
       }
-      <!-- Mostrar error si existe -->
       @if (message.error) {
       <div class="message-error">⚠️ {{ message.error.content }}</div>
-      }
+      } -->
     </div>
     }
   </div>
-  }
 
   <!-- Indicador de procesamiento -->
   @if (isProcessing$ | async) {
