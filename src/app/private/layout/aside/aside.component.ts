@@ -12,8 +12,8 @@ import * as bootstrap from 'bootstrap';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AvatarComponent } from 'ng-hub-ui-avatar';
 import { AuthService } from '../../../auth/auth.service';
+import { ChatService } from '../../../chat/chat.service';
 import { LANGUAGES } from '../../../shared/constants/languages';
-import { ChatService } from '../chat.service';
 
 interface MenuItem {
   id: string;

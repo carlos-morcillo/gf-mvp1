@@ -1,5 +1,5 @@
 <aside class="sidebar d-flex flex-column h-100">
-  <div class="sidebar-header flex-shrink-0">
+  <div class="sidebar-header flex-shrink-0 p-2">
     <a routerLink="/" class="text-decoration-none fw-semibold fs-4">
       Greenfield<span class="text-success">&bull;</span>
     </a>
@@ -58,6 +58,11 @@
                 }}</span>
                 }
               </a>
+              } @empty {
+              <div class="alert alert-secondary" role="alert">
+                No tienes chats fijados
+              </div>
+
               }
             </div>
           </div>

@@ -1,8 +1,9 @@
 // chat.service.ts
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Injectable, resource, signal } from '@angular/core';
+import { BehaviorSubject, firstValueFrom, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { PinnedChat } from '../private/layout/pinned-chat';
 import { WebSocketService } from './websocket.service';
 
 interface ChatMessage {
@@ -49,6 +50,16 @@ export class ChatService {
   }
 
   private apiToken = localStorage.getItem('token') || '';
+
+  private pinnedChatsResource = resource({
+    loader: () =>
+      firstValueFrom(
+        this.http.get<PinnedChat[]>(`${environment.baseURL}/chats/pinned`)
+      ),
+  });
+
+  readonly pinnedChats = this.pinnedChatsResource.value;
+  readonly isLoadingPinned = this.pinnedChatsResource.isLoading;
 
   // Estados reactivos como en Svelte
   chatHistory = new BehaviorSubject<ChatHistory>({
