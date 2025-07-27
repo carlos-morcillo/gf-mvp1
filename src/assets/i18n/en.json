@@ -150,28 +150,21 @@
     }
   },
   "DASHBOARD": {
-    "TITLES": {
-      "MAIN": "Dashboard"
+    "TITLE": "¡Bienvenido de vuelta!",
+    "SUBTITLE": "Continúa trabajando con tus agentes o explora nuevas posibilidades.",
+    "SEARCH": {
+      "PLACEHOLDER": "Buscar agentes, conversaciones o tareas…"
     },
-    "SECTIONS": {
-      "QUICK_ACCESS": "Quick Access",
-      "RECENT_ACTIVITY": "Recent Activity"
+    "RECENT_CONVERSATIONS": "Conversaciones Recientes",
+    "SEE_ALL": "Ver todas",
+    "QUICK_ACTIONS": {
+      "TITLE": "Acciones Rápidas",
+      "NEW_AGENT": "Crear nuevo agente",
+      "EXPLORE_MARKETPLACE": "Explorar Marketplace",
+      "FAVORITES": "Ver favoritos"
     },
-    "METRICS": {
-      "TRAININGS_COMPLETED": "Trainings completed",
-      "DOCUMENTS_INDEXED": "Indexed documents",
-      "AVERAGE_SCORE": "Average score",
-      "ACTIVE_AGENTS": "Active agents"
-    },
-    "ACTIONS": {
-      "NEW_DOC": "New document",
-      "NEW_AGENT": "Create agent",
-      "RUN_TRAINING": "Launch training"
-    },
-    "LOGS": {
-      "USER_CREATED_AGENT": "User Juan created an agent",
-      "DOC_INDEXED": "Document Manual.pdf indexed",
-      "TRAINING_UPDATED": "Basic training updated"
+    "AVAILABLE_AGENTS": {
+      "TITLE": "Agentes Disponibles"
     }
   },
   "EVALUATION": {
