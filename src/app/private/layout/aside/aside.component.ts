@@ -172,6 +172,16 @@ export class AsideComponent implements OnDestroy {
         langEl.addEventListener('click', (ev) => {
           ev.stopPropagation();
         });
+
+        langEl.addEventListener('shown.bs.dropdown', () => {
+          const layout = document.querySelector('.private-layout');
+          layout?.classList.add('overflow-visible');
+        });
+
+        langEl.addEventListener('hidden.bs.dropdown', () => {
+          const layout = document.querySelector('.private-layout');
+          layout?.classList.remove('overflow-visible');
+        });
       }
     });
   }
