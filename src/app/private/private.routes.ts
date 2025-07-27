@@ -194,8 +194,8 @@ export const PRIVATE_ROUTES: Routes = [
           {
             path: 'add',
             loadComponent: () =>
-              import('./knowledge-base/knowledge-base-form.component').then(
-                (c) => c.KnowledgeBaseFormComponent
+              import('./knowledge-base/knowledge-base-edition.component').then(
+                (c) => c.KnowledgeBaseEditionComponent
               ),
           },
           {
@@ -210,8 +210,8 @@ export const PRIVATE_ROUTES: Routes = [
             path: ':knowledgeId/edit',
             resolve: { knowledge: KnowledgeBaseResolver },
             loadComponent: () =>
-              import('./knowledge-base/knowledge-base-form.component').then(
-                (c) => c.KnowledgeBaseFormComponent
+              import('./knowledge-base/knowledge-base-edition.component').then(
+                (c) => c.KnowledgeBaseEditionComponent
               ),
           },
           {

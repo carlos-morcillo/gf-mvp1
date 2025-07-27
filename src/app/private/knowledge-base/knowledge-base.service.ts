@@ -8,7 +8,12 @@ import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
 
 export interface KnowledgeFile {
   id: string;
-  meta: Record<string, any>;
+  meta: {
+    name?: string;
+    size?: number;
+    type?: string;
+    [key: string]: any;
+  };
   created_at: number;
   updated_at: number;
 }

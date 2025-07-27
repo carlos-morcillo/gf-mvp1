@@ -1,5 +1,28 @@
 <div class="container-fluid py-4" *ngIf="knowledge() as kb">
-  <h1 class="mb-3">{{ knowledge().name }}</h1>
-  <p>{{ knowledge().description }}</p>
-  <app-file-upload [knowledgeBaseId]="knowledge().id"></app-file-upload>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="m-0">{{ kb.name }}</h1>
+    <a
+      class="btn btn-outline-primary btn-sm"
+      [routerLink]="['/private/knowledge-bases', kb.id, 'edit']"
+    >
+      <i class="bi bi-pencil"></i>
+      {{ 'knowledgeBase.editButton' | transloco }}
+    </a>
+  </div>
+  <p>{{ kb.description }}</p>
+
+  <app-file-upload [knowledgeBaseId]="kb.id" class="mb-4"></app-file-upload>
+
+  <div class="row g-3" *ngIf="files().length; else empty">
+    <div class="col-md-6 col-lg-4" *ngFor="let file of files()">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h6 class="card-title">{{ file.meta.name || file.id }}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #empty>
+    <p>{{ 'knowledgeBase.noFiles' | transloco }}</p>
+  </ng-template>
 </div>

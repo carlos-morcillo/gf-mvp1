@@ -142,6 +142,11 @@ export class Translations {
     englishName: string;
   }[] = [
     { code: 'es', nativeName: 'castellano', englishName: 'spanish' },
+    { code: 'en', nativeName: 'English', englishName: 'English' },
+    { code: 'fr', nativeName: 'Français', englishName: 'French' },
+    { code: 'de', nativeName: 'Deutsch', englishName: 'German' },
+    { code: 'it', nativeName: 'Italiano', englishName: 'Italian' },
+    { code: 'pt', nativeName: 'Português', englishName: 'Portuguese' },
   ]; /* Object.keys(languages).reduce((acc, code) => {
 		if (availableLanguages.includes(code)) {
 			acc.push({ code, ...languages[code] });

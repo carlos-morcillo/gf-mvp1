@@ -4,23 +4,31 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { firstValueFrom, map } from 'rxjs';
 import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
 import { Group, GroupService } from './group.service';
 import { KnowledgeBaseService } from './knowledge-base.service';
 
 @Component({
-  selector: 'app-knowledge-base-form',
+  selector: 'app-knowledge-base-edition',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, NgSelectModule],
-  templateUrl: './knowledge-base-form.component.html',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    NgSelectModule,
+    TranslocoModule,
+  ],
+  templateUrl: './knowledge-base-edition.component.html',
 })
-export class KnowledgeBaseFormComponent {
+export class KnowledgeBaseEditionComponent {
   #fb = inject(FormBuilder);
   #router = inject(Router);
   #route = inject(ActivatedRoute);
   #kbSvc = inject(KnowledgeBaseService);
   #groupSvc = inject(GroupService);
+  #transloco = inject(TranslocoService);
 
   knowledgeBaseId = toSignal(
     this.#route.paramMap.pipe(map((m) => m.get('knowledgeId')))
@@ -39,8 +47,8 @@ export class KnowledgeBaseFormComponent {
   readonly isEditMode = computed(() => !!this.knowledgeBaseId());
   readonly formTitle = computed(() =>
     this.isEditMode()
-      ? 'Editar Base de Conocimiento'
-      : 'Crear Base de Conocimiento'
+      ? this.#transloco.translate('knowledgeBase.edit')
+      : this.#transloco.translate('knowledgeBase.create')
   );
 
   constructor() {
