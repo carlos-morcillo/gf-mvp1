@@ -317,4 +317,126 @@
     "restricted": "Restringido",
     "privateDesc": "Solo pueden acceder los usuarios y grupos con permiso"
   }
+  ,
+  "ASIDE": {
+    "LABELS": {
+      "HOME": "Inicio",
+      "INTRANET": "Intranet",
+      "MY_AGENTS": "Mis Agentes",
+      "CHATS": "Chats",
+      "MARKETPLACE": "Marketplace",
+      "EVALUATION": "Evaluación IA",
+      "TRAINING": "Formación",
+      "GAMIFICATION": "Gamificación",
+      "SETTINGS": "Configuración",
+      "HELP": "Ayuda"
+    },
+    "BUTTONS": {
+      "CREATE_NEW_AGENT": "Crear nuevo agente",
+      "PROFILE": "Perfil de usuario",
+      "CHANGE_LANGUAGE": "Cambiar idioma",
+      "LOGOUT": "Cerrar sesión"
+    }
+  },
+  "KNOWLEDGEBASEEDITION": {
+    "TITLES": {
+      "CREATE": "Crear Base de Conocimiento",
+      "EDIT": "Editar Base de Conocimiento"
+    },
+    "LABELS": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "VISIBILITY": "Visibilidad",
+      "GROUPS": "Grupos",
+      "PRIVATE": "Privado",
+      "PUBLIC": "Público",
+      "RESTRICTED": "Restringido"
+    },
+    "PLACEHOLDERS": {
+      "NAME": "Nombra tu base de conocimientos",
+      "DESCRIPTION": "Describe tu Base de Conocimientos y sus objetivos",
+      "SELECT_GROUP": "Seleccionar un grupo"
+    },
+    "BUTTONS": {
+      "CREATE": "Crear Conocimiento",
+      "UPDATE": "Actualizar Conocimiento",
+      "CANCEL": "Cancelar"
+    },
+    "MESSAGES": {
+      "NO_GROUPS": "No hay grupos con acceso, añade un grupo para otorgar acceso",
+      "PRIVATE_DESC": "Solo pueden acceder los usuarios y grupos con permiso",
+      "CREATE_SUCCESS": "Base de conocimiento creada correctamente",
+      "UPDATE_SUCCESS": "Base de conocimiento actualizada correctamente",
+      "CREATE_ERROR": "Error al crear la base de conocimiento",
+      "UPDATE_ERROR": "Error al actualizar la base de conocimiento"
+    }
+  },
+  "KNOWLEDGEBASEDETAIL": {
+    "TITLES": {
+      "DETAIL": "Detalle de Base de Conocimiento",
+      "FILES": "Archivos Asociados"
+    },
+    "LABELS": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "VISIBILITY": "Visibilidad",
+      "GROUPS": "Grupos",
+      "CREATED_AT": "Fecha de creación",
+      "UPDATED_AT": "Última actualización"
+    },
+    "BUTTONS": {
+      "EDIT": "Editar",
+      "DELETE": "Eliminar",
+      "ADD_FILES": "Añadir Archivos",
+      "DOWNLOAD": "Descargar",
+      "REMOVE_FILE": "Eliminar archivo"
+    },
+    "MESSAGES": {
+      "NO_FILES": "No hay archivos asociados",
+      "DELETE_CONFIRM": "¿Estás seguro de que quieres eliminar esta base de conocimiento?",
+      "DELETE_SUCCESS": "Base de conocimiento eliminada correctamente",
+      "DELETE_ERROR": "Error al eliminar la base de conocimiento"
+    }
+  },
+  "FILEUPLOAD": {
+    "TITLES": {
+      "UPLOAD_FILES": "Subir Archivos"
+    },
+    "LABELS": {
+      "DRAG_DROP": "Arrastra archivos aquí o haz clic para seleccionar",
+      "SELECTED_FILES": "Archivos seleccionados",
+      "UPLOAD_PROGRESS": "Progreso de carga"
+    },
+    "BUTTONS": {
+      "SELECT_FILES": "Seleccionar archivos",
+      "UPLOAD": "Subir",
+      "CANCEL": "Cancelar",
+      "REMOVE": "Eliminar"
+    },
+    "MESSAGES": {
+      "UPLOADING": "Subiendo...",
+      "ASSOCIATING": "Asociando archivo...",
+      "SUCCESS": "Archivo subido correctamente",
+      "ERROR": "Error al subir archivo",
+      "INVALID_TYPE": "Tipo de archivo no permitido",
+      "MAX_SIZE": "Archivo demasiado grande",
+      "UPLOAD_COMPLETE": "Todos los archivos se han subido correctamente"
+    }
+  },
+  "KNOWLEDGEBASELIST": {
+    "TITLES": {
+      "MAIN": "Bases de Conocimiento"
+    },
+    "COLUMNS": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "CREATED_AT": "Creado"
+    },
+    "BUTTONS": {
+      "ADD": "Añadir"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No hay bases de conocimiento"
+    }
+  }
 }

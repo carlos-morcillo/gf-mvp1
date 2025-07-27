@@ -1,5 +1,13 @@
-import { Component, EventEmitter, Output, inject, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  inject,
+  signal,
+  afterNextRender,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import * as bootstrap from 'bootstrap';
 
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AvatarComponent } from 'ng-hub-ui-avatar';
@@ -12,21 +20,72 @@ interface MenuItem {
   label: string;
   icon: string;
   route?: string;
-  isActive?: boolean;
   isCollapsible?: boolean;
   children?: MenuItem[];
 }
 
 const MENU_ITEMS: MenuItem[] = [
-  { id: 'home', label: 'sidebar.home', icon: 'house', route: '/private/home', isActive: true },
-  { id: 'agents', label: 'sidebar.myAgents', icon: 'person', isCollapsible: true, children: [] },
-  { id: 'chats', label: 'sidebar.chats', icon: 'chat', isCollapsible: true, children: [] },
-  { id: 'marketplace', label: 'sidebar.marketplace', icon: 'cart', route: '/marketplace' },
-  { id: 'evaluation', label: 'sidebar.evaluation', icon: 'clock', route: '/evaluation' },
-  { id: 'training', label: 'sidebar.training', icon: 'mortarboard', route: '/training' },
-  { id: 'gamification', label: 'sidebar.gamification', icon: 'trophy', route: '/gamification' },
-  { id: 'settings', label: 'sidebar.settings', icon: 'gear', route: '/settings' },
-  { id: 'help', label: 'sidebar.help', icon: 'question-circle', route: '/help' },
+  {
+    id: 'home',
+    label: 'ASIDE.LABELS.HOME',
+    icon: 'house',
+    route: '/private/home',
+  },
+  {
+    id: 'intranet',
+    label: 'ASIDE.LABELS.INTRANET',
+    icon: 'building',
+    route: '/private/intranet',
+  },
+  {
+    id: 'agents',
+    label: 'ASIDE.LABELS.MY_AGENTS',
+    icon: 'person',
+    route: '/private/agents',
+  },
+  {
+    id: 'chats',
+    label: 'ASIDE.LABELS.CHATS',
+    icon: 'chat',
+    isCollapsible: true,
+    children: [],
+  },
+  {
+    id: 'marketplace',
+    label: 'ASIDE.LABELS.MARKETPLACE',
+    icon: 'cart',
+    route: '/marketplace',
+  },
+  {
+    id: 'evaluation',
+    label: 'ASIDE.LABELS.EVALUATION',
+    icon: 'clock',
+    route: '/evaluation',
+  },
+  {
+    id: 'training',
+    label: 'ASIDE.LABELS.TRAINING',
+    icon: 'mortarboard',
+    route: '/training',
+  },
+  {
+    id: 'gamification',
+    label: 'ASIDE.LABELS.GAMIFICATION',
+    icon: 'trophy',
+    route: '/gamification',
+  },
+  {
+    id: 'settings',
+    label: 'ASIDE.LABELS.SETTINGS',
+    icon: 'gear',
+    route: '/settings',
+  },
+  {
+    id: 'help',
+    label: 'ASIDE.LABELS.HELP',
+    icon: 'question-circle',
+    route: '/help',
+  },
 ];
 
 @Component({
@@ -48,19 +107,25 @@ export class AsideComponent {
 
   menuItems = MENU_ITEMS;
 
-  agentsCollapsed = signal(true);
   chatsCollapsed = signal(true);
 
   pinnedChats = this.chatSvc.pinnedChats;
+
+  constructor() {
+    afterNextRender(() => {
+      const dropdownElements = document.querySelectorAll(
+        '[data-bs-toggle="dropdown"]'
+      );
+      dropdownElements.forEach((el) => {
+        new bootstrap.Dropdown(el);
+      });
+    });
+  }
 
   changeLanguage(lang: string) {
     this.currentLang.set(lang);
     this.transloco.setActiveLang(lang);
     localStorage.setItem('language', lang);
-  }
-
-  toggleAgentsCollapse() {
-    this.agentsCollapsed.update((v) => !v);
   }
 
   toggleChatsCollapse() {

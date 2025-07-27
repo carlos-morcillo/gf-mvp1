@@ -24,7 +24,7 @@ interface FileUploadItem {
       (click)="fileInput.click()"
     >
       <p class="m-0">
-        {{ 'fileUpload.dragDropText' | transloco }}
+        {{ 'FILEUPLOAD.LABELS.DRAG_DROP' | transloco }}
       </p>
       <input
         type="file"
@@ -46,11 +46,11 @@ interface FileUploadItem {
       </div>
       } @if (item.status === 'completed') {
       <div class="alert-success">
-        {{ item.file.name }} - {{ 'fileUpload.success' | transloco }}
+        {{ item.file.name }} - {{ 'FILEUPLOAD.MESSAGES.SUCCESS' | transloco }}
       </div>
       } @if (item.status === 'error') {
       <div class="alert-danger">
-        {{ item.file.name }} - {{ 'fileUpload.error' | transloco }}
+        {{ item.file.name }} - {{ 'FILEUPLOAD.MESSAGES.ERROR' | transloco }}
       </div>
       }
     </div>

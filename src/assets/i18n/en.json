@@ -317,4 +317,126 @@
     "restricted": "Restricted",
     "privateDesc": "Only allowed users and groups can access"
   }
+  ,
+  "ASIDE": {
+    "LABELS": {
+      "HOME": "Home",
+      "INTRANET": "Intranet",
+      "MY_AGENTS": "My Agents",
+      "CHATS": "Chats",
+      "MARKETPLACE": "Marketplace",
+      "EVALUATION": "AI Evaluation",
+      "TRAINING": "Training",
+      "GAMIFICATION": "Gamification",
+      "SETTINGS": "Settings",
+      "HELP": "Help"
+    },
+    "BUTTONS": {
+      "CREATE_NEW_AGENT": "Create new agent",
+      "PROFILE": "User profile",
+      "CHANGE_LANGUAGE": "Change language",
+      "LOGOUT": "Logout"
+    }
+  },
+  "KNOWLEDGEBASEEDITION": {
+    "TITLES": {
+      "CREATE": "Create Knowledge Base",
+      "EDIT": "Edit Knowledge Base"
+    },
+    "LABELS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "VISIBILITY": "Visibility",
+      "GROUPS": "Groups",
+      "PRIVATE": "Private",
+      "PUBLIC": "Public",
+      "RESTRICTED": "Restricted"
+    },
+    "PLACEHOLDERS": {
+      "NAME": "Name your knowledge base",
+      "DESCRIPTION": "Describe your Knowledge Base and its goals",
+      "SELECT_GROUP": "Select a group"
+    },
+    "BUTTONS": {
+      "CREATE": "Create Knowledge",
+      "UPDATE": "Update Knowledge",
+      "CANCEL": "Cancel"
+    },
+    "MESSAGES": {
+      "NO_GROUPS": "No groups have access, add a group to grant access",
+      "PRIVATE_DESC": "Only allowed users and groups can access",
+      "CREATE_SUCCESS": "Knowledge base created successfully",
+      "UPDATE_SUCCESS": "Knowledge base updated successfully",
+      "CREATE_ERROR": "Error creating knowledge base",
+      "UPDATE_ERROR": "Error updating knowledge base"
+    }
+  },
+  "KNOWLEDGEBASEDETAIL": {
+    "TITLES": {
+      "DETAIL": "Knowledge Base Detail",
+      "FILES": "Associated Files"
+    },
+    "LABELS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "VISIBILITY": "Visibility",
+      "GROUPS": "Groups",
+      "CREATED_AT": "Created at",
+      "UPDATED_AT": "Last update"
+    },
+    "BUTTONS": {
+      "EDIT": "Edit",
+      "DELETE": "Delete",
+      "ADD_FILES": "Add Files",
+      "DOWNLOAD": "Download",
+      "REMOVE_FILE": "Remove file"
+    },
+    "MESSAGES": {
+      "NO_FILES": "No files associated",
+      "DELETE_CONFIRM": "Are you sure you want to delete this knowledge base?",
+      "DELETE_SUCCESS": "Knowledge base deleted successfully",
+      "DELETE_ERROR": "Error deleting knowledge base"
+    }
+  },
+  "FILEUPLOAD": {
+    "TITLES": {
+      "UPLOAD_FILES": "Upload Files"
+    },
+    "LABELS": {
+      "DRAG_DROP": "Drag files here or click to select",
+      "SELECTED_FILES": "Selected files",
+      "UPLOAD_PROGRESS": "Upload progress"
+    },
+    "BUTTONS": {
+      "SELECT_FILES": "Select files",
+      "UPLOAD": "Upload",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    },
+    "MESSAGES": {
+      "UPLOADING": "Uploading...",
+      "ASSOCIATING": "Associating file...",
+      "SUCCESS": "File uploaded successfully",
+      "ERROR": "Error uploading file",
+      "INVALID_TYPE": "File type not allowed",
+      "MAX_SIZE": "File too large",
+      "UPLOAD_COMPLETE": "All files were uploaded successfully"
+    }
+  },
+  "KNOWLEDGEBASELIST": {
+    "TITLES": {
+      "MAIN": "Knowledge Bases"
+    },
+    "COLUMNS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CREATED_AT": "Created"
+    },
+    "BUTTONS": {
+      "ADD": "Add"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No knowledge bases found"
+    }
+  }
 }
