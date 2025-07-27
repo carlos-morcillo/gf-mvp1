@@ -1,11 +1,11 @@
 import {
   Component,
   EventEmitter,
+  OnDestroy,
   Output,
   afterNextRender,
   inject,
   signal,
-  OnDestroy,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import * as bootstrap from 'bootstrap';
@@ -85,7 +85,8 @@ const MENU_ITEMS: MenuItem[] = [
     id: 'training',
     label: 'ASIDE.LABELS.TRAINING',
     icon: 'mortarboard',
-    route: '/private/training',
+    target: '_blank',
+    route: 'https://formacion.sdilab.es/',
   },
   {
     id: 'gamification',

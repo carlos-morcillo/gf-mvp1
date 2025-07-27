@@ -62,6 +62,7 @@
           class="nav-link d-flex align-items-center py-2 px-3 rounded"
           [href]="item.route"
           [class.disabled]="item.disabled"
+          target="_blank"
         >
           <i class="bi bi-{{ item.icon }} me-3"></i>
           <span>{{ item.label | transloco }}</span>

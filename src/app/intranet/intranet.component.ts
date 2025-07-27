@@ -7,4 +7,8 @@ import { RouterLink } from '@angular/router';
   templateUrl: './intranet.component.html',
   styleUrl: './intranet.component.scss',
 })
-export class IntranetComponent {}
+export class IntranetComponent {
+  alert(m: string) {
+    alert('asdf');
+  }
+}
