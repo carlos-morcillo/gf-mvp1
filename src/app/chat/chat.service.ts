@@ -61,6 +61,27 @@ export class ChatService {
   readonly pinnedChats = this.pinnedChatsResource.value;
   readonly isLoadingPinned = this.pinnedChatsResource.isLoading;
 
+  /** Pin a chat and refresh the pinned list */
+  async pinChat(chatId: string): Promise<void> {
+    await firstValueFrom(
+      this.http.post(`${environment.baseURL}/chats/${chatId}/pin`, {})
+    );
+    this.pinnedChatsResource.reload();
+  }
+
+  /** Unpin a chat and refresh the pinned list */
+  async unpinChat(chatId: string): Promise<void> {
+    await firstValueFrom(
+      this.http.post(`${environment.baseURL}/chats/${chatId}/unpin`, {})
+    );
+    this.pinnedChatsResource.reload();
+  }
+
+  /** Check if chat is currently pinned */
+  isPinned(chatId: string | number | null | undefined): boolean {
+    return this.pinnedChats()?.some((c) => c.id === String(chatId)) ?? false;
+  }
+
   // Estados reactivos como en Svelte
   chatHistory = new BehaviorSubject<ChatHistory>({
     messages: {},

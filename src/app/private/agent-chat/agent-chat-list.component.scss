@@ -1,0 +1,8 @@
+.pin-btn {
+  visibility: hidden;
+}
+
+tr:hover .pin-btn,
+.pin-btn.pinned {
+  visibility: visible;
+}
