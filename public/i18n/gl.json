@@ -260,4 +260,22 @@
       "MAIN": "Formación"
     }
   }
+,
+  "sidebar": {
+    "home": "Inicio",
+    "myAgents": "Mis Agentes",
+    "chats": "Chats",
+    "createNewAgent": "Crear nuevo agente",
+    "marketplace": "Marketplace",
+    "evaluation": "Evaluación IA",
+    "training": "Formación",
+    "gamification": "Gamificación",
+    "settings": "Configuración",
+    "help": "Ayuda",
+    "userMenu": {
+      "profile": "Perfil de usuario",
+      "language": "Cambiar idioma",
+      "logout": "Cerrar sesión"
+    }
+  }
 }
