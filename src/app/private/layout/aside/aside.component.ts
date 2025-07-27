@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgFor, NgIf } from '@angular/common';
+
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AvatarComponent } from 'ng-hub-ui-avatar';
 import { AuthService } from '../../../auth/auth.service';
@@ -32,7 +32,7 @@ const MENU_ITEMS: MenuItem[] = [
 @Component({
   selector: 'app-aside',
   standalone: true,
-  imports: [NgFor, NgIf, RouterLink, RouterLinkActive, TranslocoModule, AvatarComponent],
+  imports: [RouterLink, RouterLinkActive, TranslocoModule, AvatarComponent],
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.scss'],
 })

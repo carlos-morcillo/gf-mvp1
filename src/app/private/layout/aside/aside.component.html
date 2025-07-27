@@ -11,74 +11,82 @@
       style="border-style: dashed;"
       routerLink="/private/agents/add"
       (click)="navigate.emit()"
-    >
+      >
       <i class="bi bi-plus"></i>
       {{ 'sidebar.createNewAgent' | transloco }}
     </button>
 
     <ul class="nav flex-column">
-      <li *ngFor="let item of menuItems" class="mb-1">
-        <ng-container [ngSwitch]="item.id">
-          <ng-container *ngSwitchCase="'chats'">
-            <div class="collapsible-section">
-              <button
-                class="btn btn-link text-start w-100 d-flex align-items-center justify-content-between"
-                (click)="toggleChatsCollapse()"
-              >
-                <div class="d-flex align-items-center">
-                  <i class="bi bi-{{ item.icon }} me-2"></i>
-                  <span>{{ item.label | transloco }}</span>
-                </div>
-                <i class="bi" [class.bi-chevron-down]="!chatsCollapsed()" [class.bi-chevron-right]="chatsCollapsed()"></i>
-              </button>
-              <div class="collapse" [class.show]="!chatsCollapsed()">
-                <div class="pinned-chats-container">
-                  <a
-                    *ngFor="let chat of pinnedChats(); track chat.id"
-                    [routerLink]="['/chats', chat.id]"
-                    class="pinned-chat-item d-flex align-items-center p-2 text-decoration-none"
-                    (click)="navigate.emit()"
+      @for (item of menuItems; track item) {
+        <li class="mb-1">
+          @switch (item.id) {
+            @case ('chats') {
+              <div class="collapsible-section">
+                <button
+                  class="btn btn-link text-start w-100 d-flex align-items-center justify-content-between"
+                  (click)="toggleChatsCollapse()"
                   >
-                    <div class="chat-avatar me-2">
-                      <i class="bi bi-chat-fill"></i>
-                    </div>
-                    <div class="flex-grow-1">
-                      <div class="chat-title">{{ chat.title }}</div>
-                      <div class="chat-preview text-muted small">{{ chat.lastMessage }}</div>
-                    </div>
-                    <span *ngIf="chat.unreadCount" class="badge bg-primary rounded-pill">{{ chat.unreadCount }}</span>
-                  </a>
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-{{ item.icon }} me-2"></i>
+                    <span>{{ item.label | transloco }}</span>
+                  </div>
+                  <i class="bi" [class.bi-chevron-down]="!chatsCollapsed()" [class.bi-chevron-right]="chatsCollapsed()"></i>
+                </button>
+                <div class="collapse" [class.show]="!chatsCollapsed()">
+                  <div class="pinned-chats-container">
+                    @for (chat of pinnedChats(); track chat) {
+                      <a
+                        [routerLink]="['/chats', chat.id]"
+                        class="pinned-chat-item d-flex align-items-center p-2 text-decoration-none"
+                        (click)="navigate.emit()"
+                        >
+                        <div class="chat-avatar me-2">
+                          <i class="bi bi-chat-fill"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                          <div class="chat-title">{{ chat.title }}</div>
+                          <div class="chat-preview text-muted small">{{ chat.lastMessage }}</div>
+                        </div>
+                        @if (chat.unreadCount) {
+                          <span class="badge bg-primary rounded-pill">{{ chat.unreadCount }}</span>
+                        }
+                      </a>
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
-          </ng-container>
-          <ng-container *ngSwitchDefault>
-            <a
-              *ngIf="!item.isCollapsible"
-              [routerLink]="item.route"
-              routerLinkActive="nav-item-active"
-              class="nav-link d-flex align-items-center"
-              (click)="navigate.emit()"
-            >
-              <i class="bi bi-{{ item.icon }} me-2"></i>
-              <span>{{ item.label | transloco }}</span>
-            </a>
-            <div *ngIf="item.isCollapsible" class="collapsible-section">
-              <button
-                class="btn btn-link text-start w-100 d-flex align-items-center justify-content-between"
-                (click)="toggleAgentsCollapse()"
-              >
-                <div class="d-flex align-items-center">
+            }
+            @default {
+              @if (!item.isCollapsible) {
+                <a
+                  [routerLink]="item.route"
+                  routerLinkActive="nav-item-active"
+                  class="nav-link d-flex align-items-center"
+                  (click)="navigate.emit()"
+                  >
                   <i class="bi bi-{{ item.icon }} me-2"></i>
                   <span>{{ item.label | transloco }}</span>
+                </a>
+              }
+              @if (item.isCollapsible) {
+                <div class="collapsible-section">
+                  <button
+                    class="btn btn-link text-start w-100 d-flex align-items-center justify-content-between"
+                    (click)="toggleAgentsCollapse()"
+                    >
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-{{ item.icon }} me-2"></i>
+                      <span>{{ item.label | transloco }}</span>
+                    </div>
+                    <i class="bi" [class.bi-chevron-down]="!agentsCollapsed()" [class.bi-chevron-right]="agentsCollapsed()"></i>
+                  </button>
+                  <div class="collapse" [class.show]="!agentsCollapsed()"></div>
                 </div>
-                <i class="bi" [class.bi-chevron-down]="!agentsCollapsed()" [class.bi-chevron-right]="agentsCollapsed()"></i>
-              </button>
-              <div class="collapse" [class.show]="!agentsCollapsed()"></div>
-            </div>
-          </ng-container>
-        </ng-container>
-      </li>
+              }
+            }
+          }
+        </li>
+      }
     </ul>
   </div>
 
@@ -110,12 +118,14 @@
                 <i class="bi bi-chevron-right"></i>
               </button>
               <ul class="dropdown-menu">
-                <li *ngFor="let lang of languages">
-                  <button class="dropdown-item" (click)="changeLanguage(lang.code)">
-                    <span class="fi fi-{{ lang.code }} me-2"></span>
-                    {{ lang.labelKey | transloco }}
-                  </button>
-                </li>
+                @for (lang of languages; track lang) {
+                  <li>
+                    <button class="dropdown-item" (click)="changeLanguage(lang.code)">
+                      <span class="fi fi-{{ lang.code }} me-2"></span>
+                      {{ lang.labelKey | transloco }}
+                    </button>
+                  </li>
+                }
               </ul>
             </div>
           </div>
