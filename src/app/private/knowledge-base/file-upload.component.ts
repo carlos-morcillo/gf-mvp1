@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, signal, computed, inject } from '@angular/core';
 import { FileService } from './file.service';
 import { KnowledgeFile } from './knowledge-base.service';
@@ -15,7 +15,7 @@ interface FileUploadItem {
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [CommonModule, TranslocoModule],
+  imports: [TranslocoModule],
   template: `
     <div
       class="file-drop-zone"
@@ -24,7 +24,7 @@ interface FileUploadItem {
       (dragover)="onDragOver($event)"
       (dragleave)="onDragLeave($event)"
       (click)="fileInput.click()"
-    >
+      >
       <p class="m-0">
         {{ 'fileUpload.dragDropText' | transloco }}
       </p>
@@ -34,24 +34,32 @@ interface FileUploadItem {
         #fileInput
         multiple
         (change)="onFiles($event)"
-      />
+        />
     </div>
-    <div class="mt-3" *ngFor="let item of uploadQueue()">
-      <div class="progress" *ngIf="item.status === 'uploading'">
-        <div
-          class="progress-bar"
-          role="progressbar"
-          [style.width.%]="item.progress"
-        ></div>
+    @for (item of uploadQueue(); track item) {
+      <div class="mt-3">
+        @if (item.status === 'uploading') {
+          <div class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [style.width.%]="item.progress"
+            ></div>
+          </div>
+        }
+        @if (item.status === 'completed') {
+          <div class="text-success">
+            {{ item.file.name }} - {{ 'fileUpload.success' | transloco }}
+          </div>
+        }
+        @if (item.status === 'error') {
+          <div class="text-danger">
+            {{ item.file.name }} - {{ 'fileUpload.error' | transloco }}
+          </div>
+        }
       </div>
-      <div *ngIf="item.status === 'completed'" class="text-success">
-        {{ item.file.name }} - {{ 'fileUpload.success' | transloco }}
-      </div>
-      <div *ngIf="item.status === 'error'" class="text-danger">
-        {{ item.file.name }} - {{ 'fileUpload.error' | transloco }}
-      </div>
-    </div>
-  `,
+    }
+    `,
   styleUrl: './file-upload.component.scss',
 })
 export class FileUploadComponent {

@@ -1,18 +1,24 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 
-import { Router, RouterLink } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TranslocoModule } from '@jsverse/transloco';
 import { debounceTime, firstValueFrom } from 'rxjs';
-import { AgentsService } from '../agent-list/agents.service';
+import { AgentChat } from '../agent-chat/agent-chat.model';
 import { AgentChatService } from '../agent-chat/agent-chat.service';
 import { Agent } from '../agent-list/agent';
-import { AgentChat } from '../agent-chat/agent-chat.model';
+import { AgentsService } from '../agent-list/agents.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [TranslocoModule, RouterLink, ReactiveFormsModule],
+  imports: [TranslocoModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
@@ -55,9 +61,7 @@ export class HomeComponent implements OnInit {
       firstValueFrom(this.chatsSvc.searchChats(term)),
     ]);
     this.resultAgents.set(
-      agents.filter((a) =>
-        a.name.toLowerCase().includes(term.toLowerCase())
-      )
+      agents.filter((a) => a.name.toLowerCase().includes(term.toLowerCase()))
     );
     this.resultChats.set(chats.sort((a, b) => b.updated_at - a.updated_at));
   }

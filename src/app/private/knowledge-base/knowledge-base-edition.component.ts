@@ -1,25 +1,26 @@
-import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  resource,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { firstValueFrom, map } from 'rxjs';
 import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
-import { Group, GroupService } from './group.service';
+import { GroupService } from './group.service';
 import { KnowledgeBaseService } from './knowledge-base.service';
 
 @Component({
   selector: 'app-knowledge-base-edition',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterLink,
-    NgSelectModule,
-    TranslocoModule,
-  ],
+  imports: [ReactiveFormsModule, NgSelectModule, TranslocoModule],
   templateUrl: './knowledge-base-edition.component.html',
 })
 export class KnowledgeBaseEditionComponent {
@@ -34,8 +35,19 @@ export class KnowledgeBaseEditionComponent {
     this.#route.paramMap.pipe(map((m) => m.get('knowledgeId')))
   );
 
-  groups = signal<Group[]>([]);
-  knowledge = signal<KnowledgeBase | null>(null);
+  groups = resource({
+    loader: () => firstValueFrom(this.#groupSvc.list()),
+  });
+  knowledge = input.required<KnowledgeBase>();
+
+  knowledgeEffect = effect(() => {
+    const kb = this.knowledge();
+    this.form.patchValue({
+      name: kb.name,
+      description: kb.description,
+      groups: kb.access_control?.['read']?.group_ids || [],
+    });
+  });
 
   form = this.#fb.nonNullable.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -50,24 +62,6 @@ export class KnowledgeBaseEditionComponent {
       ? this.#transloco.translate('knowledgeBase.edit')
       : this.#transloco.translate('knowledgeBase.create')
   );
-
-  constructor() {
-    firstValueFrom(this.#groupSvc.getAvailableGroups()).then((gs) =>
-      this.groups.set(gs)
-    );
-
-    const id = this.knowledgeBaseId();
-    if (id) {
-      firstValueFrom(this.#kbSvc.find(id)).then((kb) => {
-        this.knowledge.set(kb);
-        this.form.patchValue({
-          name: kb.name,
-          description: kb.description,
-          groups: kb.access_control?.['read']?.group_ids || [],
-        });
-      });
-    }
-  }
 
   submit() {
     if (this.form.invalid) {

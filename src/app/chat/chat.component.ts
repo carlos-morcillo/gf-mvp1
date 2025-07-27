@@ -1,5 +1,5 @@
 // chat.component.ts
-import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   Component,
   effect,
@@ -16,7 +16,7 @@ import { WebSocketService } from './websocket.service';
 
 @Component({
   selector: 'app-chat',
-  imports: [DatePipe, AsyncPipe, FormsModule, JsonPipe],
+  imports: [DatePipe, AsyncPipe, FormsModule],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
