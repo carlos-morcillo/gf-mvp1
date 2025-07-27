@@ -1,0 +1,9 @@
+.file-drop-zone {
+  @apply border-3 border-dashed border-secondary rounded-4 p-5 text-center;
+  transition: all 0.3s ease;
+}
+
+.file-drop-zone.drag-over {
+  @apply border-primary bg-primary bg-opacity-10;
+  transform: scale(1.02);
+}

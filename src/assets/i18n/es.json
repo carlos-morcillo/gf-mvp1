@@ -282,5 +282,39 @@
     "BUTTONS": {
       "REMOVE": "Eliminar"
     }
+  },
+  "knowledgeBase": {
+    "title": "Base de Conocimiento",
+    "create": "Crear Base de Conocimiento",
+    "edit": "Editar Base de Conocimiento",
+    "detail": "Detalle de Base de Conocimiento",
+    "name": "Nombre",
+    "description": "Descripción",
+    "visibility": "Visibilidad",
+    "groups": "Grupos",
+    "files": "Archivos",
+    "noFiles": "No hay archivos asociados",
+    "addFiles": "Añadir Archivos",
+    "editButton": "Editar",
+    "saveButton": "Guardar",
+    "cancelButton": "Cancelar",
+    "deleteButton": "Eliminar",
+    "downloadButton": "Descargar"
+  },
+  "fileUpload": {
+    "dragDropText": "Arrastra archivos aquí o haz clic para seleccionar",
+    "uploading": "Subiendo...",
+    "success": "Archivo subido correctamente",
+    "error": "Error al subir archivo",
+    "invalidType": "Tipo de archivo no permitido",
+    "maxSize": "Archivo demasiado grande",
+    "associating": "Asociando archivo...",
+    "removeFile": "Eliminar archivo"
+  },
+  "visibility": {
+    "private": "Privado",
+    "public": "Público",
+    "restricted": "Restringido",
+    "privateDesc": "Solo pueden acceder los usuarios y grupos con permiso"
   }
 }
