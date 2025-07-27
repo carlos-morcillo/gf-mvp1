@@ -3,6 +3,7 @@ import { UserResolver } from '../auth/resolvers/user.resolver';
 import { ChatResolver } from './agent-chat/chat.resolver';
 import { AgentResolver } from './agent-edition/agent.resolver';
 import { authGuard } from './auth.guard';
+import { KnowledgeBaseResolver } from './knowledge-base/knowledge-base.resolver';
 import { PrivateLayoutComponent } from './layout/private-layout.component';
 
 export const PRIVATE_ROUTES: Routes = [
@@ -184,6 +185,13 @@ export const PRIVATE_ROUTES: Routes = [
         path: 'knowledge-bases',
         children: [
           {
+            path: '',
+            loadComponent: () =>
+              import('./knowledge-list/knowledge-list.component').then(
+                (c) => c.KnowledgeListComponent
+              ),
+          },
+          {
             path: 'add',
             loadComponent: () =>
               import('./knowledge-base/knowledge-base-form.component').then(
@@ -192,6 +200,7 @@ export const PRIVATE_ROUTES: Routes = [
           },
           {
             path: ':knowledgeId',
+            resolve: { knowledge: KnowledgeBaseResolver },
             loadComponent: () =>
               import('./knowledge-base/knowledge-base-detail.component').then(
                 (c) => c.KnowledgeBaseDetailComponent
@@ -199,6 +208,7 @@ export const PRIVATE_ROUTES: Routes = [
           },
           {
             path: ':knowledgeId/edit',
+            resolve: { knowledge: KnowledgeBaseResolver },
             loadComponent: () =>
               import('./knowledge-base/knowledge-base-form.component').then(
                 (c) => c.KnowledgeBaseFormComponent

@@ -13,8 +13,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { firstValueFrom } from 'rxjs';
 import { Agent } from '../agent-list/agent';
 import { AgentsService } from '../agent-list/agents.service';
+import { KnowledgeBaseService } from '../knowledge-base/knowledge-base.service';
 import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
-import { KnowledgeService } from '../knowledge-list/knowledge.service';
 import { AGENT_CAPABILITIES } from './agent-capability.enum';
 
 /**
@@ -39,7 +39,7 @@ export class AgentEditionComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private agentsSvc = inject(AgentsService);
-  private knowledgeSvc = inject(KnowledgeService);
+  private knowledgeSvc = inject(KnowledgeBaseService);
 
   /** Capabilities displayed in the template */
   readonly capabilities = AGENT_CAPABILITIES;

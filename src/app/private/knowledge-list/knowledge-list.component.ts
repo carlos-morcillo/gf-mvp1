@@ -1,4 +1,3 @@
-
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -9,8 +8,8 @@ import {
   TableComponent,
 } from 'ng-hub-ui-table';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
+import { KnowledgeBaseService } from '../knowledge-base/knowledge-base.service';
 import { KnowledgeBase } from './knowledge-base.model';
-import { KnowledgeService } from './knowledge.service';
 
 @Component({
   selector: 'app-knowledge-list',
@@ -20,12 +19,12 @@ import { KnowledgeService } from './knowledge.service';
     PaginableTableCellDirective,
     PaginableTableNotFoundDirective,
     RouterLink,
-    TranslocoModule
-],
+    TranslocoModule,
+  ],
   templateUrl: './knowledge-list.component.html',
 })
 export class KnowledgeListComponent extends PaginatedListComponent<KnowledgeBase> {
-  override dataSvc = inject(KnowledgeService);
+  override dataSvc = inject(KnowledgeBaseService);
 
   override headers: PaginableTableHeader[] = [
     {
@@ -33,11 +32,15 @@ export class KnowledgeListComponent extends PaginatedListComponent<KnowledgeBase
       property: 'name',
     },
     {
-      title: this.translocoSvc.selectTranslate('KNOWLEDGE_LIST.COLUMNS.DESCRIPTION'),
+      title: this.translocoSvc.selectTranslate(
+        'KNOWLEDGE_LIST.COLUMNS.DESCRIPTION'
+      ),
       property: 'description',
     },
     {
-      title: this.translocoSvc.selectTranslate('KNOWLEDGE_LIST.COLUMNS.CREATED_AT'),
+      title: this.translocoSvc.selectTranslate(
+        'KNOWLEDGE_LIST.COLUMNS.CREATED_AT'
+      ),
       property: 'created_at',
     },
   ];

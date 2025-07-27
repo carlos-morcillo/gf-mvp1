@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { signal, computed } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { firstValueFrom, map } from 'rxjs';
-import { KnowledgeBaseService } from './knowledge-base.service';
-import { GroupService, Group } from './group.service';
 import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
+import { Group, GroupService } from './group.service';
+import { KnowledgeBaseService } from './knowledge-base.service';
 
 @Component({
   selector: 'app-knowledge-base-form',
@@ -39,7 +38,9 @@ export class KnowledgeBaseFormComponent {
 
   readonly isEditMode = computed(() => !!this.knowledgeBaseId());
   readonly formTitle = computed(() =>
-    this.isEditMode() ? 'Editar Base de Conocimiento' : 'Crear Base de Conocimiento'
+    this.isEditMode()
+      ? 'Editar Base de Conocimiento'
+      : 'Crear Base de Conocimiento'
   );
 
   constructor() {
@@ -49,7 +50,7 @@ export class KnowledgeBaseFormComponent {
 
     const id = this.knowledgeBaseId();
     if (id) {
-      firstValueFrom(this.#kbSvc.getKnowledgeBase(id)).then((kb) => {
+      firstValueFrom(this.#kbSvc.find(id)).then((kb) => {
         this.knowledge.set(kb);
         this.form.patchValue({
           name: kb.name,

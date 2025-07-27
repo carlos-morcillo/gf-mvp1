@@ -1,12 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { firstValueFrom, map } from 'rxjs';
-import { KnowledgeBaseService } from './knowledge-base.service';
-import { FileUploadComponent } from './file-upload.component';
+import { Component, inject, input } from '@angular/core';
 import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
+import { FileUploadComponent } from './file-upload.component';
+import { KnowledgeBaseService } from './knowledge-base.service';
 
 @Component({
   selector: 'app-knowledge-base-detail',
@@ -15,17 +11,8 @@ import { KnowledgeBase } from '../knowledge-list/knowledge-base.model';
   templateUrl: './knowledge-base-detail.component.html',
 })
 export class KnowledgeBaseDetailComponent {
-  #route = inject(ActivatedRoute);
   #kbSvc = inject(KnowledgeBaseService);
 
-  id = toSignal(this.#route.paramMap.pipe(map((m) => m.get('knowledgeId')!)));
-
-  knowledge = signal<KnowledgeBase | null>(null);
-
-  constructor() {
-    const id = this.id() as string;
-    firstValueFrom(this.#kbSvc.getKnowledgeBase(id)).then((kb) =>
-      this.knowledge.set(kb)
-    );
-  }
+  id = input.required<string>({ alias: 'knowledgeId' });
+  knowledge = input.required<KnowledgeBase>({ alias: 'knowledge' });
 }
