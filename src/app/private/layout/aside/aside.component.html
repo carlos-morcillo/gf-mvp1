@@ -11,79 +11,64 @@
       style="border-style: dashed;"
       routerLink="/private/agents/add"
       (click)="navigate.emit()"
-      >
+    >
       <i class="bi bi-plus"></i>
-      {{ 'sidebar.createNewAgent' | transloco }}
+      {{ 'ASIDE.BUTTONS.CREATE_NEW_AGENT' | transloco }}
     </button>
 
     <ul class="nav flex-column">
-      @for (item of menuItems; track item) {
+      @for (item of menuItems; track item.id) {
         <li class="mb-1">
-          @switch (item.id) {
-            @case ('chats') {
-              <div class="collapsible-section">
-                <button
-                  class="btn btn-link text-start w-100 d-flex align-items-center justify-content-between"
-                  (click)="toggleChatsCollapse()"
-                  >
-                  <div class="d-flex align-items-center">
-                    <i class="bi bi-{{ item.icon }} me-2"></i>
-                    <span>{{ item.label | transloco }}</span>
-                  </div>
-                  <i class="bi" [class.bi-chevron-down]="!chatsCollapsed()" [class.bi-chevron-right]="chatsCollapsed()"></i>
-                </button>
-                <div class="collapse" [class.show]="!chatsCollapsed()">
-                  <div class="pinned-chats-container">
-                    @for (chat of pinnedChats(); track chat) {
-                      <a
-                        [routerLink]="['/chats', chat.id]"
-                        class="pinned-chat-item d-flex align-items-center p-2 text-decoration-none"
-                        (click)="navigate.emit()"
-                        >
-                        <div class="chat-avatar me-2">
-                          <i class="bi bi-chat-fill"></i>
-                        </div>
-                        <div class="flex-grow-1">
-                          <div class="chat-title">{{ chat.title }}</div>
-                          <div class="chat-preview text-muted small">{{ chat.lastMessage }}</div>
-                        </div>
-                        @if (chat.unreadCount) {
-                          <span class="badge bg-primary rounded-pill">{{ chat.unreadCount }}</span>
-                        }
-                      </a>
-                    }
-                  </div>
-                </div>
-              </div>
-            }
-            @default {
-              @if (!item.isCollapsible) {
-                <a
-                  [routerLink]="item.route"
-                  routerLinkActive="nav-item-active"
-                  class="nav-link d-flex align-items-center"
-                  (click)="navigate.emit()"
-                  >
+          @if (item.id === 'chats') {
+            <div class="collapsible-section">
+              <button
+                class="btn btn-link text-start w-100 d-flex align-items-center justify-content-between"
+                (click)="toggleChatsCollapse()"
+              >
+                <div class="d-flex align-items-center">
                   <i class="bi bi-{{ item.icon }} me-2"></i>
                   <span>{{ item.label | transloco }}</span>
-                </a>
-              }
-              @if (item.isCollapsible) {
-                <div class="collapsible-section">
-                  <button
-                    class="btn btn-link text-start w-100 d-flex align-items-center justify-content-between"
-                    (click)="toggleAgentsCollapse()"
-                    >
-                    <div class="d-flex align-items-center">
-                      <i class="bi bi-{{ item.icon }} me-2"></i>
-                      <span>{{ item.label | transloco }}</span>
-                    </div>
-                    <i class="bi" [class.bi-chevron-down]="!agentsCollapsed()" [class.bi-chevron-right]="agentsCollapsed()"></i>
-                  </button>
-                  <div class="collapse" [class.show]="!agentsCollapsed()"></div>
                 </div>
-              }
-            }
+                <i
+                  class="bi"
+                  [class.bi-chevron-down]="!chatsCollapsed()"
+                  [class.bi-chevron-right]="chatsCollapsed()"
+                ></i>
+              </button>
+              <div class="collapse" [class.show]="!chatsCollapsed()">
+                <div class="pinned-chats-container">
+                  @for (chat of pinnedChats(); track chat) {
+                    <a
+                      [routerLink]="['/chats', chat.id]"
+                      class="pinned-chat-item d-flex align-items-center p-2 text-decoration-none"
+                      (click)="navigate.emit()"
+                    >
+                      <div class="chat-avatar me-2">
+                        <i class="bi bi-chat-fill"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="chat-title">{{ chat.title }}</div>
+                        <div class="chat-preview text-muted small">{{ chat.lastMessage }}</div>
+                      </div>
+                      @if (chat.unreadCount) {
+                        <span class="badge bg-primary rounded-pill">{{ chat.unreadCount }}</span>
+                      }
+                    </a>
+                  }
+                </div>
+              </div>
+            </div>
+          } @else {
+            <a
+              class="nav-link d-flex align-items-center py-2 px-3 rounded"
+              [routerLink]="item.route"
+              routerLinkActive="nav-item-active"
+              [routerLinkActiveOptions]="{ exact: item.id === 'home' }"
+              (click)="navigate.emit()"
+            >
+              <i class="bi bi-{{ item.icon }} me-3"></i>
+              <span>{{ item.label | transloco }}</span>
+            </a>
           }
         </li>
       }
@@ -93,36 +78,55 @@
   <div class="sidebar-footer flex-shrink-0 p-2">
     <div class="dropdown dropup w-100">
       <button class="btn btn-link text-start w-100 d-flex align-items-center p-3" data-bs-toggle="dropdown">
-        <img [src]="currentUser()?.avatar" class="rounded-circle me-2" width="32" height="32" />
+        <img
+          [src]="currentUser()?.avatar || '/assets/images/default-avatar.png'"
+          class="rounded-circle me-2"
+          width="32"
+          height="32"
+          [alt]="currentUser()?.name"
+        />
         <div class="flex-grow-1 text-start">
-          <div class="fw-semibold">{{ currentUser()?.name }}</div>
-          <div class="text-muted small">{{ currentUser()?.email }}</div>
+          <div class="fw-semibold text-truncate">{{ currentUser()?.name }}</div>
+          <div class="text-muted small text-truncate">{{ currentUser()?.email }}</div>
         </div>
         <i class="bi bi-three-dots-vertical"></i>
       </button>
-      <ul class="dropdown-menu dropdown-menu-end w-100">
+      <ul class="dropdown-menu dropdown-menu-end w-100 shadow" aria-labelledby="userDropdown">
         <li>
-          <a class="dropdown-item" routerLink="/profile" (click)="navigate.emit()">
+          <a class="dropdown-item d-flex align-items-center" routerLink="/profile" (click)="navigate.emit()">
             <i class="bi bi-person me-2"></i>
-            {{ 'sidebar.userMenu.profile' | transloco }}
+            {{ 'ASIDE.BUTTONS.PROFILE' | transloco }}
           </a>
         </li>
         <li>
-          <div class="dropdown-item-text">
+          <div class="dropdown-item p-0">
             <div class="dropdown dropend w-100">
-              <button class="btn btn-link text-start w-100 p-0 d-flex align-items-center justify-content-between" data-bs-toggle="dropdown">
-                <span>
+              <button
+                class="btn btn-link text-start w-100 p-3 border-0 d-flex align-items-center justify-content-between"
+                type="button"
+                id="languageDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span class="d-flex align-items-center">
                   <i class="bi bi-globe me-2"></i>
-                  {{ 'sidebar.userMenu.language' | transloco }}
+                  {{ 'ASIDE.BUTTONS.CHANGE_LANGUAGE' | transloco }}
                 </span>
                 <i class="bi bi-chevron-right"></i>
               </button>
-              <ul class="dropdown-menu">
-                @for (lang of languages; track lang) {
+              <ul class="dropdown-menu shadow" aria-labelledby="languageDropdown">
+                @for (lang of languages; track lang.code) {
                   <li>
-                    <button class="dropdown-item" (click)="changeLanguage(lang.code)">
+                    <button
+                      class="dropdown-item d-flex align-items-center"
+                      (click)="changeLanguage(lang.code)"
+                      [class.active]="currentLang() === lang.code"
+                    >
                       <span class="fi fi-{{ lang.code }} me-2"></span>
                       {{ lang.labelKey | transloco }}
+                      @if (currentLang() === lang.code) {
+                        <i class="bi bi-check ms-auto"></i>
+                      }
                     </button>
                   </li>
                 }
@@ -132,9 +136,9 @@
         </li>
         <li><hr class="dropdown-divider" /></li>
         <li>
-          <button class="dropdown-item text-danger" (click)="logout()">
+          <button class="dropdown-item text-danger d-flex align-items-center" (click)="logout()">
             <i class="bi bi-box-arrow-right me-2"></i>
-            {{ 'sidebar.userMenu.logout' | transloco }}
+            {{ 'ASIDE.BUTTONS.LOGOUT' | transloco }}
           </button>
         </li>
       </ul>

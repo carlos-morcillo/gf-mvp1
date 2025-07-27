@@ -59,8 +59,8 @@ export class KnowledgeBaseEditionComponent {
   readonly isEditMode = computed(() => !!this.knowledgeBaseId());
   readonly formTitle = computed(() =>
     this.isEditMode()
-      ? this.#transloco.translate('knowledgeBase.edit')
-      : this.#transloco.translate('knowledgeBase.create')
+      ? this.#transloco.translate('KNOWLEDGEBASEEDITION.TITLES.EDIT')
+      : this.#transloco.translate('KNOWLEDGEBASEEDITION.TITLES.CREATE')
   );
 
   submit() {

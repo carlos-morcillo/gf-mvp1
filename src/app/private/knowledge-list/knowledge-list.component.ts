@@ -28,18 +28,18 @@ export class KnowledgeListComponent extends PaginatedListComponent<KnowledgeBase
 
   override headers: PaginableTableHeader[] = [
     {
-      title: this.translocoSvc.selectTranslate('KNOWLEDGE_LIST.COLUMNS.NAME'),
+      title: this.translocoSvc.selectTranslate('KNOWLEDGEBASELIST.COLUMNS.NAME'),
       property: 'name',
     },
     {
       title: this.translocoSvc.selectTranslate(
-        'KNOWLEDGE_LIST.COLUMNS.DESCRIPTION'
+        'KNOWLEDGEBASELIST.COLUMNS.DESCRIPTION'
       ),
       property: 'description',
     },
     {
       title: this.translocoSvc.selectTranslate(
-        'KNOWLEDGE_LIST.COLUMNS.CREATED_AT'
+        'KNOWLEDGEBASELIST.COLUMNS.CREATED_AT'
       ),
       property: 'created_at',
     },

@@ -7,7 +7,7 @@
       [routerLink]="['/private/knowledge-bases', kb.id, 'edit']"
     >
       <i class="bi bi-pencil"></i>
-      {{ "knowledgeBase.editButton" | transloco }}
+      {{ 'KNOWLEDGEBASEDETAIL.BUTTONS.EDIT' | transloco }}
     </a>
   </div>
   <p>{{ kb.description }}</p>
@@ -22,7 +22,7 @@
       </div>
     </div>
     } @empty {
-    <p>{{ "knowledgeBase.noFiles" | transloco }}</p>
+    <p>{{ 'KNOWLEDGEBASEDETAIL.MESSAGES.NO_FILES' | transloco }}</p>
     }
   </div>
 </div>
