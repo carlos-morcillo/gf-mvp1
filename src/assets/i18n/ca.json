@@ -288,5 +288,17 @@
     "BUTTONS": {
       "REMOVE": "Eliminar"
     }
+  },
+  "CHATLIST": {
+    "BUTTONS": {
+      "PIN_CHAT": "Pin chat",
+      "UNPIN_CHAT": "Unpin chat"
+    },
+    "MESSAGES": {
+      "PIN_SUCCESS": "Chat pinned",
+      "UNPIN_SUCCESS": "Chat unpinned",
+      "PIN_ERROR": "Error pinning chat",
+      "UNPIN_ERROR": "Error unpinning chat"
+    }
   }
 }
