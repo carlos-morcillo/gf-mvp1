@@ -1,6 +1,6 @@
 // chat.service.ts
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { WebSocketService } from './websocket.service';
@@ -25,10 +25,29 @@ interface ChatHistory {
   currentId: string;
 }
 
+interface UpdateChatPayload {
+  models: string[];
+  messages: any[];
+  history: ChatHistory;
+  params?: any;
+  files?: any[];
+  title?: string;
+  tags?: string[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
+  get headers() {
+    // return (new HttpHeaders({
+    return {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+    // }));
+  }
+
   private apiToken = localStorage.getItem('token') || '';
 
   // Estados reactivos como en Svelte
@@ -36,7 +55,8 @@ export class ChatService {
     messages: {},
     currentId: '',
   });
-  public chatHistory$ = this.chatHistory.asObservable();
+
+  selectedModels = signal<Array<string>>([]);
 
   isProcessing = new BehaviorSubject<boolean>(false);
   public isProcessing$ = this.isProcessing.asObservable();
@@ -136,6 +156,8 @@ export class ChatService {
   }
 
   // Migrado del proceso de completion del código Svelte
+
+  // Modificar el método processCompletion para incluir la actualización
   private async processCompletion(
     chatId: string,
     modelId: string,
@@ -179,18 +201,11 @@ export class ChatService {
     };
 
     try {
-      const response = await fetch(
-        `${environment.baseURL}/chats/${chatId}/completions`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${this.apiToken}`,
-            'Content-Type': 'application/json',
-            Accept: 'text/event-stream',
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response = await fetch(`https://gpt.sdi.es/api/chat/completions`, {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify(payload),
+      });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -203,10 +218,42 @@ export class ChatService {
         modelId,
         messages
       );
+
+      // ✅ NUEVO: Actualizar chat después del streaming
+      await this.saveChatAfterCompletion(chatId);
     } catch (error) {
       console.error('Error in completion:', error);
       this.handleCompletionError(error, responseMessageId);
       throw error;
+    }
+  }
+
+  /**
+   * Guarda el chat después de completar un mensaje
+   * Equivalente a saveChatHandler del código Svelte [1]
+   */
+  private async saveChatAfterCompletion(chatId: string): Promise<void> {
+    if (chatId === 'local') return; // No guardar chats temporales
+
+    try {
+      const currentHistory = this.chatHistory.value;
+      const currentMessages = this.createMessagesList(
+        currentHistory,
+        currentHistory.currentId
+      );
+
+      await this.updateChatById(chatId, {
+        models: this.selectedModels(),
+        messages: currentMessages,
+        history: currentHistory,
+        // params: this.chatParams,
+        // files: this.chatFiles,
+      });
+
+      console.log('Chat saved after completion');
+    } catch (error) {
+      console.error('Error saving chat after completion:', error);
+      // No lanzar error para no interrumpir la UX
     }
   }
 
@@ -325,12 +372,9 @@ export class ChatService {
     };
 
     try {
-      const response = await fetch(`${environment.baseURL}/chats/completed`, {
+      const response = await fetch(`https://gpt.sdi.es/api/chat/completed`, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${this.apiToken}`,
-          'Content-Type': 'application/json',
-        },
+        headers: this.headers,
         body: JSON.stringify(payload),
       });
 
@@ -402,5 +446,85 @@ export class ChatService {
       this.chatHistory.next({ ...currentHistory });
     }
     this.isProcessing.next(false);
+  }
+
+  /**
+   * Actualiza un chat existente en Open WebUI
+   * Equivalente a updateChatById del código Svelte [1]
+   */
+  async updateChatById(
+    chatId: string,
+    chatData: UpdateChatPayload
+  ): Promise<any> {
+    if (!chatId || chatId === 'local') {
+      console.log('Skipping update for local/temporary chat');
+      return null;
+    }
+
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.apiToken}`,
+    };
+
+    const payload = {
+      chat: {
+        models: chatData.models,
+        messages: chatData.messages,
+        history: chatData.history,
+        params: chatData.params || {},
+        files: chatData.files || [],
+        ...(chatData.title && { title: chatData.title }),
+        ...(chatData.tags && { tags: chatData.tags }),
+      },
+    };
+
+    try {
+      const response = await fetch(`${environment.baseURL}/chats/${chatId}`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          `HTTP ${response.status}: ${errorData.detail || response.statusText}`
+        );
+      }
+
+      const result = await response.json();
+      console.log('Chat updated successfully:', chatId);
+      return result;
+    } catch (error) {
+      console.error('Error updating chat:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Versión simplificada para actualizaciones rápidas
+   */
+  async quickUpdateChat(
+    chatId: string,
+    updates: Partial<UpdateChatPayload>
+  ): Promise<void> {
+    try {
+      const currentHistory = this.chatHistory.value;
+      const currentMessages = this.createMessagesList(
+        currentHistory,
+        currentHistory.currentId
+      );
+
+      await this.updateChatById(chatId, {
+        models: this.selectedModels(),
+        messages: currentMessages,
+        history: currentHistory,
+        ...updates,
+      });
+    } catch (error) {
+      // No lanzar error para no interrumpir la UX, solo loggear
+      console.error('Quick update failed:', error);
+    }
   }
 }

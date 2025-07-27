@@ -1,29 +1,51 @@
 // chat.component.ts
-import { AsyncPipe, DatePipe } from '@angular/common';
-import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Chat } from '../private/agent-chat/agent-chat.model';
+import { AgentChat } from '../private/agent-chat/agent-chat.model';
 import { ChatService } from './chat.service';
 import { WebSocketService } from './websocket.service';
 
 @Component({
   selector: 'app-chat',
-  imports: [DatePipe, AsyncPipe, FormsModule],
+  imports: [DatePipe, AsyncPipe, FormsModule, JsonPipe],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit, OnDestroy {
   readonly chatId = input<string | null>(null);
-  readonly chat = input<Chat>();
+  readonly chat = input<AgentChat>();
 
-  selectedModels: string[] = ['gpt-3.5-turbo'];
+  chatEffect = effect(() => {
+    const chat = this.chat();
+    if (!chat) {
+      return;
+    }
+
+    this.chatHistory$.next({
+      messages: chat.chat.messages.reduce((acc, c) => {
+        return { ...acc, [c.id!]: c };
+      }, {}),
+      currentId: chat.chat.messages.at(-1)!.id!,
+    });
+
+    this.chatService.selectedModels.set(chat.chat.models ?? []);
+  });
+
   currentMessage: string = '';
   files: any[] = [];
   chatService = inject(ChatService);
   websocketService = inject(WebSocketService);
 
-  chatHistory$ = this.chatService.chatHistory$;
+  chatHistory$ = this.chatService.chatHistory;
   isProcessing$ = this.chatService.isProcessing$;
   sessionId$ = this.websocketService.sessionId$;
 
@@ -47,7 +69,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
 
-  // chat.component.ts (continuación)
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
     this.websocketService.disconnect();
@@ -69,7 +90,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       const messageObservable = await this.chatService.sendMessage(
         this.chatId()!,
         message,
-        this.selectedModels,
+        this.chatService.selectedModels(),
         this.files,
         [], // selectedToolIds
         [], // selectedFilterIds
@@ -113,5 +134,39 @@ export class ChatComponent implements OnInit, OnDestroy {
     // Manejar selección de archivos
     const files = event.target.files;
     // Implementar lógica de upload de archivos
+  }
+
+  /**
+   * Actualizar chat cuando cambian los modelos seleccionados
+   */
+  async updateSelectedModels(
+    chatId: string,
+    newModels: string[]
+  ): Promise<void> {
+    this.chatService.selectedModels.set(newModels);
+
+    if (chatId !== 'local') {
+      await this.chatService.quickUpdateChat(chatId, { models: newModels });
+    }
+  }
+
+  /**
+   * Actualizar chat cuando se agregan/quitan archivos
+   */
+  async updateChatFiles(chatId: string, newFiles: any[]): Promise<void> {
+    // this.chatFiles = newFiles;
+    // if (chatId !== 'local') {
+    //   await this.chatService.quickUpdateChat(chatId, { files: newFiles });
+    // }
+  }
+
+  /**
+   * Actualizar parámetros del chat
+   */
+  async updateChatParams(chatId: string, newParams: any): Promise<void> {
+    // this.chatParams = { ...this.chatParams, ...newParams };
+    // if (chatId !== 'local') {
+    //   await this.chatService.quickUpdateChat(chatId, { params: this.chatParams });
+    // }
   }
 }

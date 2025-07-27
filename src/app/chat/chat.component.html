@@ -9,6 +9,7 @@
 
   <!-- Contenedor de mensajes -->
   @if (chatHistory$ | async; as history) {
+  <pre>{{ history | json }}</pre>
   <div class="messages-container">
     @for (message of getOrderedMessages(history); track message) {
     <div [class]="'message message-' + message.role">
