@@ -1,7 +1,7 @@
 {
   "AGENT_CHAT_LIST": {
     "TITLES": {
-      "MAIN": "Agent Chats"
+      "MAIN": "Chats de agentes"
     },
     "DESCRIPTIONS": {
       "MAIN": "Conversaciones de tus agentes"
@@ -13,10 +13,10 @@
       "UPDATED": "Actualizado"
     },
     "BUTTONS": {
-      "NEW_CHAT": "New Chat"
+      "NEW_CHAT": "Nuevo chat"
     },
     "EMPTY": {
-      "NO_RESULTS": "No chats found"
+      "NO_RESULTS": "No se encontraron chats"
     }
   },
   "AGENT_CHAT": {
@@ -24,24 +24,24 @@
       "MAIN": "Chat"
     },
     "PLACEHOLDER": {
-      "INPUT": "Type a message"
+      "INPUT": "Escribe un mensaje"
     },
     "BUTTONS": {
-      "VISION": "Vision",
-      "FILE_UPLOAD": "File upload",
-      "WEB_SEARCH": "Web search",
-      "IMAGE_GENERATION": "Image generation",
-      "CODE_INTERPRETER": "Code interpreter",
-      "CITATIONS": "Citations",
-      "USAGE": "Usage",
-      "SEND": "Send"
+      "VISION": "Visión",
+      "FILE_UPLOAD": "Subir archivo",
+      "WEB_SEARCH": "Búsqueda web",
+      "IMAGE_GENERATION": "Generación de imágenes",
+      "CODE_INTERPRETER": "Intérprete de código",
+      "CITATIONS": "Citas",
+      "USAGE": "Uso",
+      "SEND": "Enviar"
     },
     "STATUS": {
-      "SENDING": "Sending...",
-      "LOADING": "Loading conversation...",
-      "ERROR": "Unable to load conversation"
+      "SENDING": "Enviando...",
+      "LOADING": "Cargando conversación...",
+      "ERROR": "No se pudo cargar la conversación"
     },
-    "NEW_BUTTON": "New Chat"
+    "NEW_BUTTON": "Nuevo chat"
   },
   "AGENT_EDITION": {
     "TITLES": {
@@ -51,63 +51,63 @@
       "MAIN": "Crea o edita un agente"
     },
     "LABELS": {
-      "NAME": "Name",
-      "TONE": "Tone",
+      "NAME": "Nombre",
+      "TONE": "Tono",
       "PERSONA": "Persona",
-      "WELCOME_MESSAGE": "Welcome message",
-      "CONTEXT": "Context",
-      "OUTPUT_FORMAT": "Output format",
-      "MODEL": "Model",
-      "ACTIVE": "Active",
-      "SKILLS": "Skills",
-      "KNOWLEDGE": "Knowledge bases",
-      "FILES": "Files",
-      "UPLOAD_IMAGE": "Profile image"
+      "WELCOME_MESSAGE": "Mensaje de bienvenida",
+      "CONTEXT": "Contexto",
+      "OUTPUT_FORMAT": "Formato de salida",
+      "MODEL": "Modelo",
+      "ACTIVE": "Activo",
+      "SKILLS": "Habilidades",
+      "KNOWLEDGE": "Bases de conocimiento",
+      "FILES": "Archivos",
+      "UPLOAD_IMAGE": "Imagen de perfil"
     },
     "TIPS": {
-      "NAME": "Unique identifier for the agent",
-      "PERSONALITY": "Briefly describe how the agent should behave"
+      "NAME": "Identificador único del agente",
+      "PERSONALITY": "Describe brevemente cómo debería comportarse el agente"
     },
     "TONES": {
-      "CASUAL": "Casual",
-      "PROFESSIONAL": "Professional",
-      "CONCISE": "Concise"
+      "CASUAL": "Informal",
+      "PROFESSIONAL": "Profesional",
+      "CONCISE": "Conciso"
     },
     "BUTTONS": {
-      "SAVE": "Save"
+      "SAVE": "Guardar"
     },
     "FORM": {
-      "DRAG_DROP": "Drag image here or click to select"
+      "DRAG_DROP": "Arrastra la imagen aquí o haz clic para seleccionar"
     }
   },
   "AGENT_FORM": {
     "LABELS": {
       "ID": "Identificador",
-      "NAME": "How would you like to name your agent?",
-      "DESCRIPTION": "Briefly describe what this agent does.",
-      "BASE_MODEL": "Choose the language model powering your agent",
-      "SYSTEM": "System message",
-      "CAPABILITIES": "Capabilities",
-      "KNOWLEDGE": "Knowledge bases",
-      "PROFILE_IMAGE": "Profile image",
-      "ACTIVE": "Active agent"
+      "NAME": "¿Cómo quieres llamar a tu agente?",
+      "DESCRIPTION": "Describe brevemente qué hace este agente",
+      "BASE_MODEL": "Modelo de lenguaje del agente",
+      "SYSTEM": "Mensaje del sistema",
+      "CAPABILITIES": "Capacidades",
+      "KNOWLEDGE": "Bases de conocimiento",
+      "PROFILE_IMAGE": "Imagen de perfil",
+      "ACTIVE": "Agente activo"
     },
     "TIPS": {
-      "CAPABILITIES": "Enable the skills you want your agent to have. You can combine them freely."
+      "CAPABILITIES": "Habilita libremente las habilidades que tendrá tu agente"
     }
   },
   "AGENT_DESCRIPTION": {
-    "TITLE": "How should your agent behave?",
-    "INTRO": "Fill the following fields to define how your agent will speak, interact and respond. This information becomes an internal description used by the AI model.",
+    "TITLE": "¿Cómo debería comportarse tu agente?",
+    "INTRO": "Rellena los siguientes campos para definir cómo hablará e interactuará tu agente. Esta información será una descripción interna para el modelo de IA.",
     "FIELDS": {
-      "TONE": "Conversation tone",
-      "PERSONALITY": "Agent personality",
-      "WELCOME": "Welcome message",
-      "CONTEXT": "Context",
-      "OUTPUT": "Output format"
+      "TONE": "Tono de la conversación",
+      "PERSONALITY": "Personalidad del agente",
+      "WELCOME": "Mensaje de bienvenida",
+      "CONTEXT": "Contexto",
+      "OUTPUT": "Formato de salida"
     },
     "VALIDATION": {
-      "CONTEXT_REQUIRED": "Context is required"
+      "CONTEXT_REQUIRED": "El contexto es obligatorio"
     }
   },
   "AGENT_LIST": {
@@ -119,46 +119,46 @@
     },
     "COLUMNS": {
       "PIN": "",
-      "NAME": "Name",
-      "MODEL": "Model",
-      "FEATURES": "Features",
+      "NAME": "Nombre",
+      "MODEL": "Modelo",
+      "FEATURES": "Funciones",
       "AUTHOR": "Autor"
     },
     "BUTTONS": {
-      "ADD": "Add"
+      "ADD": "Añadir"
     },
     "EMPTY": {
-      "NO_RESULTS": "No agents found"
+      "NO_RESULTS": "No se encontraron agentes"
     },
     "CONFIRM": {
       "DELETE": "¿Estás seguro de que deseas eliminar este agente?"
     }
   },
   "CHAT_LIST": {
-    "NEW_CHAT_BUTTON": "New Chat",
+    "NEW_CHAT_BUTTON": "Nuevo chat",
     "STATUS": {
-      "LOADING": "Loading..."
+      "LOADING": "Cargando..."
     },
-    "NO_CHATS": "No chats available",
+    "NO_CHATS": "No hay chats disponibles",
     "CONFIRM": {
       "DELETE": "¿Estás seguro de que deseas eliminar esta conversación?"
     }
   },
   "CREATE_COMPANY": {
     "TITLES": {
-      "MAIN": "Register Company"
+      "MAIN": "Registrar empresa"
     },
     "FIELDS": {
-      "NAME": "Name",
-      "EMAIL": "Email",
-      "PASSWORD": "Password"
+      "NAME": "Nombre",
+      "EMAIL": "Correo electrónico",
+      "PASSWORD": "Contraseña"
     },
     "BUTTONS": {
-      "SAVE": "Create",
-      "BACK": "Back to login"
+      "SAVE": "Crear",
+      "BACK": "Volver al inicio"
     },
     "STATUS": {
-      "SAVING": "Saving..."
+      "SAVING": "Guardando..."
     }
   },
   "DASHBOARD": {
@@ -184,36 +184,36 @@
     }
   },
   "EVALUATION": {
-    "IFRAME_FALLBACK": "Your browser cannot display the form",
+    "IFRAME_FALLBACK": "Tu navegador no puede mostrar el formulario",
     "TITLES": {
-      "MAIN": "Evaluation"
+      "MAIN": "Evaluación"
     }
   },
   "KNOWLEDGE_EDITION": {
     "TITLES": {
-      "MAIN": "Knowledge Base"
+      "MAIN": "Base de Conocimiento"
     },
     "FORM": {
-      "NAME": "Name",
-      "DESCRIPTION": "Description",
-      "SAVE_BUTTON": "Save",
-      "SUCCESS": "Knowledge base saved successfully"
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "SAVE_BUTTON": "Guardar",
+      "SUCCESS": "Base de conocimiento guardada correctamente"
     }
   },
   "KNOWLEDGE_LIST": {
     "TITLES": {
-      "MAIN": "Knowledge Bases"
+      "MAIN": "Bases de Conocimiento"
     },
     "COLUMNS": {
-      "NAME": "Name",
-      "DESCRIPTION": "Description",
-      "CREATED_AT": "Created"
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "CREATED_AT": "Creado"
     },
     "BUTTONS": {
-      "ADD": "Add"
+      "ADD": "Añadir"
     },
     "EMPTY": {
-      "NO_RESULTS": "No knowledge bases found"
+      "NO_RESULTS": "No se encontraron bases de conocimiento"
     }
   },
   "LANGUAGES": {
@@ -234,51 +234,51 @@
       "LDAP": "LDAP"
     },
     "FIELDS": {
-      "EMAIL": "Email",
-      "PASSWORD": "Password",
-      "USER": "User"
+      "EMAIL": "Correo electrónico",
+      "PASSWORD": "Contraseña",
+      "USER": "Usuario"
     },
     "BUTTONS": {
-      "SUBMIT": "Login",
-      "CREATE_COMPANY": "Create company"
+      "SUBMIT": "Iniciar sesión",
+      "CREATE_COMPANY": "Crear empresa"
     },
     "STATUS": {
-      "LOADING": "Loading..."
+      "LOADING": "Cargando..."
     }
   },
   "PROFILE": {
     "TITLES": {
-      "MAIN": "User Profile"
+      "MAIN": "Perfil de usuario"
     }
   },
   "USER_PROFILE": {
-    "TITLE": "My profile",
-    "NAME": "Name",
-    "EMAIL": "Email",
-    "ROLE": "Role",
-    "LANGUAGE": "Preferred language",
-    "EDIT_BUTTON": "Edit profile"
+    "TITLE": "Mi perfil",
+    "NAME": "Nombre",
+    "EMAIL": "Correo electrónico",
+    "ROLE": "Rol",
+    "LANGUAGE": "Idioma preferido",
+    "EDIT_BUTTON": "Editar perfil"
   },
   "SIDEBAR": {
     "MENU": {
-      "DASHBOARD": "Dashboard",
-      "HOME": "Home",
-      "AGENTS": "Agents",
-      "TRAINING": "Training",
-      "EVALUATION": "Evaluation",
+      "DASHBOARD": "Panel",
+      "HOME": "Inicio",
+      "AGENTS": "Agentes",
+      "TRAINING": "Formación",
+      "EVALUATION": "Evaluación",
       "CHATS": "Chats",
-      "DOCUMENTATION": "Documentation",
-      "EMPLOYEE_PORTAL": "Employee Portal",
+      "DOCUMENTATION": "Documentación",
+      "EMPLOYEE_PORTAL": "Portal del empleado",
       "KNOWLEDGE": "Bases de conocimiento",
-      "TITLE": "Menu"
+      "TITLE": "Menú"
     },
     "ACTIONS": {
-      "LOGOUT": "Logout"
+      "LOGOUT": "Cerrar sesión"
     }
   },
   "TRAINING": {
     "TITLES": {
-      "MAIN": "Training"
+      "MAIN": "Formación"
     }
   },
   "ERROR": {
@@ -291,7 +291,7 @@
     "MESSAGE": "The page you are looking for does not exist"
   },
   "HOME": {
-    "IFRAME_FALLBACK": "Your browser cannot display the content"
+    "IFRAME_FALLBACK": "Tu navegador no puede mostrar el contenido"
   },
   "GENERIC": {
     "BUTTONS": {

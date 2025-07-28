@@ -280,20 +280,20 @@
     "IFRAME_FALLBACK": "Your browser cannot display the content"
   },
   "sidebar": {
-    "home": "Inicio",
-    "myAgents": "Mis Agentes",
+    "home": "Home",
+    "myAgents": "My Agents",
     "chats": "Chats",
-    "createNewAgent": "Crear nuevo agente",
+    "createNewAgent": "Create new agent",
     "marketplace": "Marketplace",
-    "evaluation": "Evaluación IA",
-    "training": "Formación",
-    "gamification": "Gamificación",
-    "settings": "Configuración",
-    "help": "Ayuda",
+    "evaluation": "AI Evaluation",
+    "training": "Training",
+    "gamification": "Gamification",
+    "settings": "Settings",
+    "help": "Help",
     "userMenu": {
-      "profile": "Perfil de usuario",
-      "language": "Cambiar idioma",
-      "logout": "Cerrar sesión"
+      "profile": "User profile",
+      "language": "Change language",
+      "logout": "Logout"
     }
   }
 }
