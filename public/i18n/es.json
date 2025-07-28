@@ -75,6 +75,7 @@
   },
   "AGENT_FORM": {
     "LABELS": {
+      "ID": "Identificador",
       "NAME": "¿Cómo quieres llamar a tu agente?",
       "DESCRIPTION": "Describe de forma breve qué hace este agente.",
       "BASE_MODEL": "Elige el modelo de lenguaje en el que se basa tu agente",

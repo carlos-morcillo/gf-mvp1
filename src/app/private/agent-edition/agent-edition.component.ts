@@ -57,7 +57,7 @@ export class AgentEditionComponent {
 
   /** Base models available in the backend */
   modelsResource = resource({
-    loader: () => firstValueFrom(this.agentsSvc.baseModels()),
+    loader: () => firstValueFrom(this.agentsSvc.all()),
   });
 
   /** Knowledge bases that can be linked to the agent */
@@ -254,7 +254,7 @@ export class AgentEditionComponent {
    * group controls.
    */
   private parseCapabilitiesToForm(
-    capabilities: Partial<Record<string, boolean>>,
+    capabilities: Partial<Record<string, boolean>>
   ): void {
     const group = this.form.controls.meta.controls.capabilities;
     for (const key of this.capabilities) {

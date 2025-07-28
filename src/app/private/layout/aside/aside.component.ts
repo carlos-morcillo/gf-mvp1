@@ -85,7 +85,7 @@ const MENU_ITEMS: MenuItem[] = [
     label: 'ASIDE.LABELS.TRAINING',
     icon: 'mortarboard',
     target: '_blank',
-    route: 'https://formacion.sdilab.es/',
+    route: '/private/training',
   },
   //   {
   //     id: 'gamification',
