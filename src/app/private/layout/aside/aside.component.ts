@@ -69,8 +69,7 @@ const MENU_ITEMS: MenuItem[] = [
     id: 'marketplace',
     label: 'ASIDE.LABELS.MARKETPLACE',
     icon: 'cart',
-    route: '/marketplace',
-    disabled: true,
+    route: '/private/marketplace',
   },
   //   {
   //     id: 'evaluation',

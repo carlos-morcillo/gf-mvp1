@@ -198,6 +198,13 @@ export const PRIVATE_ROUTES: Routes = [
           },
         ],
       },
+      {
+        path: 'marketplace',
+        loadComponent: () =>
+          import('../marketplace/marketplace.component').then(
+            (m) => m.MarketplaceComponent
+          ),
+      },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
   },

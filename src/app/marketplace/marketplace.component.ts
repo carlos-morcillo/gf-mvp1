@@ -37,22 +37,16 @@ export class MarketplaceComponent extends PaginatedListComponent<MarketplaceAgen
   private router = inject(Router);
 
   override headers: PaginableTableHeader[] = [
-    { property: 'meta.profile_image_url' },
+    { property: 'info.meta.profile_image_url' },
     {
       title: this.translocoSvc.selectTranslate('MARKETPLACE.COLUMNS.NAME'),
       property: 'name',
     },
     {
-      title: this.translocoSvc.selectTranslate('MARKETPLACE.COLUMNS.DESCRIPTION'),
-      property: 'meta.description',
-    },
-    {
-      title: this.translocoSvc.selectTranslate('MARKETPLACE.COLUMNS.CATEGORY'),
-      property: 'category',
-    },
-    {
-      title: this.translocoSvc.selectTranslate('MARKETPLACE.COLUMNS.RATING'),
-      property: 'rating',
+      title: this.translocoSvc.selectTranslate(
+        'MARKETPLACE.COLUMNS.DESCRIPTION'
+      ),
+      property: 'info.meta.description',
     },
   ];
 
