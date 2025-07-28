@@ -3,8 +3,12 @@
     "TITLES": {
       "MAIN": "Agent Chats"
     },
+    "DESCRIPTIONS": {
+      "MAIN": "Conversations with your agents"
+    },
     "COLUMNS": {
       "ID": "Id",
+      "TITLE": "Title",
       "AGENT": "Agent",
       "UPDATED": "Updated"
     },
@@ -43,6 +47,9 @@
     "TITLES": {
       "MAIN": "Agent"
     },
+    "DESCRIPTIONS": {
+      "MAIN": "Create or edit an agent"
+    },
     "LABELS": {
       "NAME": "Name",
       "TONE": "Tone",
@@ -75,6 +82,7 @@
   },
   "AGENT_FORM": {
     "LABELS": {
+      "ID": "Identifier",
       "NAME": "How would you like to name your agent?",
       "DESCRIPTION": "Briefly describe what this agent does.",
       "BASE_MODEL": "Choose the language model powering your agent",
@@ -106,6 +114,9 @@
     "TITLES": {
       "MAIN": "Agents"
     },
+    "DESCRIPTIONS": {
+      "MAIN": "Manage your agents"
+    },
     "COLUMNS": {
       "PIN": "",
       "NAME": "Name",
@@ -118,6 +129,9 @@
     },
     "EMPTY": {
       "NO_RESULTS": "No agents found"
+    },
+    "CONFIRM": {
+      "DELETE": "Are you sure you want to delete this agent?"
     }
   },
   "CHAT_LIST": {
@@ -125,7 +139,10 @@
     "STATUS": {
       "LOADING": "Loading..."
     },
-    "NO_CHATS": "No chats available"
+    "NO_CHATS": "No chats available",
+    "CONFIRM": {
+      "DELETE": "Are you sure you want to delete this conversation?"
+    }
   },
   "CREATE_COMPANY": {
     "TITLES": {
@@ -147,6 +164,26 @@
   "DASHBOARD": {
     "TITLES": {
       "MAIN": "Dashboard"
+    },
+    "TITLE": "Welcome back!",
+    "SUBTITLE": "Continue working with your agents or explore new possibilities.",
+    "SEARCH": {
+      "PLACEHOLDER": "Search agents, conversations or tasks…"
+    },
+    "RECENT_CONVERSATIONS": "Recent conversations",
+    "SEE_ALL": "See all",
+    "QUICK_ACTIONS": {
+      "TITLE": "Quick Actions",
+      "NEW_AGENT": "Create new agent",
+      "EXPLORE_MARKETPLACE": "Explore Marketplace",
+      "FAVORITES": "View favorites"
+    },
+    "AVAILABLE_AGENTS": {
+      "TITLE": "Available Agents"
+    },
+    "RESULTS": {
+      "AGENTS": "Agents",
+      "CHATS": "Conversations"
     },
     "SECTIONS": {
       "QUICK_ACCESS": "Quick Access",
@@ -294,6 +331,209 @@
       "profile": "User profile",
       "language": "Change language",
       "logout": "Logout"
+    }
+  },
+  "GENERIC": {
+    "BUTTONS": {
+      "REMOVE": "Remove"
+    }
+  },
+  "knowledgeBase": {
+    "title": "Knowledge Base",
+    "create": "Create Knowledge Base",
+    "edit": "Edit Knowledge Base",
+    "detail": "Knowledge Base Detail",
+    "name": "Name",
+    "description": "Description",
+    "visibility": "Visibility",
+    "groups": "Groups",
+    "files": "Files",
+    "noFiles": "No files associated",
+    "addFiles": "Add Files",
+    "editButton": "Edit",
+    "saveButton": "Save",
+    "cancelButton": "Cancel",
+    "deleteButton": "Delete",
+    "downloadButton": "Download"
+  },
+  "fileUpload": {
+    "dragDropText": "Drag files here or click to select",
+    "uploading": "Uploading...",
+    "success": "File uploaded successfully",
+    "error": "Error uploading file",
+    "invalidType": "File type not allowed",
+    "maxSize": "File too large",
+    "associating": "Associating file...",
+    "removeFile": "Remove file"
+  },
+  "visibility": {
+    "private": "Private",
+    "public": "Public",
+    "restricted": "Restricted",
+    "privateDesc": "Only users and groups with permission can access"
+  },
+  "ASIDE": {
+    "LABELS": {
+      "HOME": "Home",
+      "INTRANET": "Intranet",
+      "MY_AGENTS": "My Agents",
+      "CHATS": "Chats",
+      "MARKETPLACE": "Marketplace",
+      "EVALUATION": "AI Evaluation",
+      "TRAINING": "Training",
+      "GAMIFICATION": "Gamification",
+      "SETTINGS": "Settings",
+      "HELP": "Help"
+    },
+    "BUTTONS": {
+      "CREATE_NEW_AGENT": "Create new agent",
+      "PROFILE": "User profile",
+      "CHANGE_LANGUAGE": "Change language",
+      "LOGOUT": "Logout"
+    }
+  },
+  "KNOWLEDGEBASEEDITION": {
+    "TITLES": {
+      "CREATE": "Create Knowledge Base",
+      "EDIT": "Edit Knowledge Base"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Create or edit a knowledge base"
+    },
+    "LABELS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "VISIBILITY": "Visibility",
+      "GROUPS": "Groups",
+      "PRIVATE": "Private",
+      "PUBLIC": "Public",
+      "RESTRICTED": "Restricted"
+    },
+    "PLACEHOLDERS": {
+      "NAME": "Name your knowledge base",
+      "DESCRIPTION": "Describe your Knowledge Base and its goals",
+      "SELECT_GROUP": "Select a group"
+    },
+    "BUTTONS": {
+      "CREATE": "Create Knowledge",
+      "UPDATE": "Update Knowledge",
+      "CANCEL": "Cancel"
+    },
+    "MESSAGES": {
+      "NO_GROUPS": "No groups have access, add one to grant access",
+      "PRIVATE_DESC": "Only users and groups with permission can access",
+      "CREATE_SUCCESS": "Knowledge base created successfully",
+      "UPDATE_SUCCESS": "Knowledge base updated successfully",
+      "CREATE_ERROR": "Error creating knowledge base",
+      "UPDATE_ERROR": "Error updating knowledge base"
+    }
+  },
+  "KNOWLEDGEBASEDETAIL": {
+    "TITLES": {
+      "DETAIL": "Knowledge Base Detail",
+      "FILES": "Associated Files"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Knowledge base information"
+    },
+    "LABELS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "VISIBILITY": "Visibility",
+      "GROUPS": "Groups",
+      "CREATED_AT": "Created at",
+      "UPDATED_AT": "Last updated"
+    },
+    "BUTTONS": {
+      "EDIT": "Edit",
+      "DELETE": "Delete",
+      "ADD_FILES": "Add Files",
+      "DOWNLOAD": "Download",
+      "REMOVE_FILE": "Remove file"
+    },
+    "MESSAGES": {
+      "NO_FILES": "No files associated",
+      "DELETE_CONFIRM": "Are you sure you want to delete this knowledge base?",
+      "DELETE_SUCCESS": "Knowledge base deleted successfully",
+      "DELETE_ERROR": "Error deleting knowledge base"
+    }
+  },
+  "FILEUPLOAD": {
+    "TITLES": {
+      "UPLOAD_FILES": "Upload Files"
+    },
+    "LABELS": {
+      "DRAG_DROP": "Drag files here or click to select",
+      "SELECTED_FILES": "Selected files",
+      "UPLOAD_PROGRESS": "Upload progress"
+    },
+    "BUTTONS": {
+      "SELECT_FILES": "Select files",
+      "UPLOAD": "Upload",
+      "CANCEL": "Cancel",
+      "REMOVE": "Remove"
+    },
+    "MESSAGES": {
+      "UPLOADING": "Uploading...",
+      "ASSOCIATING": "Associating file...",
+      "SUCCESS": "File uploaded successfully",
+      "ERROR": "Error uploading file",
+      "INVALID_TYPE": "File type not allowed",
+      "MAX_SIZE": "File too large",
+      "UPLOAD_COMPLETE": "All files uploaded successfully"
+    }
+  },
+  "KNOWLEDGEBASELIST": {
+    "TITLES": {
+      "MAIN": "Knowledge Bases"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Manage your knowledge bases"
+    },
+    "COLUMNS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CREATED_AT": "Created"
+    },
+    "BUTTONS": {
+      "ADD": "Add"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No knowledge bases"
+    }
+  },
+  "MARKETPLACE": {
+    "TITLES": {
+      "MAIN": "Marketplace"
+    },
+    "LABELS": {
+      "MAIN_DESCRIPTION": "Explore available agents",
+      "NO_AGENTS": "No agents available",
+      "LOADING": "Loading..."
+    },
+    "COLUMNS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CATEGORY": "Category",
+      "RATING": "Rating"
+    },
+    "MESSAGES": {
+      "LOAD_ERROR": "Error loading agents"
+    },
+    "BUTTONS": {
+      "RETRY": "Retry"
+    }
+  },
+  "CHATLIST": {
+    "BUTTONS": {
+      "PIN_CHAT": "Pin chat",
+      "UNPIN_CHAT": "Unpin chat"
+    },
+    "MESSAGES": {
+      "PIN_SUCCESS": "Chat pinned",
+      "UNPIN_SUCCESS": "Chat unpinned",
+      "PIN_ERROR": "Error pinning chat",
+      "UNPIN_ERROR": "Error unpinning chat"
     }
   }
 }
