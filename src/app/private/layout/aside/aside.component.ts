@@ -69,18 +69,17 @@ const MENU_ITEMS: MenuItem[] = [
     id: 'marketplace',
     label: 'ASIDE.LABELS.MARKETPLACE',
     icon: 'cart',
-    route: '/marketplace',
-    disabled: true,
+    route: '/private/marketplace',
   },
-  {
-    id: 'evaluation',
-    label: 'ASIDE.LABELS.EVALUATION',
-    icon: 'easel',
-    route:
-      'https://forms.office.com/Pages/ResponsePage.aspx?id=Hiqttwiab0u1GUVodBQvvZYuSP2sOIFNoxLuOyYj9KdURVlETUtFRFhDTlJMWE9NSVk0ODVZMkpHUS4u',
-    target: '_blank',
-    disabled: false,
-  },
+  //   {
+  //     id: 'evaluation',
+  //     label: 'ASIDE.LABELS.EVALUATION',
+  //     icon: 'easel',
+  //     route:
+  //       'https://forms.office.com/Pages/ResponsePage.aspx?id=Hiqttwiab0u1GUVodBQvvZYuSP2sOIFNoxLuOyYj9KdURVlETUtFRFhDTlJMWE9NSVk0ODVZMkpHUS4u',
+  //     target: '_blank',
+  //     disabled: false,
+  //   },
   {
     id: 'training',
     label: 'ASIDE.LABELS.TRAINING',
@@ -88,27 +87,27 @@ const MENU_ITEMS: MenuItem[] = [
     target: '_blank',
     route: 'https://formacion.sdilab.es/',
   },
-  {
-    id: 'gamification',
-    label: 'ASIDE.LABELS.GAMIFICATION',
-    icon: 'trophy',
-    route: '/gamification',
-    disabled: true,
-  },
-  {
-    id: 'settings',
-    label: 'ASIDE.LABELS.SETTINGS',
-    icon: 'gear',
-    route: '/settings',
-    disabled: true,
-  },
-  {
-    id: 'help',
-    label: 'ASIDE.LABELS.HELP',
-    icon: 'question-circle',
-    route: '/help',
-    disabled: true,
-  },
+  //   {
+  //     id: 'gamification',
+  //     label: 'ASIDE.LABELS.GAMIFICATION',
+  //     icon: 'trophy',
+  //     route: '/gamification',
+  //     disabled: true,
+  //   },
+  //   {
+  //     id: 'settings',
+  //     label: 'ASIDE.LABELS.SETTINGS',
+  //     icon: 'gear',
+  //     route: '/settings',
+  //     disabled: true,
+  //   },
+  //   {
+  //     id: 'help',
+  //     label: 'ASIDE.LABELS.HELP',
+  //     icon: 'question-circle',
+  //     route: '/help',
+  //     disabled: true,
+  //   },
 ];
 
 @Component({

@@ -6,3 +6,12 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 @import "pages";
 @import "tables";
+
+// Utils
+.text-two-lines-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Máximo de 2 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

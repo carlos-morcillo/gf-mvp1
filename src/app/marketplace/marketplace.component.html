@@ -1,59 +1,51 @@
 <div class="list-page__header">
   <div class="list-page__header-actions">
     <h2 class="list-page__title">
-      {{ "AGENT_LIST.TITLES.MAIN" | transloco }}
+      {{ "MARKETPLACE.TITLES.MAIN" | transloco }}
     </h2>
-    <button class="btn btn-primary" [routerLink]="['./add']">
-      <span class="list-page__button-icon bi bi-plus"></span>
-      {{ "AGENT_LIST.BUTTONS.ADD" | transloco }}
-    </button>
   </div>
   <p class="list-page__description">
-    {{ "AGENT_LIST.DESCRIPTIONS.MAIN" | transloco }}
+    {{ "MARKETPLACE.LABELS.MAIN_DESCRIPTION" | transloco }}
   </p>
 </div>
 
 <div class="list-page__content">
   <hub-ui-table
+    class="list-page__table"
     [headers]="headers"
     [loading]="paginatedData.isLoading()"
     [data]="paginatedData.value()"
     [searchable]="false"
     [options]="{ hoverableRows: true, scrollable: true }"
-    [clickFn]="this.startChat.bind(this)"
+    [clickFn]="goToAgent.bind(this)"
     [(searchTerm)]="searchTerm"
     [(filters)]="dynamicFilters"
+    [searchable]="true"
+    [debounce]="1024"
     [(ordination)]="ordination"
     [(perPage)]="perPage"
     [(page)]="page"
-    class="list-page__table"
   >
     <ng-template
       paginableTableCell
-      header="meta.profile_image_url"
+      header="info.meta.profile_image_url"
       let-property="property"
       let-item="item"
     >
-      <hub-avatar [name]="item.title" [src]="property" size="40"></hub-avatar>
+      <hub-avatar [src]="property" [name]="item.name" size="40"></hub-avatar>
     </ng-template>
-
     <ng-template
       paginableTableCell
-      header="meta.capabilities"
+      header="info.meta.description"
       let-property="property"
     >
-      <div class="d-flex gap-2 flex-wrap">
-        @for (capability of summarizeCapabilities(property); track $index) {
-        <span class="badge rounded-pill text-bg-secondary">{{
-          capability | titlecase
-        }}</span>
-
-        }
-      </div>
+      <p class="m-0 text-muted text-two-lines-ellipsis" [title]="property">
+        {{ property }}
+      </p>
     </ng-template>
 
     <ng-template noDataTpt>
-      {{ "AGENT_LIST.EMPTY.NO_RESULTS" | transloco }}
+      {{ "MARKETPLACE.LABELS.NO_AGENTS" | transloco }}
     </ng-template>
   </hub-ui-table>
 </div>
