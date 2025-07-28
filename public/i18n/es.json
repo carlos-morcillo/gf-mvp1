@@ -82,6 +82,7 @@
   },
   "AGENT_FORM": {
     "LABELS": {
+      "ID": "Identificador",
       "NAME": "How would you like to name your agent?",
       "DESCRIPTION": "Briefly describe what this agent does.",
       "BASE_MODEL": "Choose the language model powering your agent",
@@ -120,7 +121,8 @@
       "PIN": "",
       "NAME": "Name",
       "MODEL": "Model",
-      "FEATURES": "Features"
+      "FEATURES": "Features",
+      "AUTHOR": "Autor"
     },
     "BUTTONS": {
       "ADD": "Add"

@@ -35,7 +35,13 @@
       let-property="property"
       let-item="item"
     >
-      <hub-avatar [name]="item.title" [src]="property" size="40"></hub-avatar>
+      @if (property) {
+      <hub-avatar [src]="property" size="40"></hub-avatar>
+
+      } @else {
+      <hub-avatar [name]="item.name" size="40"></hub-avatar>
+
+      }
     </ng-template>
 
     <ng-template
