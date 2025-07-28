@@ -221,7 +221,10 @@
     "GL": "Galego",
     "AST": "Asturianu",
     "OC": "Aranés",
-    "EN": "English"
+    "EN": "English",
+    "FR": "Français",
+    "IT": "Italiano",
+    "DE": "Deutsch"
   },
   "LOGIN": {
     "TABS": {
@@ -458,7 +461,9 @@
     }
   },
   "MARKETPLACE": {
-    "TITLES": { "MAIN": "Marketplace" },
+    "TITLES": {
+      "MAIN": "Marketplace"
+    },
     "LABELS": {
       "MAIN_DESCRIPTION": "Explore available agents",
       "NO_AGENTS": "No agents available",
@@ -470,8 +475,12 @@
       "CATEGORY": "Category",
       "RATING": "Rating"
     },
-    "MESSAGES": { "LOAD_ERROR": "Failed to load agents" },
-    "BUTTONS": { "RETRY": "Retry" }
+    "MESSAGES": {
+      "LOAD_ERROR": "Failed to load agents"
+    },
+    "BUTTONS": {
+      "RETRY": "Retry"
+    }
   },
   "CHATLIST": {
     "BUTTONS": {

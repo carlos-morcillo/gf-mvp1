@@ -206,7 +206,11 @@
     "EU": "Euskara",
     "GL": "Galego",
     "AST": "Asturianu",
-    "OC": "Aranés"
+    "OC": "Aranés",
+    "EN": "English",
+    "FR": "Français",
+    "IT": "Italiano",
+    "DE": "Deutsch"
   },
   "LOGIN": {
     "TABS": {
@@ -259,8 +263,7 @@
     "TITLES": {
       "MAIN": "Formación"
     }
-  }
-,
+  },
   "sidebar": {
     "home": "Inicio",
     "myAgents": "Mis Agentes",
