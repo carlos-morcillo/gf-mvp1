@@ -15,7 +15,7 @@ export interface PagedDataRequestParam {
 
   /**
    * Number of items to return per page.
-   * Defines the page size for each request.
+   * Defines the page size for each request.s
    *
    * @example 10
    */

@@ -42,19 +42,77 @@ export abstract class CollectionService<
   paginate(
     request: Partial<PagedDataRequestParam> = {}
   ): Observable<PaginationState<T>> {
-    const { page = 1, perPage = 20 } = request;
+    const {
+      page = 1,
+      perPage = 20,
+      searchTerm,
+      searchKeys,
+      ordination,
+      filters = [],
+    } = request;
+
     return this.list(request).pipe(
       map((all) => {
+        let data = [...all];
+
+        // 1. Filtrado por término de búsqueda
+        if (searchTerm?.trim()) {
+          const term = searchTerm.toLowerCase();
+          data = data.filter((item) => {
+            if (typeof item === 'string') {
+              return (item as string).toLowerCase().includes(term);
+            }
+            if (typeof item === 'object') {
+              const keys = Object.keys(item) as Array<keyof T>;
+
+              return keys.some((key) => {
+                const value = (item as any)[key];
+                return (
+                  typeof value === 'string' &&
+                  value.toLowerCase().includes(term)
+                );
+              });
+            } else {
+              return false;
+            }
+          });
+        }
+
+        // 2. Ordenación
+        if (ordination?.property) {
+          const { property, direction } = ordination;
+          const asc = direction.toLowerCase() === 'asc';
+
+          data.sort((a: any, b: any) => {
+            const aVal = a[property];
+            const bVal = b[property];
+
+            if (aVal == null) return asc ? -1 : 1;
+            if (bVal == null) return asc ? 1 : -1;
+
+            if (typeof aVal === 'string' && typeof bVal === 'string') {
+              return asc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+            }
+
+            return asc ? aVal - bVal : bVal - aVal;
+          });
+        }
+
+        // 3. Paginación
+        const totalItems = data.length;
         const start = (page - 1) * perPage;
+        const paged = data.slice(start, start + perPage);
+
         return {
-          data: all.slice(start, start + perPage),
+          data: paged,
           page,
-          totalItems: all.length,
+          totalItems,
           perPage,
         };
       })
     );
   }
+
   // const {
   // 	perPage: size,
   // 	page,
