@@ -1,18 +1,22 @@
 {
   "AGENT_CHAT_LIST": {
     "TITLES": {
-      "MAIN": "Chats de Agentes"
+      "MAIN": "Agent Chats"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Conversaciones de tus agentes"
     },
     "COLUMNS": {
       "ID": "Id",
+      "TITLE": "Título",
       "AGENT": "Agente",
       "UPDATED": "Actualizado"
     },
     "BUTTONS": {
-      "NEW_CHAT": "Nuevo Chat"
+      "NEW_CHAT": "New Chat"
     },
     "EMPTY": {
-      "NO_RESULTS": "Sin chats"
+      "NO_RESULTS": "No chats found"
     }
   },
   "AGENT_CHAT": {
@@ -20,187 +24,194 @@
       "MAIN": "Chat"
     },
     "PLACEHOLDER": {
-      "INPUT": "Escribe un mensaje"
+      "INPUT": "Type a message"
     },
     "BUTTONS": {
-      "VISION": "Visión",
-      "FILE_UPLOAD": "Subir archivo",
-      "WEB_SEARCH": "Búsqueda web",
-      "IMAGE_GENERATION": "Generación de imágenes",
-      "CODE_INTERPRETER": "Intérprete de código",
-      "CITATIONS": "Citas",
-      "USAGE": "Uso",
-      "SEND": "Enviar"
+      "VISION": "Vision",
+      "FILE_UPLOAD": "File upload",
+      "WEB_SEARCH": "Web search",
+      "IMAGE_GENERATION": "Image generation",
+      "CODE_INTERPRETER": "Code interpreter",
+      "CITATIONS": "Citations",
+      "USAGE": "Usage",
+      "SEND": "Send"
     },
     "STATUS": {
-      "SENDING": "Enviando...",
-      "LOADING": "Cargando conversación...",
-      "ERROR": "No se pudo cargar la conversación"
+      "SENDING": "Sending...",
+      "LOADING": "Loading conversation...",
+      "ERROR": "Unable to load conversation"
     },
-    "NEW_BUTTON": "Nuevo chat"
+    "NEW_BUTTON": "New Chat"
   },
   "AGENT_EDITION": {
     "TITLES": {
-      "MAIN": "Agente"
+      "MAIN": "Agent"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Crea o edita un agente"
     },
     "LABELS": {
-      "NAME": "Nombre",
-      "TONE": "Tono",
-      "PERSONA": "Personalidad",
-      "WELCOME_MESSAGE": "Mensaje de bienvenida",
-      "CONTEXT": "Contexto",
-      "OUTPUT_FORMAT": "Formato de salida",
-      "MODEL": "Modelo",
-      "ACTIVE": "Activo",
-      "SKILLS": "Habilidades",
-      "KNOWLEDGE": "Bases de conocimiento",
-      "FILES": "Archivos",
-      "UPLOAD_IMAGE": "Imagen de perfil"
+      "NAME": "Name",
+      "TONE": "Tone",
+      "PERSONA": "Persona",
+      "WELCOME_MESSAGE": "Welcome message",
+      "CONTEXT": "Context",
+      "OUTPUT_FORMAT": "Output format",
+      "MODEL": "Model",
+      "ACTIVE": "Active",
+      "SKILLS": "Skills",
+      "KNOWLEDGE": "Knowledge bases",
+      "FILES": "Files",
+      "UPLOAD_IMAGE": "Profile image"
     },
     "TIPS": {
-      "NAME": "Identificador único del agente",
-      "PERSONALITY": "Describe brevemente el comportamiento"
+      "NAME": "Unique identifier for the agent",
+      "PERSONALITY": "Briefly describe how the agent should behave"
     },
     "TONES": {
-      "CASUAL": "Cercano",
-      "PROFESSIONAL": "Profesional",
-      "CONCISE": "Conciso"
+      "CASUAL": "Casual",
+      "PROFESSIONAL": "Professional",
+      "CONCISE": "Concise"
     },
     "BUTTONS": {
-      "SAVE": "Guardar"
+      "SAVE": "Save"
     },
     "FORM": {
-      "DRAG_DROP": "Arrastra la imagen o haz clic para seleccionar"
+      "DRAG_DROP": "Drag image here or click to select"
     }
   },
   "AGENT_FORM": {
     "LABELS": {
-      "ID": "Identificador",
-      "NAME": "¿Cómo quieres llamar a tu agente?",
-      "DESCRIPTION": "Describe de forma breve qué hace este agente.",
-      "BASE_MODEL": "Elige el modelo de lenguaje en el que se basa tu agente",
-      "SYSTEM": "Mensaje del sistema",
-      "CAPABILITIES": "Habilidades",
-      "KNOWLEDGE": "Bases de conocimiento",
-      "PROFILE_IMAGE": "Imagen de perfil",
-      "ACTIVE": "Agente activo"
+      "NAME": "How would you like to name your agent?",
+      "DESCRIPTION": "Briefly describe what this agent does.",
+      "BASE_MODEL": "Choose the language model powering your agent",
+      "SYSTEM": "System message",
+      "CAPABILITIES": "Capabilities",
+      "KNOWLEDGE": "Knowledge bases",
+      "PROFILE_IMAGE": "Profile image",
+      "ACTIVE": "Active agent"
     },
     "TIPS": {
-      "CAPABILITIES": "Activa las habilidades que deseas que tu agente tenga. Puedes combinarlas libremente."
+      "CAPABILITIES": "Enable the skills you want your agent to have. You can combine them freely."
     }
   },
   "AGENT_DESCRIPTION": {
-    "TITLE": "¿Cómo debe comportarse tu agente?",
-    "INTRO": "Completa los siguientes campos para definir cómo quieres que tu agente se exprese, se relacione y responda. Esta información se convertirá en una descripción interna que el modelo de IA usará para funcionar correctamente.",
+    "TITLE": "How should your agent behave?",
+    "INTRO": "Fill the following fields to define how your agent will speak, interact and respond. This information becomes an internal description used by the AI model.",
     "FIELDS": {
-      "TONE": "Tono conversacional",
-      "PERSONALITY": "Personalidad del agente",
-      "WELCOME": "Mensaje de bienvenida",
-      "CONTEXT": "Contexto",
-      "OUTPUT": "Formato de salida"
+      "TONE": "Conversation tone",
+      "PERSONALITY": "Agent personality",
+      "WELCOME": "Welcome message",
+      "CONTEXT": "Context",
+      "OUTPUT": "Output format"
     },
     "VALIDATION": {
-      "CONTEXT_REQUIRED": "El contexto es obligatorio"
+      "CONTEXT_REQUIRED": "Context is required"
     }
   },
   "AGENT_LIST": {
     "TITLES": {
-      "MAIN": "Agentes"
+      "MAIN": "Agents"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Administra tus agentes"
     },
     "COLUMNS": {
       "PIN": "",
-      "NAME": "Nombre",
-      "MODEL": "Modelo",
-      "FEATURES": "Características",
-      "AUTHOR": "Autor"
+      "NAME": "Name",
+      "MODEL": "Model",
+      "FEATURES": "Features"
     },
     "BUTTONS": {
-      "ADD": "Añadir"
+      "ADD": "Add"
     },
     "EMPTY": {
-      "NO_RESULTS": "No se encontraron agentes"
+      "NO_RESULTS": "No agents found"
+    },
+    "CONFIRM": {
+      "DELETE": "¿Estás seguro de que deseas eliminar este agente?"
     }
   },
   "CHAT_LIST": {
-    "NEW_CHAT_BUTTON": "Nuevo Chat",
+    "NEW_CHAT_BUTTON": "New Chat",
     "STATUS": {
-      "LOADING": "Cargando..."
+      "LOADING": "Loading..."
     },
-    "NO_CHATS": "No hay chats disponibles"
+    "NO_CHATS": "No chats available",
+    "CONFIRM": {
+      "DELETE": "¿Estás seguro de que deseas eliminar esta conversación?"
+    }
   },
   "CREATE_COMPANY": {
     "TITLES": {
-      "MAIN": "Registrar compañía"
+      "MAIN": "Register Company"
     },
     "FIELDS": {
-      "NAME": "Nombre",
-      "EMAIL": "Correo",
-      "PASSWORD": "Contraseña"
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "PASSWORD": "Password"
     },
     "BUTTONS": {
-      "SAVE": "Crear",
-      "BACK": "Volver al login"
+      "SAVE": "Create",
+      "BACK": "Back to login"
     },
     "STATUS": {
-      "SAVING": "Guardando..."
+      "SAVING": "Saving..."
     }
   },
   "DASHBOARD": {
-    "TITLES": {
-      "MAIN": "Dashboard"
+    "TITLE": "¡Bienvenido de vuelta!",
+    "SUBTITLE": "Continúa trabajando con tus agentes o explora nuevas posibilidades.",
+    "SEARCH": {
+      "PLACEHOLDER": "Buscar agentes, conversaciones o tareas…"
     },
-    "SECTIONS": {
-      "QUICK_ACCESS": "Acceso rápido",
-      "RECENT_ACTIVITY": "Actividad reciente"
+    "RECENT_CONVERSATIONS": "Conversaciones Recientes",
+    "SEE_ALL": "Ver todas",
+    "QUICK_ACTIONS": {
+      "TITLE": "Acciones Rápidas",
+      "NEW_AGENT": "Crear nuevo agente",
+      "EXPLORE_MARKETPLACE": "Explorar Marketplace",
+      "FAVORITES": "Ver favoritos"
     },
-    "METRICS": {
-      "TRAININGS_COMPLETED": "Formaciones completadas",
-      "DOCUMENTS_INDEXED": "Documentos indexados",
-      "AVERAGE_SCORE": "Puntuación media",
-      "ACTIVE_AGENTS": "Agentes activos"
+    "AVAILABLE_AGENTS": {
+      "TITLE": "Agentes Disponibles"
     },
-    "ACTIONS": {
-      "NEW_DOC": "Nuevo documento",
-      "NEW_AGENT": "Crear agente",
-      "RUN_TRAINING": "Lanzar training"
-    },
-    "LOGS": {
-      "USER_CREATED_AGENT": "Usuario Juan creó un agente",
-      "DOC_INDEXED": "Se indexó el documento Manual.pdf",
-      "TRAINING_UPDATED": "Actualizada la formación Básica"
+    "RESULTS": {
+      "AGENTS": "Agentes",
+      "CHATS": "Conversaciones"
     }
   },
   "EVALUATION": {
-    "IFRAME_FALLBACK": "Tu navegador no permite mostrar el formulario",
+    "IFRAME_FALLBACK": "Your browser cannot display the form",
     "TITLES": {
-      "MAIN": "Evaluación"
+      "MAIN": "Evaluation"
     }
   },
   "KNOWLEDGE_EDITION": {
     "TITLES": {
-      "MAIN": "Base de Conocimiento"
+      "MAIN": "Knowledge Base"
     },
     "FORM": {
-      "NAME": "Nombre",
-      "DESCRIPTION": "Descripción",
-      "SAVE_BUTTON": "Guardar",
-      "SUCCESS": "Base de conocimiento guardada correctamente"
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "SAVE_BUTTON": "Save",
+      "SUCCESS": "Knowledge base saved successfully"
     }
   },
   "KNOWLEDGE_LIST": {
     "TITLES": {
-      "MAIN": "Bases de Conocimiento"
+      "MAIN": "Knowledge Bases"
     },
     "COLUMNS": {
-      "NAME": "Nombre",
-      "DESCRIPTION": "Descripción",
-      "CREATED_AT": "Creada"
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CREATED_AT": "Created"
     },
     "BUTTONS": {
-      "ADD": "Añadir"
+      "ADD": "Add"
     },
     "EMPTY": {
-      "NO_RESULTS": "No se encontraron bases de conocimiento"
+      "NO_RESULTS": "No knowledge bases found"
     }
   },
   "LANGUAGES": {
@@ -217,84 +228,270 @@
   },
   "LOGIN": {
     "TABS": {
-      "STANDARD": "Estándar",
+      "STANDARD": "Standard",
       "LDAP": "LDAP"
     },
     "FIELDS": {
-      "EMAIL": "Correo",
-      "PASSWORD": "Contraseña",
-      "USER": "Usuario"
+      "EMAIL": "Email",
+      "PASSWORD": "Password",
+      "USER": "User"
     },
     "BUTTONS": {
-      "SUBMIT": "Entrar",
-      "CREATE_COMPANY": "Crear compañía"
+      "SUBMIT": "Login",
+      "CREATE_COMPANY": "Create company"
     },
     "STATUS": {
-      "LOADING": "Cargando..."
+      "LOADING": "Loading..."
     }
   },
   "PROFILE": {
     "TITLES": {
-      "MAIN": "Perfil de usuario"
+      "MAIN": "User Profile"
     }
   },
   "USER_PROFILE": {
-    "TITLE": "Mi perfil",
-    "NAME": "Nombre",
-    "EMAIL": "Correo electrónico",
-    "ROLE": "Rol",
-    "LANGUAGE": "Idioma preferido",
-    "EDIT_BUTTON": "Editar perfil"
+    "TITLE": "My profile",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "ROLE": "Role",
+    "LANGUAGE": "Preferred language",
+    "EDIT_BUTTON": "Edit profile"
   },
   "SIDEBAR": {
     "MENU": {
-      "DASHBOARD": "Panel",
-      "HOME": "Inicio",
-      "AGENTS": "Agentes",
-      "TRAINING": "Formación",
-      "EVALUATION": "Evaluación",
+      "DASHBOARD": "Dashboard",
+      "HOME": "Home",
+      "AGENTS": "Agents",
+      "TRAINING": "Training",
+      "EVALUATION": "Evaluation",
       "CHATS": "Chats",
-      "DOCUMENTATION": "Documentación",
-      "EMPLOYEE_PORTAL": "Portal empleado",
-      "KNOWLEDGE": "Conocimiento",
-      "TITLE": "Menú"
+      "DOCUMENTATION": "Documentation",
+      "EMPLOYEE_PORTAL": "Employee Portal",
+      "KNOWLEDGE": "Bases de conocimiento",
+      "TITLE": "Menu"
     },
     "ACTIONS": {
-      "LOGOUT": "Cerrar sesión"
+      "LOGOUT": "Logout"
     }
   },
   "TRAINING": {
     "TITLES": {
-      "MAIN": "Formación"
+      "MAIN": "Training"
     }
   },
   "ERROR": {
     "GENERIC": {
-      "MESSAGE": "Se ha producido un error inesperado",
-      "RETURN_HOME": "Volver al inicio"
+      "MESSAGE": "An unexpected error occurred",
+      "RETURN_HOME": "Back to home"
     }
   },
   "NOT_FOUND": {
-    "MESSAGE": "La página que buscas no existe"
+    "MESSAGE": "The page you are looking for does not exist"
   },
   "HOME": {
-    "IFRAME_FALLBACK": "Tu navegador no permite mostrar el contenido"
+    "IFRAME_FALLBACK": "Your browser cannot display the content"
   },
-  "sidebar": {
-    "home": "Inicio",
-    "myAgents": "Mis Agentes",
-    "chats": "Chats",
-    "createNewAgent": "Crear nuevo agente",
-    "marketplace": "Marketplace",
-    "evaluation": "Evaluación IA",
-    "training": "Formación",
-    "gamification": "Gamificación",
-    "settings": "Configuración",
-    "help": "Ayuda",
-    "userMenu": {
-      "profile": "Perfil de usuario",
-      "language": "Cambiar idioma",
-      "logout": "Cerrar sesión"
+  "GENERIC": {
+    "BUTTONS": {
+      "REMOVE": "Eliminar"
+    }
+  },
+  "knowledgeBase": {
+    "title": "Base de Conocimiento",
+    "create": "Crear Base de Conocimiento",
+    "edit": "Editar Base de Conocimiento",
+    "detail": "Detalle de Base de Conocimiento",
+    "name": "Nombre",
+    "description": "Descripción",
+    "visibility": "Visibilidad",
+    "groups": "Grupos",
+    "files": "Archivos",
+    "noFiles": "No hay archivos asociados",
+    "addFiles": "Añadir Archivos",
+    "editButton": "Editar",
+    "saveButton": "Guardar",
+    "cancelButton": "Cancelar",
+    "deleteButton": "Eliminar",
+    "downloadButton": "Descargar"
+  },
+  "fileUpload": {
+    "dragDropText": "Arrastra archivos aquí o haz clic para seleccionar",
+    "uploading": "Subiendo...",
+    "success": "Archivo subido correctamente",
+    "error": "Error al subir archivo",
+    "invalidType": "Tipo de archivo no permitido",
+    "maxSize": "Archivo demasiado grande",
+    "associating": "Asociando archivo...",
+    "removeFile": "Eliminar archivo"
+  },
+  "visibility": {
+    "private": "Privado",
+    "public": "Público",
+    "restricted": "Restringido",
+    "privateDesc": "Solo pueden acceder los usuarios y grupos con permiso"
+  },
+  "ASIDE": {
+    "LABELS": {
+      "HOME": "Inicio",
+      "INTRANET": "Intranet",
+      "MY_AGENTS": "Mis Agentes",
+      "CHATS": "Chats",
+      "MARKETPLACE": "Marketplace",
+      "EVALUATION": "Evaluación IA",
+      "TRAINING": "Formación",
+      "GAMIFICATION": "Gamificación",
+      "SETTINGS": "Configuración",
+      "HELP": "Ayuda"
+    },
+    "BUTTONS": {
+      "CREATE_NEW_AGENT": "Crear nuevo agente",
+      "PROFILE": "Perfil de usuario",
+      "CHANGE_LANGUAGE": "Cambiar idioma",
+      "LOGOUT": "Cerrar sesión"
+    }
+  },
+  "KNOWLEDGEBASEEDITION": {
+    "TITLES": {
+      "CREATE": "Crear Base de Conocimiento",
+      "EDIT": "Editar Base de Conocimiento"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Crea o edita una base de conocimiento"
+    },
+    "LABELS": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "VISIBILITY": "Visibilidad",
+      "GROUPS": "Grupos",
+      "PRIVATE": "Privado",
+      "PUBLIC": "Público",
+      "RESTRICTED": "Restringido"
+    },
+    "PLACEHOLDERS": {
+      "NAME": "Nombra tu base de conocimientos",
+      "DESCRIPTION": "Describe tu Base de Conocimientos y sus objetivos",
+      "SELECT_GROUP": "Seleccionar un grupo"
+    },
+    "BUTTONS": {
+      "CREATE": "Crear Conocimiento",
+      "UPDATE": "Actualizar Conocimiento",
+      "CANCEL": "Cancelar"
+    },
+    "MESSAGES": {
+      "NO_GROUPS": "No hay grupos con acceso, añade un grupo para otorgar acceso",
+      "PRIVATE_DESC": "Solo pueden acceder los usuarios y grupos con permiso",
+      "CREATE_SUCCESS": "Base de conocimiento creada correctamente",
+      "UPDATE_SUCCESS": "Base de conocimiento actualizada correctamente",
+      "CREATE_ERROR": "Error al crear la base de conocimiento",
+      "UPDATE_ERROR": "Error al actualizar la base de conocimiento"
+    }
+  },
+  "KNOWLEDGEBASEDETAIL": {
+    "TITLES": {
+      "DETAIL": "Detalle de Base de Conocimiento",
+      "FILES": "Archivos Asociados"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Información de la base de conocimiento"
+    },
+    "LABELS": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "VISIBILITY": "Visibilidad",
+      "GROUPS": "Grupos",
+      "CREATED_AT": "Fecha de creación",
+      "UPDATED_AT": "Última actualización"
+    },
+    "BUTTONS": {
+      "EDIT": "Editar",
+      "DELETE": "Eliminar",
+      "ADD_FILES": "Añadir Archivos",
+      "DOWNLOAD": "Descargar",
+      "REMOVE_FILE": "Eliminar archivo"
+    },
+    "MESSAGES": {
+      "NO_FILES": "No hay archivos asociados",
+      "DELETE_CONFIRM": "¿Estás seguro de que quieres eliminar esta base de conocimiento?",
+      "DELETE_SUCCESS": "Base de conocimiento eliminada correctamente",
+      "DELETE_ERROR": "Error al eliminar la base de conocimiento"
+    }
+  },
+  "FILEUPLOAD": {
+    "TITLES": {
+      "UPLOAD_FILES": "Subir Archivos"
+    },
+    "LABELS": {
+      "DRAG_DROP": "Arrastra archivos aquí o haz clic para seleccionar",
+      "SELECTED_FILES": "Archivos seleccionados",
+      "UPLOAD_PROGRESS": "Progreso de carga"
+    },
+    "BUTTONS": {
+      "SELECT_FILES": "Seleccionar archivos",
+      "UPLOAD": "Subir",
+      "CANCEL": "Cancelar",
+      "REMOVE": "Eliminar"
+    },
+    "MESSAGES": {
+      "UPLOADING": "Subiendo...",
+      "ASSOCIATING": "Asociando archivo...",
+      "SUCCESS": "Archivo subido correctamente",
+      "ERROR": "Error al subir archivo",
+      "INVALID_TYPE": "Tipo de archivo no permitido",
+      "MAX_SIZE": "Archivo demasiado grande",
+      "UPLOAD_COMPLETE": "Todos los archivos se han subido correctamente"
+    }
+  },
+  "KNOWLEDGEBASELIST": {
+    "TITLES": {
+      "MAIN": "Bases de Conocimiento"
+    },
+    "DESCRIPTIONS": {
+      "MAIN": "Gestiona tus bases de conocimiento"
+    },
+    "COLUMNS": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "CREATED_AT": "Creado"
+    },
+    "BUTTONS": {
+      "ADD": "Añadir"
+    },
+    "EMPTY": {
+      "NO_RESULTS": "No hay bases de conocimiento"
+    }
+  },
+  "MARKETPLACE": {
+    "TITLES": {
+      "MAIN": "Marketplace"
+    },
+    "LABELS": {
+      "MAIN_DESCRIPTION": "Explora los agentes disponibles",
+      "NO_AGENTS": "No hay agentes disponibles",
+      "LOADING": "Cargando..."
+    },
+    "COLUMNS": {
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "CATEGORY": "Categoría",
+      "RATING": "Valoración"
+    },
+    "MESSAGES": {
+      "LOAD_ERROR": "Error al cargar los agentes"
+    },
+    "BUTTONS": {
+      "RETRY": "Reintentar"
+    }
+  },
+  "CHATLIST": {
+    "BUTTONS": {
+      "PIN_CHAT": "Pin chat",
+      "UNPIN_CHAT": "Unpin chat"
+    },
+    "MESSAGES": {
+      "PIN_SUCCESS": "Chat pinned",
+      "UNPIN_SUCCESS": "Chat unpinned",
+      "PIN_ERROR": "Error pinning chat",
+      "UNPIN_ERROR": "Error unpinning chat"
     }
   }
 }

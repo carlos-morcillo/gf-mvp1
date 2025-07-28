@@ -82,4 +82,5 @@ export interface Agent {
   user?: AgentUser;
   avatar?: any;
   type?: any;
+  preset?: boolean;
 }

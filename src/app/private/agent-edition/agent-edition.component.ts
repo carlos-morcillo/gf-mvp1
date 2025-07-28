@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import { Agent } from '../agent-list/agent';
 import { AgentsService } from '../agent-list/agents.service';
 import { KnowledgeBaseService } from '../knowledge-base/knowledge-base.service';
@@ -57,7 +57,12 @@ export class AgentEditionComponent {
 
   /** Base models available in the backend */
   modelsResource = resource({
-    loader: () => firstValueFrom(this.agentsSvc.all()),
+    loader: () =>
+      firstValueFrom(
+        this.agentsSvc
+          .all()
+          .pipe(map((models) => models.filter((model) => !model.preset)))
+      ),
   });
 
   /** Knowledge bases that can be linked to the agent */
