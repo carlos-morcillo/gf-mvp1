@@ -88,6 +88,13 @@ export class AgentChatComponent {
 
   agentId = signal<string | null>(null);
 
+  agentsEffect = effect(() => {
+    const agents = this.agents.value();
+    if (agents?.length && !this.agentId()) {
+      this.agentId.set(agents.at(0)!.id);
+    }
+  });
+
   agentIdEffect = effect(() => {
     const agentId = this.agentId();
     this.models.set(agentId ? [agentId] : []);

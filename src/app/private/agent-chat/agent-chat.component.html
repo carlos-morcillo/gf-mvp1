@@ -13,11 +13,7 @@
     >
     </ng-select>
   </div>
-  <p class="text-muted">
-    {{ models() }}
-  </p>
 </div>
-<pre>{{ agentId() | json }}</pre>
 <!-- Contenedor de mensajes -->
 <div #scrollContainer class="detail-page__content">
   @for (message of messages(); track message) {
