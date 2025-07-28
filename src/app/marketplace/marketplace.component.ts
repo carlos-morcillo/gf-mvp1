@@ -1,6 +1,5 @@
-
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { AvatarComponent } from 'ng-hub-ui-avatar';
 import {
@@ -23,8 +22,8 @@ import { MarketplaceService } from './marketplace.service';
     PaginableTableNotFoundDirective,
     RouterLink,
     TranslocoModule,
-    AvatarComponent
-],
+    AvatarComponent,
+  ],
   templateUrl: './marketplace.component.html',
   styleUrl: './marketplace.component.scss',
   host: {
@@ -34,6 +33,7 @@ import { MarketplaceService } from './marketplace.service';
 export class MarketplaceComponent extends PaginatedListComponent<MarketplaceAgent> {
   override dataSvc = inject(MarketplaceService);
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
   override headers: PaginableTableHeader[] = [
     { property: 'info.meta.profile_image_url' },
@@ -49,7 +49,9 @@ export class MarketplaceComponent extends PaginatedListComponent<MarketplaceAgen
     },
   ];
 
-  goToAgent({ data }: TableRowEvent<MarketplaceAgent>): void {
-    this.router.navigate(['/private/agents', data.id]);
+  startChat({ data }: TableRowEvent<MarketplaceAgent>) {
+    this.router.navigate(['/private/agents', data.id, 'chats', 'add'], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }

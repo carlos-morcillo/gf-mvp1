@@ -110,7 +110,8 @@
       "PIN": "",
       "NAME": "Name",
       "MODEL": "Model",
-      "FEATURES": "Features"
+      "FEATURES": "Features",
+      "AUTHOR": "Author"
     },
     "BUTTONS": {
       "ADD": "Add"

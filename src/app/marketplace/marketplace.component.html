@@ -17,7 +17,7 @@
     [data]="paginatedData.value()"
     [searchable]="false"
     [options]="{ hoverableRows: true, scrollable: true }"
-    [clickFn]="goToAgent.bind(this)"
+    [clickFn]="startChat.bind(this)"
     [(searchTerm)]="searchTerm"
     [(filters)]="dynamicFilters"
     [searchable]="true"
