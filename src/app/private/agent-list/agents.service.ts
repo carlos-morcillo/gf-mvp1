@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CollectionService } from '../../shared/services';
 import { PagedDataRequestParam } from '../../shared/types/paged-data-request-param';
@@ -25,6 +25,12 @@ export class AgentsService extends CollectionService<Agent> {
     return this.http.get<Agent>(`${environment.baseURL}/${this.path}/model`, {
       params: { id },
     });
+  }
+
+  all(): Observable<Array<Agent>> {
+    return this.http
+      .get<{ data: Agent[] }>(`${environment.baseURL2}/${this.path}`)
+      .pipe(map(({ data }) => data ?? []));
   }
 
   baseModels(

@@ -1,24 +1,36 @@
-import { DatePipe, Location } from '@angular/common';
+import { DatePipe, JsonPipe, Location } from '@angular/common';
 import {
   Component,
   ElementRef,
-  ViewChild,
+  ResourceRef,
   WritableSignal,
   effect,
   inject,
   model,
+  resource,
   signal,
+  viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { firstValueFrom } from 'rxjs';
+import { Agent } from '../agent-list/agent';
+import { AgentsService } from '../agent-list/agents.service';
 import { AgentChat, Message } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
 
 @Component({
   selector: 'app-agent-chat',
   standalone: true,
-  imports: [FormsModule, TranslocoModule, DatePipe],
+  imports: [
+    FormsModule,
+    TranslocoModule,
+    DatePipe,
+    NgSelectComponent,
+    JsonPipe,
+  ],
   styleUrls: ['./agent-chat.component.scss'],
   templateUrl: './agent-chat.component.html',
   host: {
@@ -27,8 +39,8 @@ import { AgentChatService } from './agent-chat.service';
 })
 export class AgentChatComponent {
   private chatsSvc = inject(AgentChatService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private agentsSvc = inject(AgentsService);
+  private activateRoute = inject(ActivatedRoute);
   #location = inject(Location);
   transloco = inject(TranslocoService);
 
@@ -64,12 +76,31 @@ export class AgentChatComponent {
   currentMessage = '';
 
   /** Container element that holds the messages */
-  @ViewChild('scrollContainer') scrollContainer?: ElementRef<HTMLDivElement>;
+  readonly scrollContainer =
+    viewChild<ElementRef<HTMLDivElement>>('scrollContainer');
+
+  agents: ResourceRef<Array<Agent> | undefined> = resource({
+    loader: () => firstValueFrom(this.agentsSvc.all()),
+  });
 
   /** Agent identifier captured from the route */
-  agentId = model<string>('', { alias: 'agentId' });
+  //   agentId = input<string | null>('', { alias: 'agentId' });
 
-  models = signal<Array<string>>(this.agentId() ? [this.agentId()] : []);
+  agentId = signal<string | null>(null);
+
+  agentIdEffect = effect(() => {
+    const agentId = this.agentId();
+    this.models.set(agentId ? [agentId] : []);
+  });
+
+  models = signal<Array<string>>([]);
+
+  //   modelsEffect = effect(() => {
+  //     const models = this.models();
+  //     this.agentId.set(models.at(0) ?? null);
+  //     if (models.length) {
+  //     }
+  //   });
 
   /** Chat identifier from the route */
   chatId = model<string | undefined | null>(null, { alias: 'chatId' });
@@ -82,8 +113,9 @@ export class AgentChatComponent {
     if (!chat) {
       return;
     }
-    this.agentId.set(chat.chat.agentId);
-    this.models.set([chat.chat.agentId]);
+    // this.agentId.set(chat.chat.agentId);
+    this.models.set(chat.chat.models);
+    this.agentId.set(chat.chat.models.at(0) ?? null);
   });
 
   constructor() {
@@ -94,22 +126,33 @@ export class AgentChatComponent {
     });
   }
 
+  ngOnInit() {
+    const agentId = this.activateRoute.snapshot.paramMap.get('agentId');
+    if (agentId) {
+      this.agentId.set(agentId);
+    }
+  }
+
   /** Sends the current input value */
   async send() {
+    const model = this.models().at(0);
+    if (!model) {
+      return;
+    }
     const content = this.currentMessage.trim();
     if (!content) {
       return;
     }
     if (!this.chatId() || this.chatId() === 'add') {
       this.chatsSvc
-        .createChatWithAgent(this.agentId(), content)
+        .createChatWithAgent(model, content)
         .then((chat: AgentChat) => {
           this.chatId.set(chat.id);
           this.#location.replaceState(`/private/chats/${this.chatId()}`);
         })
         .catch(() => {});
     } else {
-      await this.chatsSvc.sendMessage(this.agentId(), this.chatId()!, content);
+      await this.chatsSvc.sendMessage(model, this.chatId()!, content);
     }
     this.scrollToBottom();
     this.currentMessage = '';
@@ -121,7 +164,7 @@ export class AgentChatComponent {
    * the newest interaction is always visible.
    */
   private scrollToBottom(): void {
-    const el = this.scrollContainer?.nativeElement;
+    const el = this.scrollContainer()?.nativeElement;
     if (el) {
       el.scrollTop = el.scrollHeight;
     }

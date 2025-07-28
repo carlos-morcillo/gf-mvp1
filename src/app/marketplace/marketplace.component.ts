@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
@@ -18,14 +18,13 @@ import { MarketplaceService } from './marketplace.service';
   selector: 'app-marketplace',
   standalone: true,
   imports: [
-    CommonModule,
     TableComponent,
     PaginableTableCellDirective,
     PaginableTableNotFoundDirective,
     RouterLink,
     TranslocoModule,
-    AvatarComponent,
-  ],
+    AvatarComponent
+],
   templateUrl: './marketplace.component.html',
   styleUrl: './marketplace.component.scss',
   host: {
