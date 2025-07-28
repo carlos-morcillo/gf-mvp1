@@ -58,9 +58,13 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
       property: 'base_model_id',
     },
     {
-      title: this.translocoSvc.selectTranslate('AGENT_LIST.COLUMNS.FEATURES'),
-      property: 'meta.capabilities',
+      title: this.translocoSvc.selectTranslate('AGENT_LIST.COLUMNS.AUTHOR'),
+      property: 'user.name',
     },
+    // {
+    //   title: this.translocoSvc.selectTranslate('AGENT_LIST.COLUMNS.FEATURES'),
+    //   property: 'meta.capabilities',
+    // },
     {
       property: null as any,
       buttons: [
