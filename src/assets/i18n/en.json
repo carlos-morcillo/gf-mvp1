@@ -457,6 +457,22 @@
       "NO_RESULTS": "No knowledge bases found"
     }
   },
+  "MARKETPLACE": {
+    "TITLES": { "MAIN": "Marketplace" },
+    "LABELS": {
+      "MAIN_DESCRIPTION": "Explore available agents",
+      "NO_AGENTS": "No agents available",
+      "LOADING": "Loading..."
+    },
+    "COLUMNS": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "CATEGORY": "Category",
+      "RATING": "Rating"
+    },
+    "MESSAGES": { "LOAD_ERROR": "Failed to load agents" },
+    "BUTTONS": { "RETRY": "Retry" }
+  },
   "CHATLIST": {
     "BUTTONS": {
       "PIN_CHAT": "Pin chat",

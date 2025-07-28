@@ -1,0 +1,33 @@
+<div class="list-page__header">
+  <div class="list-page__header-actions">
+    <h2 class="list-page__title">
+      {{ 'MARKETPLACE.TITLES.MAIN' | transloco }}
+    </h2>
+  </div>
+  <p class="list-page__description">
+    {{ 'MARKETPLACE.LABELS.MAIN_DESCRIPTION' | transloco }}
+  </p>
+</div>
+
+<div class="list-page__content">
+  <hub-ui-table
+    [headers]="headers"
+    [loading]="paginatedData.isLoading()"
+    [data]="paginatedData.value()"
+    [searchable]="false"
+    [options]="{ hoverableRows: true, scrollable: true }"
+    [clickFn]="goToAgent.bind(this)"
+    [(searchTerm)]="searchTerm"
+    [(filters)]="dynamicFilters"
+    [(ordination)]="ordination"
+    [(perPage)]="perPage"
+    [(page)]="page"
+  >
+    <ng-template paginableTableCell header="meta.profile_image_url" let-property="property" let-item="item">
+      <hub-avatar [src]="property" [name]="item.name" size="40"></hub-avatar>
+    </ng-template>
+    <ng-template noDataTpt>
+      {{ 'MARKETPLACE.LABELS.NO_AGENTS' | transloco }}
+    </ng-template>
+  </hub-ui-table>
+</div>
