@@ -28,6 +28,126 @@
 
 <div class="list-page__content">
   @if (!searchSignal()) {
+
+  <!-- Hero / Encuesta -->
+  <section
+    class="bg-light d-flex flex-column align-items-center justify-content-center py-5 text-center px-3 rounded"
+  >
+    <h2 class="display-6 fw-bold text-dark mb-4 lh-sm" style="max-width: 768px">
+      ¿No has respondido la encuesta de evaluación todavía?
+    </h2>
+    <a
+      href="https://forms.office.com/Pages/ResponsePage.aspx?id=Hiqttwiab0u1GUVodBQvvZYuSP2sOIFNoxLuOyYj9KdURVlETUtFRFhDTlJMWE9NSVk0ODVZMkpHUS4u"
+      target="_blank"
+      class="btn btn-success px-4 py-2 fw-medium text-uppercase shadow"
+    >
+      Accede a la evaluación
+    </a>
+  </section>
+
+  <!-- Novedades -->
+  <section class="mt-5">
+    <h3 class="fs-5 fw-semibold d-flex align-items-center gap-2 mb-4">
+      <i class="bi bi-bell text-success"></i>
+      <span>Novedades</span>
+    </h3>
+
+    <div class="d-flex flex-column gap-3">
+      <!-- Noticia 1 -->
+      <div
+        class="d-flex align-items-center gap-3 p-3 bg-white border rounded shadow-sm"
+      >
+        <i class="bi bi-lightning-charge text-success fs-4"></i>
+        <div>
+          <p class="fw-medium text-dark mb-1">
+            Nueva misión semanal desbloqueada: "Crea tu primer agente"
+          </p>
+          <p class="text-muted small mb-0">Hace 2 días</p>
+        </div>
+      </div>
+
+      <!-- Noticia 2 -->
+      <div
+        class="d-flex align-items-center gap-3 p-3 bg-white border rounded shadow-sm"
+      >
+        <i class="bi bi-gift text-success fs-4"></i>
+        <div>
+          <p class="fw-medium text-dark mb-1">
+            Recompensas actualizadas: nuevo curso premium disponible
+          </p>
+          <p class="text-muted small mb-0">Hace 5 días</p>
+        </div>
+      </div>
+
+      <!-- Noticia 3 -->
+      <div
+        class="d-flex align-items-center gap-3 p-3 bg-white border rounded shadow-sm"
+      >
+        <i class="bi bi-people text-success fs-4"></i>
+        <div>
+          <p class="fw-medium text-dark mb-1">
+            Nuevo rango desbloqueado: "Maestro de la IA"
+          </p>
+          <p class="text-muted small mb-0">Hace 1 semana</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logros Recientes -->
+  <section class="my-5">
+    <h3 class="fs-5 fw-semibold d-flex align-items-center gap-2 mb-4">
+      <i class="bi bi-trophy text-success"></i>
+      <span>Logros Recientes</span>
+    </h3>
+
+    <div class="row g-4">
+      <!-- Logro: IA Curioso -->
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="bg-light border rounded p-4 shadow-sm h-100">
+          <div class="d-flex align-items-center gap-3">
+            <span class="fs-3">🧐</span>
+            <div>
+              <h4 class="fw-bold text-dark">IA Curioso</h4>
+              <p class="text-muted mb-1">+100 XP</p>
+              <p class="text-muted small">Desbloqueado el 15/01/2024</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logro: Constructor de Agentes -->
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div
+          class="bg-info-subtle border border-info rounded p-4 shadow-sm h-100"
+        >
+          <div class="d-flex align-items-center gap-3">
+            <span class="fs-3">⚙️</span>
+            <div>
+              <h4 class="fw-bold text-info">Constructor de Agentes</h4>
+              <p class="text-muted mb-1">+200 XP</p>
+              <p class="text-muted small">Desbloqueado el 20/01/2024</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logro: Explorador del Marketplace -->
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="bg-light border rounded p-4 shadow-sm h-100">
+          <div class="d-flex align-items-center gap-3">
+            <span class="fs-3">🏪</span>
+            <div>
+              <h4 class="fw-bold text-dark">Explorador del Marketplace</h4>
+              <p class="text-muted mb-1">+150 XP</p>
+              <p class="text-muted small">Desbloqueado el 18/01/2024</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  } @if (!searchSignal()) {
   <div class="row">
     <div class="col-12 col-lg-8">
       <div class="d-flex justify-content-between align-items-center mb-3">
