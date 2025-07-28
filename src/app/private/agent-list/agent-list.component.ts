@@ -70,9 +70,9 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
       buttons: [
         {
           tooltip: this.translocoSvc.translate('AGENT_CHAT.NEW_BUTTON'),
-          icon: { type: 'bootstrap', value: 'bi-chat-left' },
+          icon: { type: 'bootstrap', value: 'bi-pencil' },
           classlist: 'btn text-secondary',
-          handler: (e) => this.startChat((e as TableRowEvent<Agent>).data.id!),
+          handler: (event?: TableRowEvent) => this.navigateTo(event!),
         },
         {
           tooltip: upperFirst(
@@ -106,9 +106,8 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
     return this.pinnedSvc.isPinned(agent.id!);
   }
 
-  /** Navigate to the new chat route for a given agent */
-  startChat(agentId: string): void {
-    this.router.navigate(['./', agentId, 'chats', 'add'], {
+  startChat({ data }: TableRowEvent<Agent>) {
+    this.router.navigate(['./', data.id, 'chats', 'add'], {
       relativeTo: this.route,
     });
   }
