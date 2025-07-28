@@ -57,6 +57,9 @@ export class AgentChatService extends CollectionService<AgentChat> {
     const lastMessage = messages.at(-1);
     return {
       messages: messages.reduce((acc, v) => {
+        if (!v?.id) {
+          debugger;
+        }
         return { ...acc, [v.id!.toString()]: v };
       }, {}),
       current_id: lastMessage?.id ?? null,
@@ -85,41 +88,55 @@ export class AgentChatService extends CollectionService<AgentChat> {
     initialMessage: string
   ): Promise<AgentChat> {
     this.sending.set(true);
+    const assistantMessage: Message = {
+      id: uuidv4(),
+      role: 'assistant',
+      content: '',
+    };
     const messages: Message[] = [
-      { role: 'user', content: initialMessage },
-      { role: 'assistant', content: '' },
+      { id: uuidv4(), role: 'user', content: initialMessage },
+      assistantMessage,
     ];
+
+    this.messages.set(messages);
 
     const chat = await firstValueFrom(
       this.http.post<AgentChat>(`${environment.baseURL}/chats/new`, {
         chat: {
           agentId: agentId,
           models: [agentId],
-          messages: [
-            { role: 'user', content: initialMessage },
-            { role: 'assistant', content: '' },
-          ],
+          messages,
         },
       })
     );
 
-    this.messages.set(messages);
-
     const completion = await firstValueFrom(
       this.http.post<{ choices: { message: Message }[] }>(
         `https://gpt.sdi.es/api/chat/completions`,
-        { id: messages.at(-1)?.id, model: agentId, messages, stream: false }
+        {
+          id: assistantMessage.id,
+          chat_id: chat.id,
+          model: agentId,
+          messages,
+          stream: false,
+        }
       )
     );
 
-    const assistantMessage = completion.choices[0].message;
-    this.messages.update((m) => [...m, assistantMessage]);
+    Object.assign(assistantMessage, completion.choices[0].message);
+
     await this.completed(
       chat.id,
       agentId,
       assistantMessage.id!,
       this.messages()
     );
+
+    await this.updateChatById(chat.id, {
+      history: this.history(),
+      messages: this.messages(),
+      models: [agentId],
+    });
 
     this.sending.set(false);
     return { ...chat, chat: { ...chat.chat, messages: this.messages() } };
@@ -128,12 +145,12 @@ export class AgentChatService extends CollectionService<AgentChat> {
   async completed(
     chatId: string,
     model: string,
-    parentId: string,
+    assistantMessageId: string,
     messages: Array<Message>
   ) {
     return firstValueFrom(
       this.http.post(`https://gpt.sdi.es/api/chat/completed`, {
-        id: parentId,
+        id: assistantMessageId,
         chat_id: chatId,
         messages,
         model,
@@ -206,7 +223,6 @@ export class AgentChatService extends CollectionService<AgentChat> {
       done = streamDone;
       if (value) {
         partial += decoder.decode(value, { stream: true });
-        console.log(partial, streamDone);
 
         const parts = partial.split('\n\n');
         partial = parts.pop() ?? '';
@@ -245,6 +261,7 @@ export class AgentChatService extends CollectionService<AgentChat> {
       content: text,
       timestamp: Math.floor(Date.now() / 1000),
     };
+
     this.messages.update((messages) => [...messages, assistantMessage]);
 
     // 3. Call completed to persist conversation
@@ -297,22 +314,6 @@ export class AgentChatService extends CollectionService<AgentChat> {
       const result = await firstValueFrom(
         this.http.post(`${environment.baseURL}/${this.path}/${chatId}`, payload)
       );
-      debugger;
-      // const response = await fetch(`${environment.baseURL}/chats/${chatId}`, {
-      //   method: 'POST',
-      //   headers: headers,
-      //   body: JSON.stringify(payload),
-      // });
-
-      // if (!response.ok) {
-      //   const errorData = await response.json().catch(() => ({}));
-      //   throw new Error(
-      // 	`HTTP ${response.status}: ${errorData.detail || response.statusText}`
-      //   );
-      // }
-
-      // const result = await response.json();
-      console.log('Chat updated successfully:', chatId);
       return result;
     } catch (error) {
       console.error('Error updating chat:', error);
@@ -321,53 +322,32 @@ export class AgentChatService extends CollectionService<AgentChat> {
   }
 
   /**
-   * Sends a user message to the backend and updates the conversation.
-   * The agent identifier is used as the model name when calling Open WebUI.
+   * Versión simplificada para actualizaciones rápidas
    */
-  //   sendMessage(
-  //     agentId: string,
-  //     chatId: string,
-  //     content: string
-  //   ): Observable<Message> {
-  //     this.sending.set(true);
-  //     const parentId = this.messages().at(-1)!.id;
-  //     const body: {
-  //       id: string | undefined;
-  //       model: string;
-  //       messages: Array<Message>;
-  //       stream: boolean;
-  //     } = {
-  //       id: parentId,
-  //       model: agentId,
-  //       messages: [...this.messages(), { role: 'user', content }],
-  //       stream: false,
-  //     };
+  async quickUpdateChat(
+    chatId: string,
+    updates: Partial<UpdateChatPayload>
+  ): Promise<void> {
+    throw new Error('not developed');
 
-  //     return this.http
-  //       .post<{ choices: { message: Message }[] }>(
-  //         `https://gpt.sdi.es/api/chat/completions`,
-  //         body
-  //       )
-  //       .pipe(
-  //         map((res) => res.choices[0].message),
-  //         tap((msg) => {
-  //           this.messages.update((m) => [...m, { role: 'user', content }, msg]);
-  //           this.sending.set(false);
-  //         }),
-  //         switchMap((message) =>
-  //           from(this.completed(chatId, agentId, parentId!, body.messages)).pipe(
-  //             map((result) => {
-  //               console.log('Completed', result);
-  //               return message;
-  //             })
-  //           )
-  //         ),
-  //         catchError((err) => {
-  //           this.sending.set(false);
-  //           throw err;
-  //         })
-  //       );
-  //   }
+    // try {
+    //   const currentHistory = this.chatHistory.value;
+    //   const currentMessages = this.createMessagesList(
+    //     currentHistory,
+    //     currentHistory.currentId
+    //   );
+
+    //   await this.updateChatById(chatId, {
+    //     models: this.selectedModels(),
+    //     messages: currentMessages,
+    //     history: currentHistory,
+    //     ...updates,
+    //   });
+    // } catch (error) {
+    //   // No lanzar error para no interrumpir la UX, solo loggear
+    //   console.error('Quick update failed:', error);
+    // }
+  }
 
   /** Deletes a chat by identifier */
   deleteChat(id: string): Observable<void> {

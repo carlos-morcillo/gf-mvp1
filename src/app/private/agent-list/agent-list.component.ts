@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
+import { upperFirst } from 'lodash';
+import { AvatarComponent } from 'ng-hub-ui-avatar';
 import {
   PaginableTableCellDirective,
   PaginableTableHeader,
@@ -8,9 +11,6 @@ import {
   TableComponent,
   TableRowEvent,
 } from 'ng-hub-ui-table';
-
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { upperFirst } from 'lodash';
 import { firstValueFrom } from 'rxjs';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { PinnedAgentsService } from '../../shared/services';
@@ -30,6 +30,7 @@ import { AgentsService } from './agents.service';
     PaginableTableNotFoundDirective,
     TranslocoModule,
     RouterLink,
+    AvatarComponent,
   ],
   templateUrl: './agent-list.component.html',
   host: {
@@ -46,17 +47,7 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
   /** Table column definitions */
   override headers: PaginableTableHeader[] = [
     {
-      title: '',
-      property: 'pin',
-      sortable: false,
-      buttons: [
-        {
-          tooltip: 'Pin',
-          icon: { type: 'font-awesome', value: 'fa fa-thumbtack' },
-          classlist: 'btn btn-link p-0',
-          handler: (e) => this.togglePin((e as TableRowEvent<Agent>).data),
-        },
-      ],
+      property: 'meta.profile_image_url',
     },
     {
       title: this.translocoSvc.selectTranslate('AGENT_LIST.COLUMNS.NAME'),
@@ -71,28 +62,21 @@ export class AgentListComponent extends PaginatedListComponent<Agent> {
       property: 'meta.capabilities',
     },
     {
-      title: '',
-      property: 'chat',
-      sortable: false,
+      property: null as any,
       buttons: [
         {
           tooltip: this.translocoSvc.translate('AGENT_CHAT.NEW_BUTTON'),
-          icon: { type: 'font-awesome', value: 'fa-message' },
+          icon: { type: 'bootstrap', value: 'bi-chat-left' },
           classlist: 'btn text-secondary',
           handler: (e) => this.startChat((e as TableRowEvent<Agent>).data.id!),
         },
-      ],
-    },
-    {
-      property: null as any,
-      buttons: [
         {
           tooltip: upperFirst(
             this.translocoSvc.translate('GENERIC.BUTTONS.REMOVE')
           ),
           icon: {
-            type: 'font-awesome',
-            value: 'fa-trash',
+            type: 'bootstrap',
+            value: 'bi-trash3',
           },
           classlist: 'btn text-danger',
           handler: (event) => this.delete((event as TableRowEvent<Agent>).data),

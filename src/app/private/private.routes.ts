@@ -110,32 +110,6 @@ export const PRIVATE_ROUTES: Routes = [
             path: ':chatId',
             resolve: { chat: ChatResolver },
             loadComponent: () =>
-              import('../chat/chat.component').then((c) => c.ChatComponent),
-          },
-        ],
-      },
-
-      {
-        path: 'chats2',
-        children: [
-          //   {
-          //     path: '',
-          //     loadComponent: () =>
-          //       import('./agent-chat/agent-chat-list.component').then(
-          //         (c) => c.AgentChatListComponent
-          //       ),
-          //   },
-          //   {
-          //     path: 'add',
-          //     loadComponent: () =>
-          //       import('./agent-chat/agent-chat.component').then(
-          //         (c) => c.AgentChatComponent
-          //       ),
-          //   },
-          {
-            path: ':chatId',
-            resolve: { chat: ChatResolver },
-            loadComponent: () =>
               import('./agent-chat/agent-chat.component').then(
                 (c) => c.AgentChatComponent
               ),

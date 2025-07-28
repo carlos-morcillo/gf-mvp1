@@ -4,7 +4,7 @@
       {{ "AGENT_LIST.TITLES.MAIN" | transloco }}
     </h2>
     <button class="btn btn-primary" [routerLink]="['./add']">
-      <span class="list-page__button-icon material-symbols-outlined">add</span>
+      <span class="list-page__button-icon bi bi-plus"></span>
       {{ "AGENT_LIST.BUTTONS.ADD" | transloco }}
     </button>
   </div>
@@ -29,6 +29,15 @@
     [(page)]="page"
     class="list-page__table"
   >
+    <ng-template
+      paginableTableCell
+      header="meta.profile_image_url"
+      let-property="property"
+      let-item="item"
+    >
+      <hub-avatar [name]="item.title" [src]="property" size="40"></hub-avatar>
+    </ng-template>
+
     <ng-template
       paginableTableCell
       header="meta.capabilities"

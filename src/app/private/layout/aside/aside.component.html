@@ -1,7 +1,7 @@
 <aside class="sidebar d-flex flex-column h-100">
-  <div class="sidebar-header flex-shrink-0 p-2">
+  <div class="sidebar-header flex-shrink-0 p-2 px-4">
     <a routerLink="/" class="text-decoration-none fw-semibold fs-4">
-      Greenfield<span class="text-success">&bull;</span>
+      Greenfield
     </a>
   </div>
 
@@ -24,6 +24,7 @@
           <button
             class="sidebar-body-item btn text-start w-100 d-flex align-items-center justify-content-between"
             [routerLink]="['/private/chats']"
+            routerLinkActive="nav-item-active"
           >
             <div class="d-flex align-items-center">
               <i class="bi bi-{{ item.icon }} me-2"></i>
@@ -42,6 +43,7 @@
               @for (chat of pinnedChats(); track chat) {
               <a
                 [routerLink]="['/private/chats', chat.id]"
+                routerLinkActive="nav-item-active"
                 class="text-muted pinned-chat-item p-2 text-decoration-none text-truncate d-block ps-4"
                 (click)="navigate.emit()"
               >

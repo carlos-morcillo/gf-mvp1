@@ -1,0 +1,22 @@
+.hub-table__pagination-label {
+  @extend .text-nowrap;
+  @extend .text-muted;
+}
+.hub-table__pagination-select {
+  @extend .form-select;
+  @extend.form-select-sm;
+}
+.hub-table__pagination-info {
+  @extend .text-nowrap;
+  @extend .text-muted;
+}
+
+.hub-table__search {
+  &-input {
+    border-color: var(--hub-medium);
+  }
+  &-button {
+    border-color: var(--hub-medium);
+    color: var(--hub-medium);
+  }
+}

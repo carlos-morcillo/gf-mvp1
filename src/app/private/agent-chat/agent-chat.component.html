@@ -1,54 +1,124 @@
-<div class="container-fluid d-flex flex-column gap-3 vh-100">
-  <h1>{{ "AGENT_CHAT.TITLES.MAIN" | transloco }}</h1>
-  <div class="flex-grow-1 overflow-auto border rounded p-3" #scrollContainer>
-    @for (msg of messages(); track msg; let i = $index) {
-    <div class="mb-3">
-      <div class="d-flex" [class.justify-content-end]="msg.role === 'user'">
-        <div
-          class="p-2 rounded"
-          [class.bg-primary]="msg.role === 'user'"
-          [class.text-white]="msg.role === 'user'"
-          [class.bg-light]="msg.role === 'assistant'"
-        >
-          {{ msg.content }}
-        </div>
+<!-- chat.component.html -->
+<div class="detail-page__header">
+  <h2>{{ chat()?.title }}</h2>
+  <p class="text-muted">
+    {{ models() }}
+  </p>
+</div>
+<!-- Contenedor de mensajes -->
+<div #scrollContainer class="detail-page__content">
+  @for (message of messages(); track message) {
+  <div [class]="'message message-' + message.role">
+    <div class="message-header">
+      <span class="role">{{ message.role }}</span>
+    </div>
+    <div class="message-content">
+      {{ message.content }}
+    </div>
+    <div class="message-footer">
+      <span class="timestamp">{{
+        message.timestamp! * 1000 | date : "short"
+      }}</span>
+    </div>
+    <!-- Mostrar archivos si existen -->
+    <!-- @if (message.files) {
+      <div class="message-files">
+        @for (file of message.files; track file) {
+        <div class="file-item">📎 {{ file.name }}</div>
+        }
       </div>
-    </div>
-    } @if (loading()) {
-    <div class="text-muted">
-      {{ "AGENT_CHAT.STATUS.LOADING" | transloco }}
-    </div>
-    } @if (error()) {
-    <div class="text-danger">
-      {{ "AGENT_CHAT.STATUS.ERROR" | transloco }}
-    </div>
-    } @if (sending()) {
-    <div class="text-muted">
-      {{ "AGENT_CHAT.STATUS.SENDING" | transloco }}
-    </div>
-    }
+      }
+      @if (message.sources) {
+      <div class="message-sources">
+        <details>
+          <summary>Sources ({{ message.sources.length }})</summary>
+          @for (source of message.sources; track source) {
+          <div class="source-item">
+            <a [href]="source.url" target="_blank">{{ source.title }}</a>
+          </div>
+          }
+        </details>
+      </div>
+      }
+      @if (message.error) {
+      <div class="message-error">⚠️ {{ message.error.content }}</div>
+      } -->
   </div>
-
-  @if (messages().length === 0) {
-  <div class="d-flex flex-wrap gap-2">
-    @for (s of skills; track s) {
-    <button class="btn btn-outline-secondary">
-      {{ "AGENT_CHAT.BUTTONS." + s }}
-    </button>
-    }
+  } @if (streaming()) {
+  <div [class]="'message message-assistant'">
+    <div class="message-header">
+      <span class="role">Assistant</span>
+    </div>
+    <div class="message-content">
+      <span class="streaming-indicator">▋</span>
+      {{ stream() }}
+    </div>
   </div>
   }
 
-  <div class="input-group mt-2 sticky-bottom bg-white">
-    <textarea
-      class="form-control"
-      rows="1"
-      [(ngModel)]="inputValue"
-      [placeholder]="'AGENT_CHAT.PLACEHOLDER.INPUT' | transloco"
-      (keydown.enter)="send(); $event.preventDefault()"
-    ></textarea>
-    <button class="btn btn-primary" (click)="send()" [disabled]="sending()">
-      {{ "AGENT_CHAT.BUTTONS.SEND" | transloco }}
-    </button>
+  <!-- Indicador de procesamiento -->
+  @if (sending()) {
+  <div class="processing-indicator">
+    <div class="spinner"></div>
+    <span>Procesando mensaje...</span>
+  </div>
+  }
+</div>
+<div class="detail-page__footer">
+  <!-- Input de mensaje -->
+  <div class="input-container">
+    <div class="input-row">
+      <textarea
+        [(ngModel)]="currentMessage"
+        (keydown.enter)="!$any($event).shiftKey && send()"
+        [disabled]="sending()"
+        placeholder="Escribe tu mensaje..."
+        class="message-input"
+        rows="3"
+      >
+      </textarea>
+
+      <div class="input-actions">
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          multiple
+          style="display: none"
+        />
+
+        <button
+          (click)="fileInput.click()"
+          class="file-button"
+          [disabled]="sending()"
+        >
+          📎
+        </button>
+
+        <button
+          (click)="send()"
+          [disabled]="sending() || streaming() || !currentMessage.trim()"
+          class="btn btn-primary rounded-5"
+        >
+          @if (!(sending())) {
+          <span>Enviar</span>
+          } @else {
+          <span>Enviando...</span>
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- Mostrar archivos seleccionados -->
+    @if (files.length > 0) {
+    <div class="selected-files">
+      @for (file of files; track file; let i = $index) {
+      <div class="selected-file">
+        <span>{{ file.name }}</span>
+        <button (click)="files.splice(i, 1)" class="remove-file">×</button>
+      </div>
+      }
+    </div>
+    }
   </div>
 </div>

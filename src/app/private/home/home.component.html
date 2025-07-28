@@ -66,7 +66,7 @@
                 } -->
           </div>
           <div class="ms-auto text-nowrap small text-muted">
-            {{ timeAgo(chat.updated_at) }}
+            {{ timeAgo(chat.updated_at * 1000) }}
           </div>
         </div>
       </div>
@@ -160,7 +160,7 @@
             <div class="fw-bold">{{ chat.title }}</div>
           </div>
           <div class="ms-auto text-nowrap small text-muted">
-            {{ timeAgo(chat.updated_at) }}
+            {{ timeAgo(chat.updated_at * 1000) }}
           </div>
         </li>
         }

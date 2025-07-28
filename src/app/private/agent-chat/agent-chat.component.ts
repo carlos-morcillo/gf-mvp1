@@ -1,3 +1,4 @@
+import { DatePipe, Location } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -14,20 +15,21 @@ import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { AgentChat, Message } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
 
-/**
- * Chat component that mimics the ChatGPT interface.
- * Messages are displayed above and the input stays fixed at the bottom.
- */
 @Component({
   selector: 'app-agent-chat',
   standalone: true,
-  imports: [FormsModule, TranslocoModule],
+  imports: [FormsModule, TranslocoModule, DatePipe],
+  styleUrls: ['./agent-chat.component.scss'],
   templateUrl: './agent-chat.component.html',
+  host: {
+    class: 'list-page list-page--container',
+  },
 })
 export class AgentChatComponent {
   private chatsSvc = inject(AgentChatService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  #location = inject(Location);
   transloco = inject(TranslocoService);
 
   /** Skills available for the agent */
@@ -43,6 +45,14 @@ export class AgentChatComponent {
 
   /** Current list of chat messages */
   messages: WritableSignal<Message[]> = this.chatsSvc.messages;
+  stream = this.chatsSvc.stream;
+  streamEffect = effect(() => {
+    this.stream();
+    this.scrollToBottom();
+  });
+  streaming = this.chatsSvc.streaming;
+  files: any[] = [];
+
   sending = this.chatsSvc.sending;
 
   /** Indicates that the chat history is being loaded */
@@ -51,13 +61,15 @@ export class AgentChatComponent {
   error = signal(false);
 
   /** Input model */
-  inputValue = '';
+  currentMessage = '';
 
   /** Container element that holds the messages */
   @ViewChild('scrollContainer') scrollContainer?: ElementRef<HTMLDivElement>;
 
   /** Agent identifier captured from the route */
   agentId = model<string>('', { alias: 'agentId' });
+
+  models = signal<Array<string>>(this.agentId() ? [this.agentId()] : []);
 
   /** Chat identifier from the route */
   chatId = model<string | undefined | null>(null, { alias: 'chatId' });
@@ -66,11 +78,12 @@ export class AgentChatComponent {
 
   chatEffect = effect(() => {
     const chat = this.chat();
+    this.chatsSvc.messages.set(chat?.chat?.messages ?? []);
     if (!chat) {
       return;
     }
-    this.chatsSvc.messages.set(chat.chat.messages);
     this.agentId.set(chat.chat.agentId);
+    this.models.set([chat.chat.agentId]);
   });
 
   constructor() {
@@ -83,7 +96,7 @@ export class AgentChatComponent {
 
   /** Sends the current input value */
   async send() {
-    const content = this.inputValue.trim();
+    const content = this.currentMessage.trim();
     if (!content) {
       return;
     }
@@ -92,17 +105,14 @@ export class AgentChatComponent {
         .createChatWithAgent(this.agentId(), content)
         .then((chat: AgentChat) => {
           this.chatId.set(chat.id);
-          this.router.navigate(['chats', this.chatId()]);
+          this.#location.replaceState(`/private/chats/${this.chatId()}`);
         })
         .catch(() => {});
     } else {
-      const result = await this.chatsSvc.sendMessage(
-        this.agentId(),
-        this.chatId()!,
-        content
-      );
+      await this.chatsSvc.sendMessage(this.agentId(), this.chatId()!, content);
     }
-    this.inputValue = '';
+    this.scrollToBottom();
+    this.currentMessage = '';
   }
 
   /**
@@ -115,5 +125,45 @@ export class AgentChatComponent {
     if (el) {
       el.scrollTop = el.scrollHeight;
     }
+  }
+
+  onFileSelected(event: any) {
+    // Manejar selección de archivos
+    const files = event.target.files;
+    // Implementar lógica de upload de archivos
+  }
+
+  /**
+   * Actualizar chat cuando cambian los modelos seleccionados
+   */
+  async updateSelectedModels(
+    chatId: string,
+    newModels: string[]
+  ): Promise<void> {
+    this.models.set(newModels);
+
+    if (chatId !== 'local') {
+      await this.chatsSvc.quickUpdateChat(chatId, { models: newModels });
+    }
+  }
+
+  /**
+   * Actualizar chat cuando se agregan/quitan archivos
+   */
+  async updateChatFiles(chatId: string, newFiles: any[]): Promise<void> {
+    // this.chatFiles = newFiles;
+    // if (chatId !== 'local') {
+    //   await this.chatService.quickUpdateChat(chatId, { files: newFiles });
+    // }
+  }
+
+  /**
+   * Actualizar parámetros del chat
+   */
+  async updateChatParams(chatId: string, newParams: any): Promise<void> {
+    // this.chatParams = { ...this.chatParams, ...newParams };
+    // if (chatId !== 'local') {
+    //   await this.chatService.quickUpdateChat(chatId, { params: this.chatParams });
+    // }
   }
 }
