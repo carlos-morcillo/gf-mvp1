@@ -217,7 +217,10 @@
     "GL": "Galego",
     "AST": "Asturianu",
     "OC": "Aranés",
-    "EN": "English"
+    "EN": "English",
+    "FR": "Français",
+    "IT": "Italiano",
+    "DE": "Deutsch"
   },
   "LOGIN": {
     "TABS": {

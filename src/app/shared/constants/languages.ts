@@ -11,4 +11,7 @@ export const LANGUAGES: LanguageOption[] = [
   { code: 'ast', labelKey: 'LANGUAGES.AST' },
   { code: 'oc', labelKey: 'LANGUAGES.OC' },
   { code: 'en', labelKey: 'LANGUAGES.EN' },
+  { code: 'fr', labelKey: 'LANGUAGES.FR' },
+  { code: 'it', labelKey: 'LANGUAGES.IT' },
+  { code: 'de', labelKey: 'LANGUAGES.DE' },
 ];
