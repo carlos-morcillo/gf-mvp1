@@ -18,6 +18,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'marketplace',
+    loadComponent: () =>
+      import('./marketplace/marketplace.component').then(
+        (m) => m.MarketplaceComponent
+      ),
+  },
+  {
     path: 'private',
     resolve: { user: UserResolver },
     loadChildren: () =>
