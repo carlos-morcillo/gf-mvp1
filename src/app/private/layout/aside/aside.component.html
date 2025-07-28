@@ -114,18 +114,8 @@
         aria-labelledby="userDropdown"
       >
         <li>
-          <a
-            class="dropdown-item d-flex align-items-center"
-            routerLink="/private/profile"
-            (click)="navigate.emit()"
-          >
-            <i class="bi bi-person me-2"></i>
-            {{ "ASIDE.BUTTONS.PROFILE" | transloco }}
-          </a>
-        </li>
-        <li>
           <div class="dropdown-item p-0">
-            <div class="dropdown dropend w-100">
+            <div class="dropdown dropup w-100">
               <button
                 class="btn btn-link text-start w-100 p-3 border-0 d-flex align-items-center justify-content-between"
                 type="button"
@@ -133,15 +123,15 @@
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="true"
                 data-bs-boundary="viewport"
-                data-bs-placement="right-start"
-                data-bs-flip="false"
+                data-bs-placement="top"
+                data-bs-flip="true"
                 aria-expanded="false"
               >
                 <span class="d-flex align-items-center">
                   <i class="bi bi-globe me-2"></i>
                   {{ "ASIDE.BUTTONS.CHANGE_LANGUAGE" | transloco }}
                 </span>
-                <i class="bi bi-chevron-right"></i>
+                <i class="bi bi-chevron-up"></i>
               </button>
               <ul
                 class="dropdown-menu shadow"
@@ -165,6 +155,16 @@
               </ul>
             </div>
           </div>
+        </li>
+        <li>
+          <a
+            class="dropdown-item d-flex align-items-center"
+            routerLink="/private/profile"
+            (click)="navigate.emit()"
+          >
+            <i class="bi bi-person me-2"></i>
+            {{ "ASIDE.BUTTONS.PROFILE" | transloco }}
+          </a>
         </li>
         <li><hr class="dropdown-divider" /></li>
         <li>

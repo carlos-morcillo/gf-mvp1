@@ -157,13 +157,14 @@ export class AsideComponent implements OnDestroy {
         this.languageDropdown = new bootstrap.Dropdown(langEl, {
           autoClose: true,
           boundary: 'viewport',
+          offset: [0, 4],
           popperConfig: {
             strategy: 'fixed',
-            placement: 'right-start',
+            placement: 'top-start',
             modifiers: [
               {
                 name: 'flip',
-                options: { fallbackPlacements: [] },
+                options: { fallbackPlacements: ['bottom-start', 'top-end'] },
               },
             ],
           },
