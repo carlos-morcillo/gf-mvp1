@@ -9,6 +9,7 @@ import {
   model,
   resource,
   signal,
+  computed,
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +21,7 @@ import { Agent } from '../agent-list/agent';
 import { AgentsService } from '../agent-list/agents.service';
 import { AgentChat, Message } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
+import { ChatService } from '../../chat/chat.service';
 
 @Component({
   selector: 'app-agent-chat',
@@ -41,6 +43,7 @@ export class AgentChatComponent {
   private chatsSvc = inject(AgentChatService);
   private agentsSvc = inject(AgentsService);
   private activateRoute = inject(ActivatedRoute);
+  private chatSvc = inject(ChatService);
   #location = inject(Location);
   transloco = inject(TranslocoService);
 
@@ -71,6 +74,10 @@ export class AgentChatComponent {
   loading = signal(false);
   /** Error flag when the chat cannot be retrieved */
   error = signal(false);
+
+  /** Pinned state and loading flag */
+  pinned = computed(() => this.chatSvc.isPinned(this.chatId()));
+  loadingPin = signal(false);
 
   /** Input model */
   currentMessage = '';
@@ -215,5 +222,17 @@ export class AgentChatComponent {
     // if (chatId !== 'local') {
     //   await this.chatService.quickUpdateChat(chatId, { params: this.chatParams });
     // }
+  }
+
+  /** Toggle pin state for the current chat */
+  async togglePin(): Promise<void> {
+    const id = this.chatId();
+    if (!id) return;
+    this.loadingPin.set(true);
+    try {
+      await this.chatSvc.toggleChatPin(id);
+    } finally {
+      this.loadingPin.set(false);
+    }
   }
 }

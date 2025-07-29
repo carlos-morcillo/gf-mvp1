@@ -1,6 +1,6 @@
 // chat.service.ts
 import { HttpClient } from '@angular/common/http';
-import { Injectable, resource, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PinnedChat } from '../private/layout/pinned-chat';
@@ -51,35 +51,56 @@ export class ChatService {
 
   private apiToken = localStorage.getItem('token') || '';
 
-  private pinnedChatsResource = resource({
-    loader: () =>
-      firstValueFrom(
+  /** List of pinned chats */
+  private _pinnedChats = signal<PinnedChat[]>([]);
+  readonly pinnedChats = this._pinnedChats.asReadonly();
+  readonly isLoadingPinned = signal(false);
+
+  /** Fetch pinned chats from the API */
+  async loadPinnedChats(): Promise<void> {
+    this.isLoadingPinned.set(true);
+    try {
+      const list = await firstValueFrom(
         this.http.get<PinnedChat[]>(`${environment.baseURL}/chats/pinned`)
-      ),
-  });
-
-  readonly pinnedChats = this.pinnedChatsResource.value;
-  readonly isLoadingPinned = this.pinnedChatsResource.isLoading;
-
-  /** Pin a chat and refresh the pinned list */
-  async pinChat(chatId: string): Promise<void> {
-    await firstValueFrom(
-      this.http.post(`${environment.baseURL}/chats/${chatId}/pin`, {})
-    );
-    this.pinnedChatsResource.reload();
+      );
+      this._pinnedChats.set(list);
+    } finally {
+      this.isLoadingPinned.set(false);
+    }
   }
 
-  /** Unpin a chat and refresh the pinned list */
-  async unpinChat(chatId: string): Promise<void> {
-    await firstValueFrom(
-      this.http.post(`${environment.baseURL}/chats/${chatId}/unpin`, {})
+  /** Get pinned status of a single chat */
+  async getChatPinnedStatus(chatId: string): Promise<boolean> {
+    const result = await firstValueFrom(
+      this.http.get<{ pinned: boolean }>(
+        `${environment.baseURL}/chats/${chatId}/pinned`
+      )
     );
-    this.pinnedChatsResource.reload();
+    return result.pinned;
+  }
+
+  /** Toggle pin state of a chat */
+  async toggleChatPin(chatId: string): Promise<void> {
+    const current = this._pinnedChats();
+    const isPinned = current.some((c) => c.id === chatId);
+    const optimistic = isPinned
+      ? current.filter((c) => c.id !== chatId)
+      : [...current, { id: chatId, title: '' } as PinnedChat];
+    this._pinnedChats.set(optimistic);
+    try {
+      await firstValueFrom(
+        this.http.post(`${environment.baseURL}/chats/${chatId}/pin`, {})
+      );
+      await this.loadPinnedChats();
+    } catch (err) {
+      this._pinnedChats.set(current);
+      throw err;
+    }
   }
 
   /** Check if chat is currently pinned */
   isPinned(chatId: string | number | null | undefined): boolean {
-    return this.pinnedChats()?.some((c) => c.id === String(chatId)) ?? false;
+    return this._pinnedChats().some((c) => c.id === String(chatId));
   }
 
   // Estados reactivos como en Svelte
@@ -96,7 +117,38 @@ export class ChatService {
   constructor(
     private http: HttpClient,
     private websocketService: WebSocketService
-  ) {}
+  ) {
+    this.loadPinnedChats();
+    this.startPolling();
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          this.startPolling();
+          this.loadPinnedChats();
+        } else {
+          this.stopPolling();
+        }
+      });
+    }
+  }
+
+  private pollId: any;
+
+  private startPolling() {
+    if (this.pollId || typeof document === 'undefined') return;
+    this.pollId = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        this.loadPinnedChats();
+      }
+    }, 60000);
+  }
+
+  private stopPolling() {
+    if (this.pollId) {
+      clearInterval(this.pollId);
+      this.pollId = null;
+    }
+  }
 
   // Migrado de sendPromptSocket del código Svelte
   async sendMessage(

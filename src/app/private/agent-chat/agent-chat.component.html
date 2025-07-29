@@ -1,7 +1,26 @@
 <!-- chat.component.html -->
 <div class="detail-page__header">
-  <div class="d-flex justify-content-between">
-    <h2>{{ chat()?.title }}</h2>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-2">
+      <h2 class="m-0">{{ chat()?.title }}</h2>
+      <button
+        type="button"
+        class="btn btn-link p-0"
+        (click)="togglePin()"
+        [disabled]="loadingPin()"
+        [attr.aria-label]="
+          pinned()
+            ? ('CHATLIST.BUTTONS.UNPIN_CHAT' | transloco)
+            : ('CHATLIST.BUTTONS.PIN_CHAT' | transloco)
+        "
+      >
+        @if (!loadingPin()) {
+        <i class="bi" [class.bi-pin-fill]="pinned()" [class.bi-pin]="!pinned()"></i>
+        } @else {
+        <span class="spinner-border spinner-border-sm"></span>
+        }
+      </button>
+    </div>
     <ng-select
       [items]="agents.value()"
       [loading]="agents.isLoading()"
