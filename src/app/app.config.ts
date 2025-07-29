@@ -14,6 +14,7 @@ import {
   TranslocoService,
 } from '@jsverse/transloco';
 import { TableModule } from 'ng-hub-ui-table';
+import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { tokenInterceptor } from './auth/token.interceptor';
@@ -35,7 +36,11 @@ export const appConfig: ApplicationConfig = {
       }),
       loader: TranslocoHttpLoader,
     }),
-    importProvidersFrom(NoopAnimationsModule, TableModule.forRoot()),
+    importProvidersFrom(
+      NoopAnimationsModule,
+      TableModule.forRoot(),
+      ToastrModule.forRoot()
+    ),
     {
       provide: APP_INITIALIZER,
       multi: true,

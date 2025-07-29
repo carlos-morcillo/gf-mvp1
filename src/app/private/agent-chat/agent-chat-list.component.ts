@@ -9,10 +9,10 @@ import {
   TableComponent,
   TableRowEvent,
 } from 'ng-hub-ui-table';
+import { ToastrService } from 'ngx-toastr';
 import { firstValueFrom } from 'rxjs';
 import { ChatService } from '../../chat/chat.service';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
-import { Toast } from '../../shared/services/toast.service';
 import { AgentChat } from './agent-chat.model';
 import { AgentChatService } from './agent-chat.service';
 
@@ -37,6 +37,7 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private chatSvc = inject(ChatService);
+  private toastrSvc = inject(ToastrService);
 
   /** Track chats currently being processed */
   loadingPins = signal<Set<string>>(new Set());
@@ -53,7 +54,7 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
     const currentlyPinned = this.isPinned(chat);
     try {
       await this.chatSvc.toggleChatPin(id);
-      Toast.success(
+      this.toastrSvc.success(
         this.translocoSvc.translate(
           currentlyPinned
             ? 'CHATLIST.MESSAGES.UNPIN_SUCCESS'
@@ -61,7 +62,7 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
         )
       );
     } catch {
-      Toast.error(
+      this.toastrSvc.error(
         this.translocoSvc.translate(
           currentlyPinned
             ? 'CHATLIST.MESSAGES.UNPIN_ERROR'

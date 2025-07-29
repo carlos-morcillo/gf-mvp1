@@ -77,14 +77,13 @@ const MENU_ITEMS: MenuItem[] = [
   //     icon: 'easel',
   //     route:
   //       'https://forms.office.com/Pages/ResponsePage.aspx?id=Hiqttwiab0u1GUVodBQvvZYuSP2sOIFNoxLuOyYj9KdURVlETUtFRFhDTlJMWE9NSVk0ODVZMkpHUS4u',
-  //     target: '_blank',
+  //
   //     disabled: false,
   //   },
   {
     id: 'training',
     label: 'ASIDE.LABELS.TRAINING',
     icon: 'mortarboard',
-    target: '_blank',
     route: '/private/training',
   },
   //   {
