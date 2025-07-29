@@ -41,14 +41,29 @@
           <div class="collapse" [class.show]="!chatsCollapsed()">
             <div class="pinned-chats-container">
               @for (chat of pinnedChats(); track chat) {
-              <a
-                [routerLink]="['/private/chats', chat.id]"
-                routerLinkActive="nav-item-active"
-                class="text-muted pinned-chat-item p-2 text-decoration-none text-truncate d-block ps-4"
-                (click)="navigate.emit()"
-              >
-                {{ chat.title }}
-              </a>
+              <div class="pinned-chat-item d-flex align-items-center ps-4 pe-2">
+                <a
+                  class="flex-grow-1 text-muted text-decoration-none text-truncate"
+                  [routerLink]="['/private/chats', chat.id]"
+                  routerLinkActive="nav-item-active"
+                  (click)="navigate.emit()"
+                >
+                  {{ chat.title }}
+                </a>
+                <button
+                  type="button"
+                  class="btn btn-link p-0 ms-2 unpin-btn"
+                  (click)="togglePin(chat.id); $event.preventDefault(); $event.stopPropagation()"
+                  [title]="'CHATLIST.BUTTONS.UNPIN_CHAT' | transloco"
+                  [disabled]="loadingPins().has(chat.id)"
+                >
+                  @if (!loadingPins().has(chat.id)) {
+                  <i class="bi bi-pin-fill"></i>
+                  } @else {
+                  <span class="spinner-border spinner-border-sm"></span>
+                  }
+                </button>
+              </div>
               } @empty {
               <div class="alert alert-secondary" role="alert">
                 No tienes chats fijados

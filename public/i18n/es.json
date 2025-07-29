@@ -486,14 +486,14 @@
   },
   "CHATLIST": {
     "BUTTONS": {
-      "PIN_CHAT": "Pin chat",
-      "UNPIN_CHAT": "Unpin chat"
+      "PIN_CHAT": "Fijar chat",
+      "UNPIN_CHAT": "Desfijar chat"
     },
     "MESSAGES": {
-      "PIN_SUCCESS": "Chat pinned",
-      "UNPIN_SUCCESS": "Chat unpinned",
-      "PIN_ERROR": "Error pinning chat",
-      "UNPIN_ERROR": "Error unpinning chat"
+      "PIN_SUCCESS": "Chat fijado",
+      "UNPIN_SUCCESS": "Chat desfijado",
+      "PIN_ERROR": "Error al fijar el chat",
+      "UNPIN_ERROR": "Error al desfijar el chat"
     }
   }
 }

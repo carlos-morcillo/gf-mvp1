@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { upperFirst } from 'lodash';
@@ -32,7 +32,10 @@ import { AgentChatService } from './agent-chat.service';
     class: 'list-page list-page--container',
   },
 })
-export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
+export class AgentChatListComponent
+  extends PaginatedListComponent<AgentChat>
+  implements OnInit
+{
   override dataSvc = inject(AgentChatService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -136,5 +139,10 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
   formatDate(timestamp: number): string {
     const date = new Date(timestamp);
     return date.toLocaleString();
+  }
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+    this.chatSvc.loadPinnedChats();
   }
 }

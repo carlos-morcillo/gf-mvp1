@@ -69,6 +69,14 @@
       text-overflow: ellipsis;
       max-width: 150px;
     }
+
+    .unpin-btn {
+      visibility: hidden;
+    }
+
+    &:hover .unpin-btn {
+      visibility: visible;
+    }
   }
 }
 

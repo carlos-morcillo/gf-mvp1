@@ -131,6 +131,7 @@ export class AsideComponent implements OnDestroy {
   chatsCollapsed = signal(true);
 
   pinnedChats = this.chatSvc.pinnedChats;
+  loadingPins = signal<Set<string>>(new Set());
 
   private userDropdown: any;
   private languageDropdown: any;
@@ -202,6 +203,19 @@ export class AsideComponent implements OnDestroy {
 
   logout() {
     this.auth.logout();
+  }
+
+  async togglePin(chatId: string): Promise<void> {
+    this.loadingPins.update((set) => new Set(set).add(chatId));
+    try {
+      await this.chatSvc.toggleChatPin(chatId);
+    } finally {
+      this.loadingPins.update((set) => {
+        const newSet = new Set(set);
+        newSet.delete(chatId);
+        return newSet;
+      });
+    }
   }
 
   currentUser = this.auth.user;
