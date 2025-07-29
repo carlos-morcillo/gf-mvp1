@@ -50,22 +50,20 @@ export class AgentChatListComponent extends PaginatedListComponent<AgentChat> {
   async togglePin(chat: AgentChat): Promise<void> {
     const id = String(chat.id);
     this.loadingPins.update((set) => new Set(set).add(id));
+    const currentlyPinned = this.isPinned(chat);
     try {
-      if (this.isPinned(chat)) {
-        await this.chatSvc.unpinChat(id);
-        Toast.success(
-          this.translocoSvc.translate('CHATLIST.MESSAGES.UNPIN_SUCCESS')
-        );
-      } else {
-        await this.chatSvc.pinChat(id);
-        Toast.success(
-          this.translocoSvc.translate('CHATLIST.MESSAGES.PIN_SUCCESS')
-        );
-      }
+      await this.chatSvc.toggleChatPin(id);
+      Toast.success(
+        this.translocoSvc.translate(
+          currentlyPinned
+            ? 'CHATLIST.MESSAGES.UNPIN_SUCCESS'
+            : 'CHATLIST.MESSAGES.PIN_SUCCESS'
+        )
+      );
     } catch {
       Toast.error(
         this.translocoSvc.translate(
-          this.isPinned(chat)
+          currentlyPinned
             ? 'CHATLIST.MESSAGES.UNPIN_ERROR'
             : 'CHATLIST.MESSAGES.PIN_ERROR'
         )
