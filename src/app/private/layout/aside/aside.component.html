@@ -1,7 +1,7 @@
 <aside class="sidebar d-flex flex-column h-100">
   <div class="sidebar-header flex-shrink-0 p-2 px-4">
     <a routerLink="/" class="text-decoration-none fw-semibold fs-4">
-      Greenfield
+      <img class="sidebar__logo" src="logos/logo.svg" alt="Greenfield" />
     </a>
   </div>
 
@@ -39,13 +39,14 @@
             ></i>
           </button>
           <div class="collapse" [class.show]="!chatsCollapsed()">
-            <div class="pinned-chats-container">
-              @for (chat of pinnedChats(); track chat) {
-              <div class="pinned-chat-item d-flex align-items-center ps-4 pe-2">
+            <div class="nav pinned-chats-container">
+              @if (pinnedChats.hasValue()) { @for (chat of pinnedChats.value();
+              track chat) {
+              <div class="nav-link pinned-chat-item d-flex align-items-center2">
                 <a
                   class="flex-grow-1 text-muted text-decoration-none text-truncate"
                   [routerLink]="['/private/chats', chat.id]"
-                  routerLinkActive="nav-item-active"
+                  routerLinkActive="active"
                   (click)="navigate.emit()"
                 >
                   {{ chat.title }}
@@ -53,12 +54,16 @@
                 <button
                   type="button"
                   class="btn btn-link p-0 ms-2 unpin-btn"
-                  (click)="togglePin(chat.id); $event.preventDefault(); $event.stopPropagation()"
+                  (click)="
+                    togglePin(chat.id);
+                    $event.preventDefault();
+                    $event.stopPropagation()
+                  "
                   [title]="'CHATLIST.BUTTONS.UNPIN_CHAT' | transloco"
                   [disabled]="loadingPins().has(chat.id)"
                 >
                   @if (!loadingPins().has(chat.id)) {
-                  <i class="bi bi-pin-fill"></i>
+                  <i class="bi bi-pin-angle"></i>
                   } @else {
                   <span class="spinner-border spinner-border-sm"></span>
                   }
@@ -69,7 +74,7 @@
                 No tienes chats fijados
               </div>
 
-              }
+              } }
             </div>
           </div>
         </div>

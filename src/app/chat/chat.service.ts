@@ -1,6 +1,6 @@
 // chat.service.ts
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { Injectable, resource, signal } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { PinnedChat } from '../private/layout/pinned-chat';
@@ -49,25 +49,16 @@ export class ChatService {
     // }));
   }
 
+  pinnedChats = resource({
+    loader: () =>
+      firstValueFrom(
+        this.http.get<PinnedChat[]>(`${environment.baseURL}/chats/pinned`)
+      ),
+  });
+
   private apiToken = localStorage.getItem('token') || '';
 
-  /** List of pinned chats */
-  private _pinnedChats = signal<PinnedChat[]>([]);
-  readonly pinnedChats = this._pinnedChats.asReadonly();
   readonly isLoadingPinned = signal(false);
-
-  /** Fetch pinned chats from the API */
-  async loadPinnedChats(): Promise<void> {
-    this.isLoadingPinned.set(true);
-    try {
-      const list = await firstValueFrom(
-        this.http.get<PinnedChat[]>(`${environment.baseURL}/chats/pinned`)
-      );
-      this._pinnedChats.set(list);
-    } finally {
-      this.isLoadingPinned.set(false);
-    }
-  }
 
   /** Get pinned status of a single chat */
   async getChatPinnedStatus(chatId: string): Promise<boolean> {
@@ -81,26 +72,28 @@ export class ChatService {
 
   /** Toggle pin state of a chat */
   async toggleChatPin(chatId: string): Promise<void> {
-    const current = this._pinnedChats();
+    const current = this.pinnedChats.value();
+    if (!current) {
+      return;
+    }
     const isPinned = current.some((c) => c.id === chatId);
-    const optimistic = isPinned
-      ? current.filter((c) => c.id !== chatId)
-      : [...current, { id: chatId, title: '' } as PinnedChat];
-    this._pinnedChats.set(optimistic);
+
     try {
       await firstValueFrom(
         this.http.post(`${environment.baseURL}/chats/${chatId}/pin`, {})
       );
-      await this.loadPinnedChats();
     } catch (err) {
-      this._pinnedChats.set(current);
       throw err;
     }
+    await this.pinnedChats.reload();
   }
 
   /** Check if chat is currently pinned */
   isPinned(chatId: string | number | null | undefined): boolean {
-    return this._pinnedChats().some((c) => c.id === String(chatId));
+    if (!this.pinnedChats.hasValue()) {
+      return false;
+    }
+    return this.pinnedChats.value().some((c) => c.id === String(chatId));
   }
 
   // Estados reactivos como en Svelte
@@ -118,13 +111,11 @@ export class ChatService {
     private http: HttpClient,
     private websocketService: WebSocketService
   ) {
-    this.loadPinnedChats();
     this.startPolling();
     if (typeof document !== 'undefined') {
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') {
           this.startPolling();
-          this.loadPinnedChats();
         } else {
           this.stopPolling();
         }
@@ -138,7 +129,7 @@ export class ChatService {
     if (this.pollId || typeof document === 'undefined') return;
     this.pollId = setInterval(() => {
       if (document.visibilityState === 'visible') {
-        this.loadPinnedChats();
+        this.pinnedChats.reload();
       }
     }, 60000);
   }

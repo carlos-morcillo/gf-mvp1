@@ -1,0 +1,17 @@
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columnas iguales */
+  gap: 0.25rem; /* espacio entre celdas */
+  text-align: center;
+}
+
+.calendar-grid span {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.calendar-grid span.today {
+  background-color: #d1e7dd; /* color de fondo para hoy */
+  font-weight: bold;
+  color: #0f5132;
+}

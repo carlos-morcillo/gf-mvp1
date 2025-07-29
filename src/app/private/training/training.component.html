@@ -1,17 +1,11 @@
-<!-- Tailwind CSS via CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- Lucide Icons via CDN -->
-<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Estilos locales -->
 <style>
-  body {
-    font-family: "Inter", sans-serif;
-  }
   .aspect-video {
     position: relative;
     width: 100%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 */
+    padding-bottom: 56.25%;
   }
+
   .aspect-video iframe {
     position: absolute;
     top: 0;
@@ -23,83 +17,56 @@
 </style>
 
 <!-- Header -->
-<header class="bg-white border-b border-gray-200 px-8 py-4">
-  <div class="flex items-center justify-between">
-    <span class="text-2xl font-bold text-[#00B86B]">Greenfield</span>
-    <div class="flex items-center space-x-4">
-      <select
-        class="text-sm border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:border-[#00B86B]"
-      >
+<div class="px-4 py-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <span class="fs-4 fw-bold text-success">Greenfield</span>
+    <div class="d-flex align-items-center gap-3">
+      <select class="form-select form-select-sm">
         <option>ES</option>
         <option>EN</option>
       </select>
-      <a
-        href="#"
-        class="text-sm font-medium text-[#00B86B] hover:text-[#009A5B] transition"
+      <a href="#" class="text-success fw-semibold text-decoration-none"
         >Acceder</a
       >
     </div>
   </div>
 
-  <!-- Pestañas de navegación -->
-  <nav class="flex space-x-8 mt-4 border-b border-gray-200">
-    <button
-      data-tab="inicio"
-      class="flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm border-[#00B86B] text-[#00B86B]"
-    >
-      <i data-lucide="home" class="w-4 h-4"></i>
-      <span>Inicio</span>
+  <!-- Navegación -->
+  <nav class="nav nav-pills d-flex gap-4 mt-3">
+    <button data-tab="inicio" class="nav-link active">
+      <i class="bi bi-house me-2"></i> Inicio
     </button>
-    <button
-      data-tab="cursos"
-      class="flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700"
-    >
-      <i data-lucide="book-open" class="w-4 h-4"></i>
-      <span>Cursos disponibles</span>
+    <button data-tab="cursos" class="nav-link">
+      <i class="bi bi-book me-2"></i> Cursos disponibles
     </button>
-    <button
-      data-tab="missions"
-      class="flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700"
-    >
-      <i data-lucide="trophy" class="w-4 h-4"></i>
-      <span>Misiones</span>
+    <button data-tab="missions" class="nav-link">
+      <i class="bi bi-trophy me-2"></i> Misiones
     </button>
-    <button
-      data-tab="achievements"
-      class="flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700"
-    >
-      <i data-lucide="gift" class="w-4 h-4"></i>
-      <span>Logros</span>
+    <button data-tab="achievements" class="nav-link">
+      <i class="bi bi-gift me-2"></i> Logros
     </button>
-    <button
-      data-tab="leaderboard"
-      class="flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700"
-    >
-      <i data-lucide="users" class="w-4 h-4"></i>
-      <span>Clasificación</span>
+    <button data-tab="leaderboard" class="nav-link">
+      <i class="bi bi-people me-2"></i> Clasificación
     </button>
   </nav>
-</header>
+</div>
 
-<!-- Main Content -->
-<main class="px-8 py-10 max-w-7xl mx-auto space-y-8">
-  <!-- === PESTAÑA: INICIO === -->
-  <div id="tab-inicio" class="space-y-8">
+<!-- Main -->
+<main class="container py-5">
+  <div id="tab-inicio" class="d-block">
     <!-- Bienvenida -->
-    <section class="bg-white rounded-lg shadow-sm p-8 text-center">
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+    <section class="bg-white rounded shadow-sm p-4 text-center">
+      <h1 class="fs-3 fw-bold text-dark mb-2">
         Centro de Formación Greenfield
       </h1>
-      <p class="text-gray-600">
+      <p class="text-secondary">
         Tu espacio para aprender, compartir y crecer con nuestra comunidad.
       </p>
     </section>
 
     <!-- ¿Qué son los agentes de IA? -->
-    <section class="bg-white rounded-lg shadow-sm p-8 space-y-6">
-      <h2 class="text-2xl font-bold text-gray-900">
-        ¿Qué son los agentes de IA?
-      </h2>
+    <section class="bg-white rounded shadow-sm p-4 mt-4">
+      <h2 class="fs-4 fw-bold text-dark mb-3">¿Qué son los agentes de IA?</h2>
       <div class="aspect-video">
         <iframe
           src="https://www.youtube.com/embed/m4DKFNLyWj4?si=jk4eLfP2ghaDdmSi"
@@ -112,364 +79,158 @@
     </section>
 
     <!-- Calendario y Anuncios -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <!-- Calendario -->
-      <div class="bg-white rounded-lg shadow-sm p-6">
-        <h2
-          class="text-lg font-semibold flex items-center space-x-2 mb-6 text-gray-900"
-        >
-          <i data-lucide="calendar" class="w-5 h-5 text-[#00B86B]"></i>
-          <span>Próximos Eventos</span>
-        </h2>
-        <div
-          class="bg-gray-50 p-4 rounded-lg text-center mb-6 text-sm text-gray-600"
-        >
-          <div class="font-bold mb-2">Octubre 2024</div>
-          <div class="grid grid-cols-7 gap-1">
-            <span>L</span><span>M</span><span>X</span><span>J</span
-            ><span>V</span><span>S</span><span>D</span> <span></span
-            ><span></span><span></span><span>1</span><span>2</span><span>3</span
-            ><span>4</span> <span>5</span><span>6</span><span>7</span
-            ><span>8</span><span>9</span><span>10</span><span>11</span>
-            <span>12</span><span class="font-bold text-[#00B86B]">13</span
-            ><span>14</span><span>15</span><span>16</span><span>17</span
-            ><span>18</span>
+    <div class="row mt-4">
+      <div class="col-lg-6">
+        <div class="bg-white rounded shadow-sm p-4 mb-4">
+          <h2
+            class="h5 fw-semibold d-flex align-items-center gap-2 text-dark mb-3"
+          >
+            <i class="bi bi-calendar text-success"></i> Próximos Eventos
+          </h2>
+          <div
+            class="bg-light p-3 rounded text-center text-secondary mb-3 small"
+          >
+            <div class="fw-bold mb-2">Octubre 2024</div>
+            <div class="calendar-grid">
+              <span>L</span><span>M</span><span>X</span><span>J</span
+              ><span>V</span><span>S</span><span>D</span> <span></span
+              ><span></span><span></span><span>1</span><span>2</span
+              ><span>3</span><span>4</span> <span>5</span><span>6</span
+              ><span>7</span><span>8</span><span>9</span><span>10</span
+              ><span>11</span> <span>12</span
+              ><span class="fw-bold text-success">13</span><span>14</span
+              ><span>15</span><span>16</span><span>17</span><span>18</span>
+            </div>
           </div>
-        </div>
-        <div class="space-y-4">
-          <div class="flex items-start space-x-3">
-            <i data-lucide="clock" class="w-5 h-5 text-[#00B86B] mt-1"></i>
-            <div>
-              <p class="font-medium text-gray-900">
-                Webinar: Introducción a la IA
-              </p>
-              <p class="text-sm text-gray-500">13 oct, 10:00 - 11:30</p>
+          <div>
+            <div class="d-flex align-items-start gap-2 mb-2">
+              <i class="bi bi-clock text-success mt-1"></i>
+              <div>
+                <p class="fw-semibold text-dark mb-0">
+                  Webinar: Introducción a la IA
+                </p>
+                <p class="small text-secondary mb-0">13 oct, 10:00 - 11:30</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Anuncios -->
-      <div class="bg-white rounded-lg shadow-sm p-6">
-        <h2
-          class="text-lg font-semibold flex items-center space-x-2 mb-6 text-gray-900"
-        >
-          <i data-lucide="megaphone" class="w-5 h-5 text-[#00B86B]"></i>
-          <span>Anuncios</span>
-        </h2>
-        <div class="bg-[#E0F2F1] text-gray-700 p-4 rounded-lg text-sm">
-          <p>
-            <strong>Nuevo curso:</strong> "IA para principiantes" ya disponible.
-          </p>
-          <p class="mt-2">
-            <strong>Importante:</strong> Completa la evaluación antes del 31
-            oct.
-          </p>
+      <div class="col-lg-6">
+        <div class="bg-white rounded shadow-sm p-4">
+          <h2
+            class="h5 fw-semibold d-flex align-items-center gap-2 text-dark mb-3"
+          >
+            <i class="bi bi-megaphone text-success"></i> Anuncios
+          </h2>
+          <div class="bg-success bg-opacity-10 text-dark p-3 rounded small">
+            <p>
+              <strong>Nuevo curso:</strong> "IA para principiantes" ya
+              disponible.
+            </p>
+            <p class="mt-2">
+              <strong>Importante:</strong> Completa la evaluación antes del 31
+              oct.
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Accesos Rápidos -->
-    <section class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <div
-        class="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center space-y-4 hover:shadow-md transition"
-      >
-        <i data-lucide="video" class="w-10 h-10 text-[#00B86B]"></i>
-        <span class="font-medium text-gray-900">Vídeo de bienvenida</span>
+    <section class="row mt-4">
+      <div class="col-sm-4">
+        <div class="bg-white rounded shadow-sm p-4 text-center hover-shadow">
+          <i class="bi bi-camera-video fs-3 text-success"></i>
+          <p class="fw-medium text-dark mt-2">Vídeo de bienvenida</p>
+        </div>
       </div>
-      <div
-        class="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center space-y-4 hover:shadow-md transition"
-      >
-        <i data-lucide="book-open" class="w-10 h-10 text-[#00B86B]"></i>
-        <span class="font-medium text-gray-900">Principales cursos</span>
+      <div class="col-sm-4">
+        <div class="bg-white rounded shadow-sm p-4 text-center hover-shadow">
+          <i class="bi bi-book fs-3 text-success"></i>
+          <p class="fw-medium text-dark mt-2">Principales cursos</p>
+        </div>
       </div>
-      <a
-        href="https://forms.office.com/Pages/ResponsePage.aspx?id=Hiqttwiab0u1GUVodBQvvZYuSP2sOIFNoxLuOyYj9KdURVlETUtFRFhDTlJMWE9NSVk0ODVZMkpHUS4u"
-        target="_blank"
-        class="bg-white rounded-lg shadow-sm p-6 flex flex-col items-center space-y-4 hover:shadow-md transition cursor-pointer"
-      >
-        <i data-lucide="edit" class="w-10 h-10 text-[#00B86B]"></i>
-        <span class="font-medium text-gray-900">Formulario de evaluación</span>
-      </a>
+      <div class="col-sm-4">
+        <a
+          href="https://forms.office.com/..."
+          target="_blank"
+          class="bg-white rounded shadow-sm p-4 d-block text-center hover-shadow text-decoration-none text-dark"
+        >
+          <i class="bi bi-pencil fs-3 text-success"></i>
+          <p class="fw-medium mt-2">Formulario de evaluación</p>
+        </a>
+      </div>
     </section>
 
-    <!-- Buscador y Listado de Cursos -->
-    <section class="bg-white rounded-lg shadow-sm p-6 space-y-6">
+    <!-- Buscador y Cursos -->
+    <section class="bg-white rounded shadow-sm p-4 mt-4">
       <div
-        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+        class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3"
       >
-        <h2 class="text-xl font-semibold text-gray-900">Cursos</h2>
-        <form class="flex w-full sm:w-auto">
+        <h2 class="fs-5 fw-semibold text-dark">Cursos</h2>
+        <form class="d-flex">
           <input
             type="text"
+            class="form-control rounded-start"
             placeholder="Buscar cursos..."
-            class="border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-[#00B86B]"
           />
-          <button
-            type="submit"
-            class="bg-[#00B86B] text-white px-4 py-2 rounded-r-lg hover:bg-[#009A5B] transition"
-          >
-            <i data-lucide="search" class="w-5 h-5"></i>
+          <button type="submit" class="btn btn-success rounded-end">
+            <i class="bi bi-search"></i>
           </button>
         </form>
       </div>
 
-      <!-- Grid de Cursos -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div
-          class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition"
-        >
-          <h3 class="font-bold text-gray-900">IA para Principiantes</h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Aprende los conceptos básicos de inteligencia artificial y su
-            aplicación práctica.
-          </p>
-          <a
-            href="#"
-            class="text-[#00B86B] hover:underline text-sm font-medium mt-3 block"
-            >Entrar</a
-          >
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="border rounded p-3 h-100">
+            <h3 class="fw-bold text-dark">IA para Principiantes</h3>
+            <p class="text-secondary small">
+              Aprende los conceptos básicos de inteligencia artificial y su
+              aplicación práctica.
+            </p>
+            <a href="#" class="text-success small fw-medium d-block mt-2"
+              >Entrar</a
+            >
+          </div>
         </div>
-        <div
-          class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition"
-        >
-          <h3 class="font-bold text-gray-900">Agentes Personalizados</h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Crea y configura tus propios agentes inteligentes para automatizar
-            tareas.
-          </p>
-          <a
-            href="#"
-            class="text-[#00B86B] hover:underline text-sm font-medium mt-3 block"
-            >Entrar</a
-          >
+        <div class="col-md-4">
+          <div class="border rounded p-3 h-100">
+            <h3 class="fw-bold text-dark">Agentes Personalizados</h3>
+            <p class="text-secondary small">
+              Crea y configura tus propios agentes inteligentes para automatizar
+              tareas.
+            </p>
+            <a href="#" class="text-success small fw-medium d-block mt-2"
+              >Entrar</a
+            >
+          </div>
         </div>
-        <div
-          class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition"
-        >
-          <h3 class="font-bold text-gray-900">Evaluación y Mejora</h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Aprende a evaluar el rendimiento de los agentes y optimizar sus
-            resultados.
-          </p>
-          <a
-            href="#"
-            class="text-[#00B86B] hover:underline text-sm font-medium mt-3 block"
-            >Entrar</a
-          >
+        <div class="col-md-4">
+          <div class="border rounded p-3 h-100">
+            <h3 class="fw-bold text-dark">Evaluación y Mejora</h3>
+            <p class="text-secondary small">
+              Aprende a evaluar el rendimiento de los agentes y optimizar sus
+              resultados.
+            </p>
+            <a href="#" class="text-success small fw-medium d-block mt-2"
+              >Entrar</a
+            >
+          </div>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- === PESTAÑA: CURSOS DISPONIBLES === -->
-  <div id="tab-cursos" class="hidden space-y-8">
-    <h2 class="text-2xl font-bold text-gray-900">Cursos Disponibles</h2>
-
-    <!-- Curso 1 -->
-    <a
-      href="https://tudominio.com/curso/ia-principiantes"
-      target="_blank"
-      class="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition"
-    >
-      <div class="flex items-start space-x-4">
-        <div
-          class="w-12 h-12 bg-[#00B86B]/10 rounded-lg flex items-center justify-center"
-        >
-          <i data-lucide="brain" class="w-6 h-6 text-[#00B86B]"></i>
-        </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold text-gray-900">
-            IA para Principiantes
-          </h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Aprende los fundamentos de la inteligencia artificial y cómo
-            aplicarla en tu trabajo diario.
-          </p>
-          <div class="flex items-center space-x-4 mt-3 text-xs text-gray-500">
-            <span>4 módulos</span>
-            <span>•</span>
-            <span>2h 30m</span>
-            <span>•</span>
-            <span class="text-[#00B86B] font-medium">En progreso (65%)</span>
-          </div>
-        </div>
-        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 mt-2"></i>
-      </div>
-    </a>
-
-    <!-- Curso 2 -->
-    <a
-      href="https://tudominio.com/curso/agentes-personalizados"
-      target="_blank"
-      class="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition"
-    >
-      <div class="flex items-start space-x-4">
-        <div
-          class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"
-        >
-          <i data-lucide="cog" class="w-6 h-6 text-blue-600"></i>
-        </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold text-gray-900">
-            Agentes Personalizados
-          </h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Crea y configura tus propios agentes IA para automatizar tareas
-            complejas.
-          </p>
-          <div class="flex items-center space-x-4 mt-3 text-xs text-gray-500">
-            <span>6 módulos</span>
-            <span>•</span>
-            <span>5h</span>
-            <span>•</span>
-            <span class="text-gray-500">No iniciado</span>
-          </div>
-        </div>
-        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 mt-2"></i>
-      </div>
-    </a>
-
-    <!-- Curso 3 -->
-    <a
-      href="https://tudominio.com/curso/evaluacion-mejora"
-      target="_blank"
-      class="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition"
-    >
-      <div class="flex items-start space-x-4">
-        <div
-          class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center"
-        >
-          <i data-lucide="bar-chart" class="w-6 h-6 text-purple-600"></i>
-        </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold text-gray-900">
-            Evaluación y Mejora
-          </h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Aprende a evaluar el rendimiento de los agentes y optimizar sus
-            resultados.
-          </p>
-          <div class="flex items-center space-x-4 mt-3 text-xs text-gray-500">
-            <span>3 módulos</span>
-            <span>•</span>
-            <span>1h 45m</span>
-            <span>•</span>
-            <span class="text-green-600 font-medium">Completado ✅</span>
-          </div>
-        </div>
-        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 mt-2"></i>
-      </div>
-    </a>
-
-    <!-- Curso 4 -->
-    <a
-      href="https://tudominio.com/curso/buen-prompt"
-      target="_blank"
-      class="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition"
-    >
-      <div class="flex items-start space-x-4">
-        <div
-          class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center"
-        >
-          <i data-lucide="message-square" class="w-6 h-6 text-yellow-600"></i>
-        </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold text-gray-900">
-            ¿Cómo generar un buen prompt?
-          </h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Domina el arte del prompt engineering para obtener respuestas de
-            alta calidad.
-          </p>
-          <div class="flex items-center space-x-4 mt-3 text-xs text-gray-500">
-            <span>5 módulos</span>
-            <span>•</span>
-            <span>3h</span>
-            <span>•</span>
-            <span class="text-gray-500">No iniciado</span>
-          </div>
-        </div>
-        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 mt-2"></i>
-      </div>
-    </a>
-
-    <!-- Curso 5 -->
-    <a
-      href="https://tudominio.com/podcast/ia"
-      target="_blank"
-      class="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition"
-    >
-      <div class="flex items-start space-x-4">
-        <div
-          class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center"
-        >
-          <i data-lucide="mic" class="w-6 h-6 text-red-600"></i>
-        </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold text-gray-900">
-            Podcast: Ponte al día con la IA
-          </h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Escucha los episodios más relevantes sobre IA, ética y futuro del
-            trabajo.
-          </p>
-          <div class="flex items-center space-x-4 mt-3 text-xs text-gray-500">
-            <span>12 episodios</span>
-            <span>•</span>
-            <span>4h 30m</span>
-            <span>•</span>
-            <span class="text-gray-500">Acceso libre</span>
-          </div>
-        </div>
-        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 mt-2"></i>
-      </div>
-    </a>
-
-    <!-- Curso 6 -->
-    <a
-      href="https://tudominio.com/landing-greenfield"
-      target="_blank"
-      class="block border border-gray-200 rounded-lg p-6 hover:shadow-md transition"
-    >
-      <div class="flex items-start space-x-4">
-        <div
-          class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center"
-        >
-          <i data-lucide="home" class="w-6 h-6 text-green-600"></i>
-        </div>
-        <div class="flex-1">
-          <h3 class="text-lg font-semibold text-gray-900">
-            Introducción a Greenfield
-          </h3>
-          <p class="text-sm text-gray-600 mt-1">
-            Descubre cómo funciona la plataforma y cómo aprovecharla al máximo.
-          </p>
-          <div class="flex items-center space-x-4 mt-3 text-xs text-gray-500">
-            <span>2 módulos</span>
-            <span>•</span>
-            <span>1h</span>
-            <span>•</span>
-            <span class="text-[#00B86B] font-medium">Recomendado</span>
-          </div>
-        </div>
-        <i data-lucide="chevron-right" class="w-5 h-5 text-gray-400 mt-2"></i>
-      </div>
-    </a>
-  </div>
-
-  <!-- === OTRAS PESTAÑAS (placeholders) === -->
-  <div id="tab-missions" class="hidden">Contenido de Misiones...</div>
-  <div id="tab-achievements" class="hidden">Contenido de Logros...</div>
-  <div id="tab-leaderboard" class="hidden">Contenido de Clasificación...</div>
+  <!-- Resto de pestañas -->
+  <div id="tab-cursos" class="d-none">Contenido de Cursos...</div>
+  <div id="tab-missions" class="d-none">Contenido de Misiones...</div>
+  <div id="tab-achievements" class="d-none">Contenido de Logros...</div>
+  <div id="tab-leaderboard" class="d-none">Contenido de Clasificación...</div>
 </main>
 
 <!-- Scripts -->
 <script>
-  // Inicializa Lucide Icons
-  lucide.createIcons();
-
-  // Manejo de pestañas
   const tabs = document.querySelectorAll("[data-tab]");
   const panels = {
     inicio: document.getElementById("tab-inicio"),
@@ -481,14 +242,14 @@
 
   function showTab(tabName) {
     tabs.forEach((t) => {
-      t.classList.remove("border-[#00B86B]", "text-[#00B86B]");
-      t.classList.add("border-transparent", "text-gray-500");
+      t.classList.remove("border-success", "text-success");
+      t.classList.add("border-0", "text-secondary");
     });
     const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
-    activeTab.classList.add("border-[#00B86B]", "text-[#00B86B]");
+    activeTab.classList.add("border-success", "text-success");
 
-    Object.values(panels).forEach((p) => p.classList.add("hidden"));
-    panels[tabName].classList.remove("hidden");
+    Object.values(panels).forEach((p) => p.classList.add("d-none"));
+    panels[tabName].classList.remove("d-none");
   }
 
   tabs.forEach((tab) => {
@@ -497,6 +258,5 @@
     });
   });
 
-  // Mostrar "Inicio" por defecto
   showTab("inicio");
 </script>

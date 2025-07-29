@@ -3,6 +3,12 @@
   background-color: var(--bs-body-bg);
   border-right: var(--bs-border-width) solid var(--bs-border-color);
 
+  &__logo {
+    object-fit: contain;
+    height: 2rem;
+    max-width: 100%;
+  }
+
   .sidebar-header {
     padding: var(--bs-spacer-3);
     border-bottom: var(--bs-border-width) solid
@@ -46,12 +52,16 @@
   }
 
   .collapsible-section {
-    margin-bottom: var(--bs-spacer-2);
+    margin-bottom: 1rem;
+  }
+  .pinned-chats-container {
+    padding: 1rem;
   }
 
   .pinned-chat-item {
     border-radius: var(--bs-border-radius-sm);
     transition: background-color 0.15s ease-in-out;
+    width: 100%;
 
     &:hover {
       background-color: var(--bs-gray-100);

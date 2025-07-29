@@ -2,9 +2,13 @@
   visibility: hidden;
 }
 
+.pin-btn.pinned {
+  visibility: visible;
+}
+
 ::ng-deep {
   tr:hover .pin-btn,
-  .pin-btn.pinned {
+  tr .pinned {
     visibility: visible;
   }
 }

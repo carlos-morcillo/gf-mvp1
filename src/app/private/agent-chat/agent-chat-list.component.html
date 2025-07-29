@@ -31,13 +31,18 @@
     <ng-template cellTpt header="updated_at" let-property="property">
       {{ formatDate(property) }}
     </ng-template>
-    <ng-template cellTpt header="pin" let-item="item">
+    <ng-template
+      cellTpt
+      header="pinned"
+      let-property="property"
+      let-item="item"
+    >
       <button
         type="button"
         class="btn btn-link p-0 pin-btn"
-        [class.pinned]="isPinned(item)"
+        [class.pinned]="property"
         [attr.aria-label]="
-          isPinned(item)
+          property.pinned
             ? ('CHATLIST.BUTTONS.UNPIN_CHAT' | transloco)
             : ('CHATLIST.BUTTONS.PIN_CHAT' | transloco)
         "
@@ -47,8 +52,8 @@
         @if (!loadingPins().has(item.id)) {
         <i
           class="bi"
-          [class.bi-pin-fill]="isPinned(item)"
-          [class.bi-pin]="!isPinned(item)"
+          [class.bi-pin-fill]="property"
+          [class.bi-pin]="!property"
         ></i>
         } @else {
         <span class="spinner-border spinner-border-sm"></span>

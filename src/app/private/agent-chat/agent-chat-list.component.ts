@@ -1,4 +1,11 @@
-import { Component, inject, input, signal, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnInit,
+  resource,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { upperFirst } from 'lodash';
@@ -10,7 +17,7 @@ import {
   TableRowEvent,
 } from 'ng-hub-ui-table';
 import { ToastrService } from 'ngx-toastr';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 import { ChatService } from '../../chat/chat.service';
 import { PaginatedListComponent } from '../../shared/components/paginated-list.component';
 import { AgentChat } from './agent-chat.model';
@@ -45,8 +52,27 @@ export class AgentChatListComponent
   /** Track chats currently being processed */
   loadingPins = signal<Set<string>>(new Set());
 
+  override paginatedData = resource({
+    params: () => ({
+      ...this.request(),
+      pinnedChats: this.chatSvc.pinnedChats.value(),
+    }),
+    loader: ({ params: { pinnedChats } }) =>
+      firstValueFrom(
+        this.fetchFn().pipe(
+          map((result) => {
+            for (const item of result.data ?? []) {
+              item.pinned = !!pinnedChats?.find((chat) => chat.id === item.id);
+            }
+            return result;
+          })
+        )
+      ),
+  });
+
   /** Determine if a chat is pinned */
   isPinned = (chat: AgentChat) => {
+    console.log(chat.title, this.chatSvc.isPinned(chat.id));
     return this.chatSvc.isPinned(chat.id);
   };
 
@@ -87,7 +113,7 @@ export class AgentChatListComponent
   override headers: PaginableTableHeader[] = [
     {
       title: '',
-      property: 'pin',
+      property: 'pinned',
       sortable: false,
     },
     {
@@ -139,10 +165,5 @@ export class AgentChatListComponent
   formatDate(timestamp: number): string {
     const date = new Date(timestamp);
     return date.toLocaleString();
-  }
-
-  override ngOnInit(): void {
-    super.ngOnInit();
-    this.chatSvc.loadPinnedChats();
   }
 }
